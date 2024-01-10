@@ -1,0 +1,35 @@
+{
+  "name": "keto-relations-parser",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/keto-relations-parser/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/keto-relations-parser",
+        "tsConfig": "packages/keto-relations-parser/tsconfig.lib.json",
+        "packageJson": "packages/keto-relations-parser/package.json",
+        "main": "packages/keto-relations-parser/src/index.ts",
+        "assets": ["packages/keto-relations-parser/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs keto-relations-parser {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/keto-relations-parser/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

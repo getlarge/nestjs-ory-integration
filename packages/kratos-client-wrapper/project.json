@@ -1,0 +1,35 @@
+{
+  "name": "kratos-client-wrapper",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/kratos-client-wrapper/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/kratos-client-wrapper",
+        "tsConfig": "packages/kratos-client-wrapper/tsconfig.lib.json",
+        "packageJson": "packages/kratos-client-wrapper/package.json",
+        "main": "packages/kratos-client-wrapper/src/index.ts",
+        "assets": ["packages/kratos-client-wrapper/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs kratos-client-wrapper {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/kratos-client-wrapper/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
