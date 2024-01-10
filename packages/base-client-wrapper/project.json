@@ -1,0 +1,38 @@
+{
+  "name": "base-client-wrapper",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/base-client-wrapper/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/base-client-wrapper",
+        "tsConfig": "packages/base-client-wrapper/tsconfig.lib.json",
+        "packageJson": "packages/base-client-wrapper/package.json",
+        "main": "packages/base-client-wrapper/src/index.ts",
+        "assets": ["packages/base-client-wrapper/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/base-client-wrapper/**/*.ts",
+          "packages/base-client-wrapper/**/package.json",
+          "packages/base-client-wrapper/**/project.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/base-client-wrapper/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
