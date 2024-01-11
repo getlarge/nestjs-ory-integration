@@ -12,6 +12,7 @@
         "tsConfig": "packages/kratos-client-wrapper/tsconfig.lib.json",
         "packageJson": "packages/kratos-client-wrapper/package.json",
         "main": "packages/kratos-client-wrapper/src/index.ts",
+        "external": "none",
         "assets": ["packages/kratos-client-wrapper/*.md"]
       }
     },
@@ -21,7 +22,14 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/kratos-client-wrapper/**/*.ts",
+          "packages/kratos-client-wrapper/**/project.json",
+          "packages/kratos-client-wrapper/**/package.json"
+        ]
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",

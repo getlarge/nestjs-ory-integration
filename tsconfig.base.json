@@ -24,7 +24,9 @@
       "@getlarge/keto-relations-parser": [
         "packages/keto-relations-parser/src/index.ts"
       ],
-      "@getlarge/kratos-client-wrapper": ["packages/kratos-client-wrapper/src/index.ts"]
+      "@getlarge/kratos-client-wrapper": [
+        "packages/kratos-client-wrapper/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
