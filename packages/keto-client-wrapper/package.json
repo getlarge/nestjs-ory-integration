@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0",
-    "@nestjs/common": "^10.0.2"
+    "@nestjs/common": "^10.0.2",
+    "@ory/client": "^1.4.9",
+    "axios": "1.6.5",
+    "@nestjs/axios": "^3.0.1"
   },
   "type": "commonjs",
   "main": "./src/index.js",
