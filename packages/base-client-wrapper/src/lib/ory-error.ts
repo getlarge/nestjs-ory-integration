@@ -9,7 +9,10 @@ export function isAxiosError(error: unknown): error is AxiosError {
   );
 }
 
-export class OryError extends Error {
+export class OryError
+  extends Error
+  implements Pick<AxiosError, 'config' | 'toJSON' | 'isAxiosError'>
+{
   constructor(
     readonly error: unknown,
     readonly defaultStatus = 500,
@@ -30,6 +33,32 @@ export class OryError extends Error {
       return error.message;
     }
     return 'Unknown error';
+  }
+
+  get isAxiosError(): boolean {
+    return isAxiosError(this.error);
+  }
+
+  toJSON(): {
+    message: string;
+    statusCode: number;
+    details: Record<string, unknown>;
+  } {
+    return {
+      message: this.errorMessage,
+      statusCode: this.statusCode,
+      details: this.getDetails(),
+    };
+  }
+
+  get config(): AxiosError['config'] {
+    if (isAxiosError(this.error)) {
+      return this.error.config;
+    }
+    if (isOryError(this.error)) {
+      return this.error.config;
+    }
+    return undefined;
   }
 
   get errorMessage(): string {

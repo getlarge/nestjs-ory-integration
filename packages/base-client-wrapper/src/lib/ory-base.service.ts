@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 
-import { OryError, isAxiosError } from './ory-error';
+import { OryError, isAxiosError, isOryError } from './ory-error';
 
 @Injectable()
 export class OryBaseService implements OnModuleInit {
@@ -17,7 +17,7 @@ export class OryBaseService implements OnModuleInit {
     this.axios.interceptors.response.use(
       (response) => response,
       async (error) => {
-        if (isAxiosError(error) && error.config) {
+        if ((isAxiosError(error) || isOryError(error)) && error.config) {
           const { config } = error;
           const shouldRetry =
             typeof config.retryCondition === 'function'
