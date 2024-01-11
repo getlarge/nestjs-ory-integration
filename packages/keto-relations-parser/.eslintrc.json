@@ -24,7 +24,8 @@
             "buildTargets": ["build"],
             "checkMissingDependencies": true,
             "checkObsoleteDependencies": true,
-            "checkVersionMismatches": true
+            "checkVersionMismatches": true,
+            "ignoredDependencies": ["@nestjs/testing"]
           }
         ]
       }
