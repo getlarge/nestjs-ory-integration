@@ -1,0 +1,49 @@
+courier:
+  message_retries: 5
+  delivery_strategy: smtp
+  smtp:
+    connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+dsn: memory
+identity:
+  default_schema_id: default
+  schemas:
+    - id: default
+      url: file:///etc/config/kratos/identity.schema.json
+secrets:
+  cipher:
+    - 32-LONG-SECRET-NOT-SECURE-AT-ALL
+  cookie:
+    - cookie_secret_not_good_not_secure
+selfservice:
+  default_browser_return_url: http://127.0.0.1:8080/
+  methods:
+    code:
+      enabled: true
+    link:
+      config:
+        base_url: ''
+        lifespan: 15m
+      enabled: true
+    lookup_secret:
+      enabled: true
+    password:
+      config:
+        haveibeenpwned_enabled: true
+        identifier_similarity_check_enabled: true
+        ignore_network_errors: true
+        max_breaches: 1
+        min_password_length: 8
+      enabled: true
+    profile:
+      enabled: true
+    totp:
+      config:
+        issuer: Ticketing
+      enabled: true
+serve:
+  admin:
+    base_url: http://kratos:4434/
+  public:
+    base_url: http://127.0.0.1:4433/
+
+version: v1.0.0

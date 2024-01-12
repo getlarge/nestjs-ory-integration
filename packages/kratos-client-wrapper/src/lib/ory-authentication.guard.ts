@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Logger,
   mixin,
 } from '@nestjs/common';
 import { OryFrontendService } from './ory-frontend';
@@ -34,6 +35,8 @@ export const OryAuthenticationGuard = (
 ) => {
   @Injectable()
   class AuthenticationGuard implements CanActivate {
+    readonly logger = new Logger(AuthenticationGuard.name);
+
     constructor(readonly oryService: OryFrontendService) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -47,19 +50,13 @@ export const OryAuthenticationGuard = (
         ...options,
       };
 
-      const cookie = cookieResolver(context);
-      const xSessionToken = sessionTokenResolver(context);
-      console.warn({
-        cookie,
-        xSessionToken,
-      });
       try {
+        const cookie = cookieResolver(context);
+        const xSessionToken = sessionTokenResolver(context);
         const { data: session } = await this.oryService.toSession({
           cookie,
           xSessionToken,
         });
-        console.warn('session', session, isValidSession(session));
-
         if (!isValidSession(session)) {
           return false;
         }
@@ -68,7 +65,7 @@ export const OryAuthenticationGuard = (
         }
         return true;
       } catch (error) {
-        console.error(error);
+        this.logger.error(error);
         return false;
       }
     }

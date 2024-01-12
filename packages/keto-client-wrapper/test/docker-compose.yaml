@@ -8,6 +8,16 @@ services:
       - '44670:4467' # admin
     command: serve -c /home/ory/keto.yaml
     restart: on-failure
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'wget -nv --spider -t1 http://localhost:4466/health/ready || exit 1',
+        ]
+      interval: 3s
+      timeout: 3s
+      retries: 3
+      start_period: 2s
     volumes:
       - type: bind
         source: ./keto.yaml

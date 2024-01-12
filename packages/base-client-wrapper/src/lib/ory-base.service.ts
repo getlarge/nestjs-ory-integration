@@ -22,7 +22,7 @@ export class OryBaseService implements OnModuleInit {
           const shouldRetry =
             typeof config.retryCondition === 'function'
               ? config.retryCondition(error)
-              : true;
+              : false;
           if (config?.retries && shouldRetry) {
             const retryDelay =
               typeof config.retryDelay === 'function'
