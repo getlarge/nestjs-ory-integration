@@ -1,0 +1,17 @@
+version: '2.7'
+
+services:
+  keto:
+    image: oryd/keto:v0.11.1
+    ports:
+      - '44660:4466' # public
+      - '44670:4467' # admin
+    command: serve -c /home/ory/keto.yaml
+    restart: on-failure
+    volumes:
+      - type: bind
+        source: ./keto.yaml
+        target: /home/ory/keto.yaml
+      - type: bind
+        source: ./namespaces.ts
+        target: /home/ory/namespaces.ts
