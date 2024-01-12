@@ -21,3 +21,13 @@ export {
 export type { RelationTupleStringGenerator } from './lib/with-replacements/relation-tuple-with-replacements-parser';
 export { parseRelationTupleWithReplacements } from './lib/with-replacements/relation-tuple-with-replacements-parser';
 export type { ReplacementValues } from './lib/with-replacements/replacement-values';
+
+export {
+  createFlattenRelationQuery,
+  createRelationQuery,
+  createRelationship,
+} from './lib/keto-converters/tuple-to-relationships-parameters';
+export {
+  createExpandPermissionQuery,
+  createPermissionCheckQuery,
+} from './lib/keto-converters/tuple-to-permissions-parameters';

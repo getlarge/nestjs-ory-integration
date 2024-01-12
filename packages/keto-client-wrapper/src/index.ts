@@ -1,3 +1,8 @@
+export { OryAuthorizationGuard } from './lib/ory-authorization.guard';
+export {
+  OryPermissionChecks,
+  getOryPermissionChecks,
+} from './lib/ory-permission-checks.decorator';
 export {
   OryPermissionsModule,
   OryPermissionsModuleAsyncOptions,
