@@ -16,7 +16,7 @@ export class OryError
   constructor(
     readonly error: unknown,
     readonly defaultStatus = 500,
-    readonly defaultReason = 'Error connecting to the Ory Keto API'
+    readonly defaultReason = 'Error connecting to the Ory API'
   ) {
     super(OryError.parseError(error));
     Object.setPrototypeOf(this, OryError.prototype);

@@ -1,4 +1,4 @@
-import { HttpModule } from '@nestjs/axios';
+import { HttpModule, HttpModuleOptions, HttpService } from '@nestjs/axios';
 import { DynamicModule, Module, Provider, Type } from '@nestjs/common';
 import {
   AxiosExtraRequestConfig,
@@ -8,39 +8,39 @@ import {
   OryBaseModuleOptionsFactory,
 } from './ory-base.interfaces';
 import { OryBaseService } from './ory-base.service';
+import axios from 'axios';
 
 declare module 'axios' {
   interface AxiosRequestConfig extends AxiosExtraRequestConfig {}
 }
 
-const HttpModuleWithRetry = HttpModule.registerAsync({
-  inject: [OryBaseModuleOptions],
-  useFactory: (options: IOryBaseModuleOptions) => ({
-    timeout: 5000,
-    responseType: 'json',
-    validateStatus(status: number) {
-      return status >= 200 && status < 300;
-    },
-    retries: 3,
-    retryCondition(error) {
-      const statusToRetry = [429];
-      return error.response?.status
-        ? statusToRetry.includes(error.response?.status)
-        : false;
-    },
-    retryDelay(error, retryCount) {
-      if (error.response?.status === 429) {
-        const headers = error.response.headers;
-        const remaining = headers['x-ratelimit-remaining'];
-        const resetTimestamp = headers['x-ratelimit-reset'];
-        if (Number(remaining) === 0) {
-          return Number(resetTimestamp) * 1000 - Date.now();
-        }
+const httpModuleOptionsFactory = (
+  options: IOryBaseModuleOptions
+): HttpModuleOptions => ({
+  timeout: 5000,
+  responseType: 'json',
+  validateStatus(status: number) {
+    return status >= 200 && status < 300;
+  },
+  retries: 3,
+  retryCondition(error) {
+    const statusToRetry = [429];
+    return error.response?.status
+      ? statusToRetry.includes(error.response?.status)
+      : false;
+  },
+  retryDelay(error, retryCount) {
+    if (error.response?.status === 429) {
+      const headers = error.response.headers;
+      const remaining = headers['x-ratelimit-remaining'];
+      const resetTimestamp = headers['x-ratelimit-reset'];
+      if (Number(remaining) === 0) {
+        return Number(resetTimestamp) * 1000 - Date.now();
       }
-      return retryCount * 250;
-    },
-    ...options.axiosConfig,
-  }),
+    }
+    return retryCount * 250;
+  },
+  ...options.axiosConfig,
 });
 
 @Module({})
@@ -49,14 +49,16 @@ export class OryBaseModule {
     options: IOryBaseModuleOptions,
     isGlobal?: boolean
   ): DynamicModule {
+    const providers = [
+      { provide: OryBaseModuleOptions, useValue: options },
+      OryBaseService,
+    ];
+
     return {
       module: OryBaseModule,
-      imports: [HttpModuleWithRetry],
-      providers: [
-        { provide: OryBaseModuleOptions, useValue: options },
-        OryBaseService,
-      ],
-      exports: [OryBaseModuleOptions, OryBaseService],
+      imports: [HttpModule.register(httpModuleOptionsFactory(options))],
+      providers,
+      exports: [OryBaseService],
       global: isGlobal,
     };
   }
@@ -65,13 +67,24 @@ export class OryBaseModule {
     options: OryBaseModuleAsyncOptions,
     isGlobal?: boolean
   ): DynamicModule {
+    const providers: Provider[] = [
+      ...this.createAsyncProviders(options),
+      OryBaseService,
+      {
+        provide: HttpService,
+        useFactory: (options: OryBaseModuleOptions) => {
+          const axiosInstance = axios.create(httpModuleOptionsFactory(options));
+          return new HttpService(axiosInstance);
+        },
+        inject: [OryBaseModuleOptions],
+      },
+    ];
+
     return {
       module: OryBaseModule,
-      imports: options.imports
-        ? [...options.imports, HttpModuleWithRetry]
-        : [HttpModuleWithRetry],
-      providers: [...this.createAsyncProviders(options), OryBaseService],
-      exports: [OryBaseModuleOptions, OryBaseService],
+      imports: options.imports ?? [],
+      providers,
+      exports: [OryBaseService],
       global: isGlobal,
     };
   }
