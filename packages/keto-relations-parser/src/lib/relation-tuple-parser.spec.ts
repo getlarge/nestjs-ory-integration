@@ -1,4 +1,3 @@
-import { inspect } from 'util';
 import { RelationTuple } from './relation-tuple';
 import {
   parseRelationTuple,
@@ -214,11 +213,6 @@ describe('parseRelationTuple tests', () => {
   describe('rejects wrong syntax', () => {
     it.each(invalidSyntaxtTestCases)('%s', (str) => {
       const result = parseRelationTuple(str);
-
-      if (result.hasError()) {
-        const stringifiedError = inspect(result.error, false, 10, true);
-        console.warn(`Result has error: `, stringifiedError);
-      }
 
       expect(result.hasError()).toBe(true);
       expect(result.hasValue()).toBe(false);
