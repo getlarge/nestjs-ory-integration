@@ -1,4 +1,4 @@
-import { RelationTupleBuilder } from './relation-tuple';
+import { RelationTupleBuilder } from './relation-tuple-builder';
 
 describe('RelationTupleBuilder', () => {
   let builder: RelationTupleBuilder;
@@ -117,5 +117,27 @@ describe('RelationTupleBuilder', () => {
     expect(builder.toHumanReadableString()).toBe(
       'subjectRelation of subjectNamespace:subjectObject is in relation of namespace:object'
     );
+  });
+
+  it('should build a relation tuple object from a relation tuple string', () => {
+    const tupleString = builder
+      .subject('subjectNamespace', 'subjectObject', 'subjectRelation')
+      .isIn('relation')
+      .of('namespace', 'object')
+      .toString();
+
+    builder = RelationTupleBuilder.fromString(tupleString);
+
+    expect(tupleString).toEqual(builder.toString());
+    expect(builder.toJSON()).toEqual({
+      namespace: 'namespace',
+      object: 'object',
+      relation: 'relation',
+      subjectIdOrSet: {
+        namespace: 'subjectNamespace',
+        object: 'subjectObject',
+        relation: 'subjectRelation',
+      },
+    });
   });
 });

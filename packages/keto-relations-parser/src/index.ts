@@ -6,6 +6,10 @@ export {
 } from './lib/is-relation-tuple';
 export { RelationTuple, SubjectSet } from './lib/relation-tuple';
 export {
+  relationTupleBuilder,
+  RelationTupleBuilder,
+} from './lib/relation-tuple-builder';
+export {
   parseRelationTuple,
   relationTupleToString,
 } from './lib/relation-tuple-parser';
