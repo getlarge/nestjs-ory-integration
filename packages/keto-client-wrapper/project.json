@@ -12,6 +12,7 @@
         "tsConfig": "packages/keto-client-wrapper/tsconfig.lib.json",
         "packageJson": "packages/keto-client-wrapper/package.json",
         "main": "packages/keto-client-wrapper/src/index.ts",
+        "external": ["keto-relations-parser"],
         "assets": ["packages/keto-client-wrapper/*.md"]
       }
     },

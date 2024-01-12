@@ -2,10 +2,10 @@
   "name": "@getlarge/base-client-wrapper",
   "version": "0.0.1",
   "dependencies": {
-    "tslib": "^2.3.0",
-    "axios": "1.6.5",
+    "@nestjs/axios": "^3.0.1",
     "@nestjs/common": "^10.0.2",
-    "@nestjs/axios": "^3.0.1"
+    "axios": "1.6.5",
+    "tslib": "^2.3.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",

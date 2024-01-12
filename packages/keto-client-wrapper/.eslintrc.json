@@ -28,7 +28,8 @@
             "includeTransitiveDependencies": true,
             "ignoredDependencies": [
               "@getlarge/base-client-wrapper",
-              "@nestjs/testing"
+              "@nestjs/testing",
+              "supertest"
             ]
           }
         ]
