@@ -1,4 +1,7 @@
-export { OryAuthorizationGuard } from './lib/ory-authorization.guard';
+export {
+  OryAuthorizationGuard,
+  OryAuthorizationGuardOptions,
+} from './lib/ory-authorization.guard';
 export {
   OryPermissionChecks,
   getOryPermissionChecks,

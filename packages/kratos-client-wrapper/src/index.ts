@@ -1,4 +1,7 @@
-export { OryAuthenticationGuard } from './lib/ory-authentication.guard';
+export {
+  OryAuthenticationGuard,
+  OryAuthenticationGuardOptions,
+} from './lib/ory-authentication.guard';
 export {
   OryIdentitiesModuleAsyncOptions,
   OryIdentitiesModuleOptions,

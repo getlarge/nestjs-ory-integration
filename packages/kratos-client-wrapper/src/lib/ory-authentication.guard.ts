@@ -7,42 +7,70 @@ import {
 import { OryFrontendService } from './ory-frontend';
 import type { Session } from '@ory/client';
 
+export interface OryAuthenticationGuardOptions {
+  cookieResolver: (ctx: ExecutionContext) => string;
+  isValidSession: (session: Session) => boolean;
+  sessionTokenResolver: (ctx: ExecutionContext) => string;
+  postValidationHook?: (
+    ctx: ExecutionContext,
+    session: Session
+  ) => void | Promise<void>;
+}
+
+const defaultOptions: OryAuthenticationGuardOptions = {
+  isValidSession(): boolean {
+    return true;
+  },
+  sessionTokenResolver: (ctx) =>
+    ctx
+      .switchToHttp()
+      .getRequest()
+      ?.headers?.authorization?.replace('Bearer ', ''),
+  cookieResolver: (ctx) => ctx.switchToHttp().getRequest()?.headers?.cookie,
+};
+
 export const OryAuthenticationGuard = (
-  options: {
-    cookieResolver: (ctx: ExecutionContext) => string;
-    isValidSession: (session: Session) => boolean;
-    sessionTokenResolver: (ctx: ExecutionContext) => string;
-    postValidationHook?: (
-      ctx: ExecutionContext,
-      session: Session
-    ) => void | Promise<void>;
-  } = {
-    isValidSession(): boolean {
-      return true;
-    },
-    sessionTokenResolver: (ctx) =>
-      ctx.switchToHttp().getRequest().headers.authorization,
-    cookieResolver: (ctx) => ctx.switchToHttp().getRequest().headers.cookie,
-  }
+  options: Partial<OryAuthenticationGuardOptions> = defaultOptions
 ) => {
   @Injectable()
   class AuthenticationGuard implements CanActivate {
     constructor(readonly oryService: OryFrontendService) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-      const cookie = options.cookieResolver(context);
-      const xSessionToken = options.sessionTokenResolver(context);
-      const { data: session } = await this.oryService.toSession({
+      const {
+        cookieResolver,
+        sessionTokenResolver,
+        isValidSession,
+        postValidationHook,
+      } = {
+        ...defaultOptions,
+        ...options,
+      };
+
+      const cookie = cookieResolver(context);
+      const xSessionToken = sessionTokenResolver(context);
+      console.warn({
         cookie,
         xSessionToken,
       });
-      if (!options.isValidSession(session)) {
+      try {
+        const { data: session } = await this.oryService.toSession({
+          cookie,
+          xSessionToken,
+        });
+        console.warn('session', session, isValidSession(session));
+
+        if (!isValidSession(session)) {
+          return false;
+        }
+        if (typeof postValidationHook === 'function') {
+          await postValidationHook(context, session);
+        }
+        return true;
+      } catch (error) {
+        console.error(error);
         return false;
       }
-      if (typeof options.postValidationHook === 'function') {
-        await options.postValidationHook(context, session);
-      }
-      return true;
     }
   }
   return mixin(AuthenticationGuard);

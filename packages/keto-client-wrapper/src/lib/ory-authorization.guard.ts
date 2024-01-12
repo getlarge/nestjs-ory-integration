@@ -13,11 +13,13 @@ import {
 import { OryPermissionsService } from './ory-permissions';
 import { getOryPermissionChecks } from './ory-permission-checks.decorator';
 
+export interface OryAuthorizationGuardOptions {
+  errorFactory?: (error: Error) => Error;
+  postCheck?: (relationTuple: RelationTuple, isPermitted: boolean) => void;
+}
+
 export const OryAuthorizationGuard = (
-  options: {
-    errorFactory?: (error: Error) => Error;
-    postCheck?: (relationTuple: RelationTuple, isPermitted: boolean) => void;
-  } = {}
+  options: OryAuthorizationGuardOptions = {}
 ) => {
   @Injectable()
   class AuthorizationGuard implements CanActivate {
