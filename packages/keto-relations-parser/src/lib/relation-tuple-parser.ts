@@ -127,6 +127,17 @@ export function parseRelationTuple(
   }
 }
 
+/**
+ * @description Converts a {@link RelationTuple} to a string
+ * @example
+ * ```typescript
+ * const relationTuple = new RelationTuple('namespace', 'object', 'relation', 'subjectId');
+ * relationTuple.toString() // => 'namespace:object#relation@subjectId'
+ * ```
+ *
+ * @param tuple
+ * @returns
+ */
 export const relationTupleToString = (
   tuple: Partial<RelationTuple>
 ): RelationTupleString => {
