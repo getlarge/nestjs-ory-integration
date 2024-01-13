@@ -1,6 +1,8 @@
 {
   "name": "@getlarge/keto-relations-parser",
   "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/keto-relations-parser",
   "dependencies": {
     "defekt": "^9.3.1",
     "lodash.get": "^4.4.2",

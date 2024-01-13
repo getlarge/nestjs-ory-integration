@@ -1,6 +1,8 @@
 {
   "name": "@getlarge/keto-client-wrapper",
   "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/keto-client-wrapper",
   "dependencies": {
     "@getlarge/keto-relations-parser": "0.0.1",
     "@ory/client": "^1.4.9",
