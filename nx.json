@@ -13,6 +13,22 @@
       "!{projectRoot}/node_modules/**"
     ]
   },
+  "release": {
+    "projects": ["*"],
+    "projectsRelationship": "independent",
+    "changelog": {
+      "projectChangelogs": true,
+      "workspaceChangelog": true
+    },
+    "git": {
+      "commit": true,
+      "commitMessage": "chore(release): release ${version}",
+      "push": true,
+      "pushRemote": "origin",
+      "tag": true,
+      "tagMessage": "chore(release): release ${version}"
+    }
+  },
   "targetDefaults": {
     "build": {
       "cache": true,

@@ -1,6 +1,7 @@
 # keto-relations-parser
 
 This library can parse a string representation of a Relation tuple to an object structure in typescript.
+It is a fork of the [relation-tuple-parser](https://github.com/nidomiro/relation-tuple-parser/tree/main) library which uses Regular Expressions to parse the string instead of Antlr4.
 
 Relation tuples are used to evaluate permissions in "Zanzibar: Google's Consistent, Global Authorization System".
 
