@@ -1,9 +1,9 @@
 import { Controller, Get, Logger, Param, UseGuards } from '@nestjs/common';
+import { RelationTupleBuilder } from '@getlarge/keto-relations-parser';
 
 import { ExampleService } from './app.service.mock';
 import { OryAuthorizationGuard } from '../src/lib/ory-authorization.guard';
 import { OryPermissionChecks } from '../src/lib/ory-permission-checks.decorator';
-import { RelationTupleBuilder } from '@getlarge/keto-relations-parser';
 
 @Controller('Example')
 export class ExampleController {
