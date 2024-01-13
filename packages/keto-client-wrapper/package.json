@@ -2,7 +2,7 @@
   "name": "@getlarge/keto-client-wrapper",
   "version": "0.0.1",
   "dependencies": {
-    "@getlarge/keto-relations-parser": "^0.0.1",
+    "@getlarge/keto-relations-parser": "0.0.1",
     "@ory/client": "^1.4.9",
     "@nestjs/axios": "^3.0.1",
     "@nestjs/common": "^10.0.2",
