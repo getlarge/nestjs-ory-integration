@@ -1,5 +1,6 @@
 {
   "name": "@getlarge/base-client-wrapper",
+  "private": true,
   "version": "0.0.1",
   "dependencies": {
     "@nestjs/axios": "^3.0.1",

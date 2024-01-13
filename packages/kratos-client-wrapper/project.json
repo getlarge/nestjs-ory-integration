@@ -20,6 +20,14 @@
       "command": "node tools/scripts/publish.mjs kratos-client-wrapper {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "options": {
+        "packageRoot": "dist/packages/kratos-client-wrapper",
+        "registry": "https://registry.npmjs.org/"
+      },
+      "dependsOn": ["build"]
+    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],

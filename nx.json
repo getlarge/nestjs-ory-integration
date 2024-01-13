@@ -20,13 +20,17 @@
       "projectChangelogs": true,
       "workspaceChangelog": true
     },
+    "version": {
+      "git": {
+        "commit": false,
+        "tag": false
+      }
+    },
     "git": {
       "commit": true,
-      "commitMessage": "chore(release): release ${version}",
       "push": true,
       "pushRemote": "origin",
-      "tag": true,
-      "tagMessage": "chore(release): release ${version}"
+      "tag": true
     }
   },
   "targetDefaults": {

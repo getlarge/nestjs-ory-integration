@@ -19,6 +19,14 @@
       "command": "node tools/scripts/publish.mjs keto-relations-parser {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "options": {
+        "packageRoot": "dist/packages/keto-relations-parser",
+        "registry": "https://registry.npmjs.org/"
+      },
+      "dependsOn": ["build"]
+    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
