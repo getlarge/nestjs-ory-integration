@@ -45,6 +45,13 @@
       "options": {
         "jestConfig": "packages/kratos-client-wrapper/jest.config.ts"
       }
+    },
+    "docker-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker buildx build ./test --platform linux/amd64,linux/arm64 -t ghcr.io/getlarge/nestjs-ory-integration/kratos --push",
+        "cwd": "packages/kratos-client-wrapper"
+      }
     }
   },
   "tags": []

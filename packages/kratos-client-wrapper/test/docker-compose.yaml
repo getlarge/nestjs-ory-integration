@@ -6,34 +6,13 @@ networks:
 
 services:
   kratos:
-    image: oryd/kratos:v1.0.0
+    image: ghcr.io/getlarge/nestjs-ory-integration/kratos:latest
     ports:
       - '44330:4433' # public
       - '44340:4434' # admin
     networks:
       - ory
     restart: unless-stopped
-    command: serve -c /etc/config/kratos/kratos.yaml --dev --watch-courier
-    healthcheck:
-      test:
-        [
-          'CMD-SHELL',
-          'wget -nv --spider -t1 http://localhost:4433/health/ready || exit 1',
-        ]
-      interval: 2s
-      timeout: 3s
-      retries: 3
-      start_period: 1s
-    volumes:
-      - type: bind
-        source: ./kratos.yaml
-        target: /etc/config/kratos/kratos.yaml
-      - type: bind
-        source: ./identity.schema.json
-        target: /etc/config/kratos/identity.schema.json
-    # for docker on linux
-    # extra_hosts:
-    #   - "host.docker.internal:host-gateway"
 
   mailslurper:
     image: oryd/mailslurper:latest-smtps
