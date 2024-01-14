@@ -14,33 +14,16 @@ jobs:
 
     services:
       kratos:
-        image: oryd/kratos:v1.0.0
+        image: ghcr.io/getlarge/nestjs-ory-integration/kratos:latest
         ports:
           - '44330:4433'
           - '44340:4434'
-        options: >-
-          --health-cmd "wget -nv --spider -t1 http://localhost:4433/health/ready || exit 1"
-          --health-interval 3s
-          --health-timeout 2s
-          --health-retries 5
-          --health-start-period 5s
 
       keto:
-        image: oryd/keto:v0.11.1
+        image: ghcr.io/getlarge/nestjs-ory-integration/keto:latest
         ports:
           - '44660:4466'
           - '44670:4467'
-        volumes:
-          - ${{ github.workspace }}/packages/keto-client-wrapper/test/namespaces.ts:/home/ory/namespaces.ts
-        options: >-
-          --health-cmd "wget -nv --spider -t1 http://localhost:4466/health/ready || exit 1"
-          --health-interval 3s
-          --health-timeout 2s
-          --health-retries 5
-          --health-start-period 5s
-        env:
-          DSN: memory
-          NAMESPACES_LOCATION: /home/ory/namespaces.ts
 
     steps:
       - uses: actions/checkout@v4
