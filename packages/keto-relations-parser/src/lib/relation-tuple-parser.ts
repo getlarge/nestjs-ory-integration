@@ -41,13 +41,16 @@ type RelationTupleString =
 export function parseRelationTuple(
   input: string
 ): Result<RelationTuple, RelationTupleSyntaxError | UnknownError> {
-  input = input.replace(/[()]/g, '');
+  /**
+   * parenthesis could be used to group a subject set but are not allowed in any segment
+   * so we remove them here as they do not affect the parsing
+   */
+  const cleanInput = input.replace(/[()]/g, '');
 
   const regex =
     /^([^:]+)(?::([^#]+))?(?:#([^@]+)(?:@([^:]+)(?::([^#]+))?(?:#([^()]+(?:\([^()]+\))?)?)?)?)?$/;
 
-  const match = input.match(regex);
-
+  const match = regex.exec(cleanInput);
   if (!match) {
     return error(
       new RelationTupleSyntaxError({
@@ -76,9 +79,9 @@ export function parseRelationTuple(
       new RelationTupleSyntaxError({
         data: {
           errors: matchesWithForbiddenCharacters.map((str) => {
-            const index = input.indexOf(str);
+            const index = cleanInput.indexOf(str);
             return {
-              wholeInput: input,
+              wholeInput: cleanInput,
               line: 1,
               charPositionInLine: index,
               offendingSymbol: str,

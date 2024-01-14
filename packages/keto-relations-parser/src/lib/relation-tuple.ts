@@ -17,7 +17,14 @@ export class SubjectSet {
   }
 }
 
-export class RelationTuple {
+export interface IRelationTuple {
+  namespace: string;
+  object: string;
+  relation: string;
+  subjectIdOrSet: string | SubjectSet;
+}
+
+export class RelationTuple implements IRelationTuple {
   namespace: string;
   object: string;
   relation: string;

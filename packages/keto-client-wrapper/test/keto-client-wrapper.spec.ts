@@ -41,7 +41,7 @@ describe('Keto client wrapper E2E', () => {
   };
 
   beforeAll(() => {
-    execSync(`docker-compose -f ${dockerComposeFile} up -d`, {
+    execSync(`docker-compose -f ${dockerComposeFile} up -d --wait`, {
       stdio: 'ignore',
     });
   });

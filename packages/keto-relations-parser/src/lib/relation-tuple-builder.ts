@@ -1,4 +1,4 @@
-import { RelationTuple, SubjectSet } from './relation-tuple';
+import { IRelationTuple, RelationTuple, SubjectSet } from './relation-tuple';
 import { parseRelationTuple } from './relation-tuple-parser';
 
 export class RelationTupleBuilder {
@@ -74,17 +74,62 @@ export class RelationTupleBuilder {
     this.tuple.subjectIdOrSet = subjectIdOrSet;
   }
 
+  /**
+   * @param relation
+   * @returns
+   * @description Sets the relation between the subject and the namespace:object
+   */
   isIn(relation: string): this {
     this.relation = relation;
     return this;
   }
 
+  /**
+   * @alias isIn
+   * @param relation
+   * @returns
+   */
+  areIn(relation: string): this {
+    return this.isIn(relation);
+  }
+
+  /**
+   * @alias isIn
+   * @param relation
+   * @returns
+   * @description Alias for isIn
+   */
+  isAllowedTo(verb: string): this {
+    return this.isIn(verb);
+  }
+
+  /**
+   * @alias isIn
+   * @param relation
+   * @returns
+   * @description Alias for isIn
+   */
+  areAllowedTo(verb: string): this {
+    return this.isIn(verb);
+  }
+
+  /**
+   * @param namespace
+   * @param object
+   * @returns
+   * @description Sets the namespace and object for the relation tuple
+   */
   of(namespace: string, object: string): this {
     this.namespace = namespace;
     this.object = object;
     return this;
   }
 
+  /**
+   * @param subjectSet | subjectSet | subjectId | subjectNamespace, subjectObject | subjectNamespace, subjectObject, subjectRelation
+   * @returns
+   * @description Sets the subject of the relation tuple
+   */
   subject(subjectSet: SubjectSet): this;
   subject(subjectId: string): this;
   subject(namespace: string, object: string): this;
@@ -116,12 +161,44 @@ export class RelationTupleBuilder {
     return this;
   }
 
+  /**
+   * @description Returns the relation tuple as Zanzibar string notation
+   */
   toString(): string {
     return this.tuple.toString();
   }
 
-  toJSON(): RelationTuple {
-    return this.tuple;
+  /**
+   * @description Returns the relation tuple as JSON
+   */
+  toJSON(): IRelationTuple {
+    return {
+      namespace: this.namespace,
+      object: this.object,
+      relation: this.relation,
+      subjectIdOrSet: this.subjectIdOrSet,
+    };
+  }
+
+  // TODO: check if relation is plural
+  private get isPlural(): boolean {
+    return false
+  }
+
+  // TODO: check if relation is a verb
+  private get isVerb(): boolean {
+    return this.relation.endsWith('ing');
+  }
+
+  private get subjectRelation():
+    | 'is in'
+    | 'is allowed to'
+    | 'are in'
+    | 'are allowed to' {
+    if (this.isVerb) {
+      return this.isPlural ? 'are allowed to' : 'is allowed to';
+    }
+    return this.isPlural ? 'are in' : 'is in';
   }
 
   /**
@@ -138,10 +215,10 @@ export class RelationTupleBuilder {
    */
   toHumanReadableString(): string {
     if (typeof this.subjectIdOrSet === 'string') {
-      return `${this.subjectIdOrSet} is in ${this.relation} of ${this.namespace}:${this.object}`;
+      return `${this.subjectIdOrSet} ${this.subjectRelation} ${this.relation} of ${this.namespace}:${this.object}`;
     }
     const { namespace, object, relation } = this.subjectIdOrSet;
-    const base = `${namespace}:${object} is in ${this.relation} of ${this.namespace}:${this.object}`;
+    const base = `${namespace}:${object} ${this.subjectRelation} ${this.relation} of ${this.namespace}:${this.object}`;
     return relation ? `${relation} of ${base}` : base;
   }
 }
