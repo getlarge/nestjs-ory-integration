@@ -4,11 +4,13 @@
   "license": "MIT",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/kratos-client-wrapper",
   "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "axios": "1.6.5",
     "@nestjs/axios": "^3.0.1",
     "@nestjs/common": "^10.0.2",
-    "@ory/client": "^1.4.9",
-    "axios": "1.6.5",
-    "tslib": "^2.3.0"
+    "@ory/client": "^1.4.9"
   },
   "type": "commonjs",
   "main": "./src/index.js",
