@@ -68,15 +68,19 @@ describe('Kratos client wrapper E2E', () => {
   };
 
   beforeAll(() => {
-    execSync(`docker-compose -f ${dockerComposeFile} up -d --wait`, {
-      stdio: 'ignore',
-    });
+    if (!process.env['CI']) {
+      execSync(`docker-compose -f ${dockerComposeFile} up -d --wait`, {
+        stdio: 'ignore',
+      });
+    }
   });
 
   afterAll(() => {
-    execSync(`docker-compose -f ${dockerComposeFile} down`, {
-      stdio: 'ignore',
-    });
+    if (!process.env['CI']) {
+      execSync(`docker-compose -f ${dockerComposeFile} down`, {
+        stdio: 'ignore',
+      });
+    }
   });
 
   beforeEach(async () => {
