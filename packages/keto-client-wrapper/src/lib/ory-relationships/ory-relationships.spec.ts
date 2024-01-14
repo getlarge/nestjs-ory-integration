@@ -1,5 +1,6 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { OryBaseService } from '@getlarge/base-client-wrapper';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { OryRelationshipsModuleOptions } from './ory-relationships.interfaces';
 import { OryRelationshipsService } from './ory-relationships.service';
 

@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 
-import { OryError, isAxiosError, isOryError } from './ory-error';
+import { isAxiosError, isOryError, OryError } from './ory-error';
 
 @Injectable()
 export class OryBaseService implements OnModuleInit {
@@ -13,7 +13,8 @@ export class OryBaseService implements OnModuleInit {
     return this.httpService.axiosRef;
   }
 
-  async onModuleInit(): Promise<void> {
+  onModuleInit(): void {
+    // TODO: consider using defekt to wrap response and error
     this.axios.interceptors.response.use(
       (response) => response,
       async (error) => {

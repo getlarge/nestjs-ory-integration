@@ -1,17 +1,18 @@
 import {
+  createPermissionCheckQuery,
+  RelationTuple,
+} from '@getlarge/keto-relations-parser';
+import {
   CanActivate,
   ExecutionContext,
   Injectable,
   mixin,
+  Type,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import {
-  RelationTuple,
-  createPermissionCheckQuery,
-} from '@getlarge/keto-relations-parser';
 
-import { OryPermissionsService } from './ory-permissions';
 import { getOryPermissionChecks } from './ory-permission-checks.decorator';
+import { OryPermissionsService } from './ory-permissions';
 
 export interface OryAuthorizationGuardOptions {
   errorFactory?: (error: Error) => Error;
@@ -20,7 +21,7 @@ export interface OryAuthorizationGuardOptions {
 
 export const OryAuthorizationGuard = (
   options: OryAuthorizationGuardOptions = {}
-) => {
+): Type<CanActivate> => {
   @Injectable()
   class AuthorizationGuard implements CanActivate {
     constructor(

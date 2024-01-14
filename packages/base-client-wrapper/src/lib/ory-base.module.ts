@@ -1,5 +1,7 @@
 import { HttpModule, HttpModuleOptions, HttpService } from '@nestjs/axios';
 import { DynamicModule, Module, Provider, Type } from '@nestjs/common';
+import axios from 'axios';
+
 import {
   AxiosExtraRequestConfig,
   IOryBaseModuleOptions,
@@ -8,7 +10,6 @@ import {
   OryBaseModuleOptionsFactory,
 } from './ory-base.interfaces';
 import { OryBaseService } from './ory-base.service';
-import axios from 'axios';
 
 declare module 'axios' {
   interface AxiosRequestConfig extends AxiosExtraRequestConfig {}

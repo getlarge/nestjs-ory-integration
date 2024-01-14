@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { Namespace, Context } from '@ory/permission-namespace-types';
+import type { Context, Namespace } from '@ory/permission-namespace-types';
 
 class User implements Namespace {}
 

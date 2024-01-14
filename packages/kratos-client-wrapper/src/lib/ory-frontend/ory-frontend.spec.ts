@@ -1,7 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { OryFrontendService } from './ory-frontend.service';
 import { OryBaseService } from '@getlarge/base-client-wrapper';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { OryFrontendModuleOptions } from './ory-frontend.interfaces';
+import { OryFrontendService } from './ory-frontend.service';
 
 describe('OryFrontendService', () => {
   let oryFrontendService: OryFrontendService;

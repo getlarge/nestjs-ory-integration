@@ -1,10 +1,11 @@
+import { ResultError } from 'defekt/build/lib/Result';
+
+import { RelationTupleSyntaxError } from './errors/relation-tuple-syntax.error';
 import { RelationTuple } from './relation-tuple';
 import {
   parseRelationTuple,
   relationTupleToString,
 } from './relation-tuple-parser';
-import { ResultError } from 'defekt/build/lib/Result';
-import { RelationTupleSyntaxError } from './errors/relation-tuple-syntax.error';
 
 function nsToMs(ns: bigint): bigint;
 function nsToMs(ns: number): number;

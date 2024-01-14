@@ -1,10 +1,10 @@
-import type { AxiosError, AxiosRequestConfig } from 'axios';
 import {
   InjectionToken,
   ModuleMetadata,
   OptionalFactoryDependency,
   Type,
 } from '@nestjs/common';
+import type { AxiosError, AxiosRequestConfig } from 'axios';
 
 export interface AxiosExtraRequestConfig {
   retries?: number;

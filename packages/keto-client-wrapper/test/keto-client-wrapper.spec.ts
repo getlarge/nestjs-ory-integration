@@ -1,21 +1,20 @@
+import {
+  createPermissionCheckQuery,
+  createRelationQuery,
+  relationTupleBuilder,
+} from '@getlarge/keto-relations-parser';
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { execSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import request from 'supertest';
 
-import { ExampleController } from './app.controller.mock';
-import { ExampleService } from './app.service.mock';
+import { OryPermissionsService } from '../src/lib/ory-permissions';
 import { OryPermissionsModule } from '../src/lib/ory-permissions/ory-permissions.module';
 import { OryRelationshipsModule } from '../src/lib/ory-relationships/ory-relationships.module';
-import { OryPermissionsService } from '../src/lib/ory-permissions';
 import { OryRelationshipsService } from '../src/lib/ory-relationships/ory-relationships.service';
-import {
-  createPermissionCheckQuery,
-  createRelationQuery,
-  relationTupleBuilder,
-} from '@getlarge/keto-relations-parser';
-
+import { ExampleController } from './app.controller.mock';
+import { ExampleService } from './app.service.mock';
 
 describe('Keto client wrapper E2E', () => {
   let app: INestApplication;

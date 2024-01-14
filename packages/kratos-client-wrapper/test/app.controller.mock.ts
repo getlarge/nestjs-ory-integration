@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 
-import { ExampleService } from './app.service.mock';
 import { OryAuthenticationGuard } from '../src/lib/ory-authentication.guard';
+import { ExampleService } from './app.service.mock';
 
 @Controller('Example')
 export class ExampleController {

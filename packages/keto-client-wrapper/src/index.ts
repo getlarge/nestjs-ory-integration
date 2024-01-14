@@ -3,8 +3,8 @@ export {
   OryAuthorizationGuardOptions,
 } from './lib/ory-authorization.guard';
 export {
-  OryPermissionChecks,
   getOryPermissionChecks,
+  OryPermissionChecks,
 } from './lib/ory-permission-checks.decorator';
 export {
   OryPermissionsModule,

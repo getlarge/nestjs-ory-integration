@@ -1,7 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { OryPermissionsService } from './ory-permissions.service';
 import { OryBaseService } from '@getlarge/base-client-wrapper';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { OryPermissionsModuleOptions } from './ory-permissions.interfaces';
+import { OryPermissionsService } from './ory-permissions.service';
 
 describe('OryPermissionsService', () => {
   let oryPermissionsService: OryPermissionsService;

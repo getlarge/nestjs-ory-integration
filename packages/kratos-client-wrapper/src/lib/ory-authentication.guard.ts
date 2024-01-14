@@ -4,9 +4,11 @@ import {
   Injectable,
   Logger,
   mixin,
+  Type,
 } from '@nestjs/common';
-import { OryFrontendService } from './ory-frontend';
 import type { Session } from '@ory/client';
+
+import { OryFrontendService } from './ory-frontend';
 
 export interface OryAuthenticationGuardOptions {
   cookieResolver: (ctx: ExecutionContext) => string;
@@ -32,7 +34,7 @@ const defaultOptions: OryAuthenticationGuardOptions = {
 
 export const OryAuthenticationGuard = (
   options: Partial<OryAuthenticationGuardOptions> = defaultOptions
-) => {
+): Type<CanActivate> => {
   @Injectable()
   class AuthenticationGuard implements CanActivate {
     readonly logger = new Logger(AuthenticationGuard.name);

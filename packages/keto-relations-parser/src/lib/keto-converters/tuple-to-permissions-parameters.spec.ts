@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  createPermissionCheckQuery,
-  createExpandPermissionQuery,
-} from './tuple-to-permissions-parameters';
-import { RelationTuple } from '../relation-tuple';
 import { TupleToPermissionError } from '../errors/tuple-to-permission.error';
+import { RelationTuple } from '../relation-tuple';
+import {
+  createExpandPermissionQuery,
+  createPermissionCheckQuery,
+} from './tuple-to-permissions-parameters';
 
 describe('Tuple to permissions parameters', () => {
   describe('createPermissionCheckQuery', () => {

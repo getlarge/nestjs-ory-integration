@@ -1,10 +1,10 @@
+import { OryBaseModuleOptions } from '@getlarge/base-client-wrapper';
 import {
   InjectionToken,
   ModuleMetadata,
   OptionalFactoryDependency,
   Type,
 } from '@nestjs/common';
-import { OryBaseModuleOptions } from '@getlarge/base-client-wrapper';
 
 export interface IOryRelationshipsModuleOptions extends OryBaseModuleOptions {
   basePath: string;

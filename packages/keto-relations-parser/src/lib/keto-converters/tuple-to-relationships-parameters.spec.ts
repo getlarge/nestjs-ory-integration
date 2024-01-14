@@ -1,11 +1,11 @@
-import {
-  createRelationQuery,
-  createFlattenRelationQuery,
-  createRelationship,
-} from './tuple-to-relationships-parameters';
 import { RelationTuple } from '../relation-tuple';
 import { RelationTupleWithReplacements } from '../with-replacements/relation-tuple-with-replacements';
 import { ReplacementValues } from '../with-replacements/replacement-values';
+import {
+  createFlattenRelationQuery,
+  createRelationQuery,
+  createRelationship,
+} from './tuple-to-relationships-parameters';
 
 describe('Tuple to relationships parameters', () => {
   let tuple: RelationTuple;
