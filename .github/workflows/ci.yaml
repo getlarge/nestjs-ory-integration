@@ -43,7 +43,7 @@ jobs:
       - uses: 8BitJonny/gh-get-current-pr@2.2.0
         id: current-pr
 
-      - if: steps.current-pr.outputs.number != 'null'
+      - if: steps.current-pr.outputs.number != 'null' && github.ref_name != 'main'
         # This line is needed for nx affected to work when CI is running on a PR
         run: git branch --track main origin/main
 
