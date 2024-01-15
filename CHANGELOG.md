@@ -1,3 +1,7 @@
+## 0.0.2 (2024-01-15)
+
+This was a version bump only for nestjs-ory-integration to align it with other projects, there were no code changes.
+
 ## 0.0.1 (2024-01-13)
 
 
