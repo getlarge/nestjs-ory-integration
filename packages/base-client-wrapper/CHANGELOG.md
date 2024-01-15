@@ -4,11 +4,9 @@ This was a version bump only for base-client-wrapper to align it with other proj
 
 ## 0.0.1 (2024-01-13)
 
-
 ### 🚀 Features
 
 - create base-client-wrapper
-
 
 ### 🩹 Fixes
 

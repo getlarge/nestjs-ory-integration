@@ -4,7 +4,6 @@ This was a version bump only for nestjs-ory-integration to align it with other p
 
 ## 0.0.1 (2024-01-13)
 
-
 ### 🚀 Features
 
 - create base-client-wrapper ([e8e9a57](https://github.com/getlarge/nestjs-ory-integration/commit/e8e9a57))
