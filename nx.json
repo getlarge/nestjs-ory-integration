@@ -17,13 +17,11 @@
     "projects": ["*"],
     "projectsRelationship": "independent",
     "changelog": {
-      "projectChangelogs": true,
-      "workspaceChangelog": true
-    },
-    "version": {
-      "git": {
-        "commit": false,
-        "tag": false
+      "projectChangelogs": {
+        "createRelease": "github"
+      },
+      "workspaceChangelog": {
+        "createRelease": "github"
       }
     },
     "git": {
