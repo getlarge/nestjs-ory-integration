@@ -1,5 +1,10 @@
 # keto-relations-parser
 
+[![npm][npm-image]][npm-url]
+
+[npm-image]: https://img.shields.io/npm/v/@getlarge/keto-relations-parser.svg?style=flat
+[npm-url]: https://npmjs.org/package/@getlarge/keto-relations-parser
+
 This library can parse a string representation of a Relation tuple to an object structure in typescript.
 It is a fork of the [relation-tuple-parser](https://github.com/nidomiro/relation-tuple-parser/tree/main) library which uses Regular Expressions to parse the string instead of Antlr4 and provides a fluent API to create a Relation tuple.
 
