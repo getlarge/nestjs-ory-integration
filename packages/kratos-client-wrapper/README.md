@@ -1,10 +1,15 @@
 # kratos-client-wrapper
 
+[![npm][npm-image]][npm-url]
+
+[npm-image]: https://img.shields.io/npm/v/@getlarge/kratos-client-wrapper.svg?style=flat
+[npm-url]: https://npmjs.org/package/@getlarge/kratos-client-wrapper
+
 This library is a wrapper around the [Ory Kratos](https://www.ory.sh/kratos/docs/) client - [@ory/client](https://github.com/ory/client-js). It provides :
 
-- OryIdentitiesModule: a module to interact with the Ory Kratos Identities API
-- OryFrontendModule: a module to interact with the Ory Kratos Frontend API
-- OryAuthenticationGuard: a guard to protect your routes based on the Ory Kratos session
+- `OryIdentitiesModule`: a module to interact with the Ory Kratos Identities API
+- `OryFrontendModule`: a module to interact with the Ory Kratos Frontend API
+- `OryAuthenticationGuard`: a guard to protect your routes based on the Ory Kratos session
 
 ## Install
 

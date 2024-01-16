@@ -1,12 +1,17 @@
 # NestJS Ory Integration
 
-This is a monorepo containing the following packages:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/getlarge/nestjs-ory-integration/actions/workflows/ci.yaml/badge.svg?branch=main&event=push)](https://github.com/getlarge/nestjs-ory-integration/actions/workflows/ci.yaml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=getlarge_nestjs-ory-integration&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=getlarge_nestjs-ory-integration)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-- [keto-client-wrapper](./packages/keto-client-wrapper/README.md)
-- [keto-relations-parser](./packages/keto-relations-parser/README.md)
-- [kratos-client-wrapper](./packages/kratos-client-wrapper/README.md)
+This is a mono repository containing the following packages:
 
-These packages are used to integrate [Ory Keto](https://www.ory.sh/keto/docs/) and [Ory Kratos](https://www.ory.sh/kratos/docs/) with [NestJS](https://nestjs.com/).
+| Package                                                             | Description                                                                                                            | Version                                                                                                                                          |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [keto-client-wrapper](./packages/keto-client-wrapper/README.md)     | A NestJS library to integrate [Ory Keto](https://www.ory.sh/keto/docs/) API                                            | [![npm](https://img.shields.io/npm/v/@getlarge/keto-client-wrapper.svg?style=flat)](https://npmjs.org/package/@getlarge/keto-client-wrapper)     |
+| [keto-relations-parser](./packages/keto-relations-parser/README.md) | A TS library to parse a string representation of a Relation tuple using [Zanzibar](https://zanzibar.academy) notation. | [![npm](https://img.shields.io/npm/v/@getlarge/keto-relations-parser.svg?style=flat)](https://npmjs.org/package/@getlarge/keto-relations-parser) |
+| [kratos-client-wrapper](./packages/kratos-client-wrapper/README.md) | A NestJS library to integrate [Ory Kratos](https://www.ory.sh/kratos/docs/) API                                        | [![npm](https://img.shields.io/npm/v/@getlarge/kratos-client-wrapper.svg?style=flat)](https://npmjs.org/package/@getlarge/kratos-client-wrapper) |
 
 ## Installation and usage
 
@@ -14,4 +19,4 @@ Check the README of each package for more details.
 
 ## Examples
 
-Check the [ticketing repository](https://github.com/getlarge/ticketing) for a real world example of how to use these packages.
+Check the [ticketing repository](https://github.com/getlarge/ticketing) for a real-world example of how to use these packages.

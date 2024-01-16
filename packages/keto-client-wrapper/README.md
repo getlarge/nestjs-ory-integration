@@ -1,10 +1,15 @@
 # keto-client-wrapper
 
+[![npm][npm-image]][npm-url]
+
+[npm-image]: https://img.shields.io/npm/v/@getlarge/keto-client-wrapper.svg?style=flat
+[npm-url]: https://npmjs.org/package/@getlarge/keto-client-wrapper
+
 This library is a wrapper around the [Ory Keto](https://www.ory.sh/keto/docs/) client - [@ory/client](https://github.com/ory/client-js). It provides :
 
-- OryRelationshipsModule: a module to interact with the Ory Keto Relationships API
-- OryPermissionsModule: a module to interact with the Ory Keto Permissions API
-- OryAuthorizationGuard: a guard to protect your routes based on the Ory Keto permissions
+- `OryRelationshipsModule`: a module to interact with the Ory Keto Relationships API
+- `OryPermissionsModule`: a module to interact with the Ory Keto Permissions API
+- `OryAuthorizationGuard`: a guard to protect your routes based on the Ory Keto permissions
 
 ## Install
 
@@ -47,23 +52,24 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class YourService {
-  constructor(private readonly oryRelationshipsService: OryRelationshipsService) {}
+  constructor(
+    private readonly oryRelationshipsService: OryRelationshipsService
+  ) {}
 }
-
 ```
 
 Use the Guard to protect your routes:
 
 ```ts
-import { OryAuthorizationGuard, OryPermissionChecks } from '@getlarge/keto-client-wrapper';
 import {
-  RelationTupleBuilder,
-} from '@getlarge/keto-relations-parser';
+  OryAuthorizationGuard,
+  OryPermissionChecks,
+} from '@getlarge/keto-client-wrapper';
+import { RelationTupleBuilder } from '@getlarge/keto-relations-parser';
 import { Controller, Get, Logger, UseGuards } from '@nestjs/common';
 
 @Controller()
 export class YourController {
-
   @OryPermissionChecks((ctx) => {
     const req = ctx.switchToHttp().getRequest();
     const currentUserId = req.headers['x-current-user-id'] as string;
@@ -98,4 +104,7 @@ Run `nx build keto-client-wrapper` to build the library.
 ### Running unit tests
 
 Run `nx test keto-client-wrapper` to execute the unit tests via [Jest](https://jestjs.io).
+
+```
+
 ```

@@ -4,6 +4,7 @@ on:
     branches:
       - main
   pull_request:
+    types: [opened, synchronize, reopened]
 
 env:
   CI: true
@@ -51,3 +52,25 @@ jobs:
 
       # requires kratos and keto to be running
       - run: npx nx affected -t lint,test,build --parallel=3
+
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    needs: main
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      - uses: martinbeentjes/npm-get-version-action@v1.3.1
+        id: package-version
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectVersion=${{ steps.package-version.outputs.current-version}}
