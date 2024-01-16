@@ -18,3 +18,4 @@ export {
   OryRelationshipsModuleOptions,
   OryRelationshipsService,
 } from './lib/ory-relationships';
+export { isOryError, OryError } from '@getlarge/base-client-wrapper';

@@ -14,3 +14,4 @@ export {
   OryIdentitiesModuleOptions,
   OryIdentitiesService,
 } from './lib/ory-identities';
+export { isOryError, OryError } from '@getlarge/base-client-wrapper';
