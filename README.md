@@ -20,3 +20,7 @@ Check the README of each package for more details.
 ## Examples
 
 Check the [ticketing repository](https://github.com/getlarge/ticketing) for a real-world example of how to use these packages.
+
+## Misc
+
+You can read the [blog post](https://dev.to/getlarge/creating-ory-integration-libraries-for-nestjs-6pj) detailing the journey of creating these libraries.
