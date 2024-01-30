@@ -18,5 +18,16 @@ export class OryPermissionsService extends PermissionApi {
       options.basePath,
       baseService.axios as ConstructorParameters<typeof PermissionApi>[2]
     );
+    this.configuration ??= new Configuration({
+      basePath: options.basePath,
+    });
+  }
+
+  get config(): Configuration {
+    return this.configuration;
+  }
+
+  set config(config: Configuration) {
+    this.configuration = config;
   }
 }
