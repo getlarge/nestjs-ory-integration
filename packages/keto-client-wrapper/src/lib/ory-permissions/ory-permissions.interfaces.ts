@@ -32,7 +32,8 @@ export interface OryPermissionsModuleAsyncOptions
   useExisting?: Type<OryPermissionsModuleOptionsFactory>;
   useClass?: Type<OryPermissionsModuleOptionsFactory>;
   useFactory?: (
-    ...args: unknown[]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...args: any[]
   ) => Promise<IOryPermissionsModuleOptions> | IOryPermissionsModuleOptions;
   inject?: (InjectionToken | OptionalFactoryDependency)[];
 }
