@@ -19,6 +19,7 @@
       "@getlarge/base-client-wrapper": [
         "packages/base-client-wrapper/src/index.ts"
       ],
+      "@getlarge/keto-cli": ["packages/keto-cli/src/index.ts"],
       "@getlarge/keto-client-wrapper": [
         "packages/keto-client-wrapper/src/index.ts"
       ],
