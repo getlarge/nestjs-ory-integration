@@ -5,6 +5,7 @@ import {
 import {
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   mixin,
   Type,
@@ -17,10 +18,17 @@ import { OryPermissionsService } from './ory-permissions';
 export interface OryAuthorizationGuardOptions {
   errorFactory?: (error: Error) => Error;
   postCheck?: (relationTuple: RelationTuple, isPermitted: boolean) => void;
+  unauthorizedFactory: (ctx: ExecutionContext, error: unknown) => Error;
 }
 
+const defaultOptions: OryAuthorizationGuardOptions = {
+  unauthorizedFactory: (ctx, error) => {
+    return new ForbiddenException(error);
+  },
+};
+
 export const OryAuthorizationGuard = (
-  options: OryAuthorizationGuardOptions = {}
+  options: Partial<OryAuthorizationGuardOptions> = {}
 ): Type<CanActivate> => {
   @Injectable()
   class AuthorizationGuard implements CanActivate {
@@ -35,22 +43,31 @@ export const OryAuthorizationGuard = (
       if (!factories?.length) {
         return true;
       }
+      const { unauthorizedFactory } = {
+        ...defaultOptions,
+        ...options,
+      };
       for (const { relationTupleFactory } of factories) {
         const relationTuple = relationTupleFactory(context);
         const result = createPermissionCheckQuery(relationTuple);
         if (result.hasError()) {
-          if (options.errorFactory) {
-            throw options.errorFactory(result.error);
-          }
-          return false;
+          throw unauthorizedFactory(context, result.error);
         }
-        const { data } = await this.oryService.checkPermission(result.value);
-        const isPermitted = data.allowed;
+        let isPermitted = false;
+        try {
+          const { data } = await this.oryService.checkPermission(result.value);
+          isPermitted = data.allowed;
+        } catch (error) {
+          throw unauthorizedFactory(context, error);
+        }
         if (options.postCheck) {
           options.postCheck(relationTuple, isPermitted);
         }
         if (!isPermitted) {
-          return false;
+          throw unauthorizedFactory(
+            context,
+            new Error(`Unauthorized access for ${relationTuple}`)
+          );
         }
       }
       return true;
