@@ -1,3 +1,15 @@
+## 0.0.3 (2024-02-06)
+
+
+### 🩹 Fixes
+
+- **keto-relations-parser:** return RelationTuple instance in `parseRelationTuple` ([4458aac](https://github.com/getlarge/nestjs-ory-integration/commit/4458aac))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.0.2 (2024-01-15)
 
 ### 🩹 Fixes

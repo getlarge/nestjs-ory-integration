@@ -1,10 +1,10 @@
 {
   "name": "@getlarge/keto-client-wrapper",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "license": "MIT",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/keto-client-wrapper",
   "dependencies": {
-    "@getlarge/keto-relations-parser": "0.0.2",
+    "@getlarge/keto-relations-parser": "0.0.3",
     "tslib": "^2.3.0",
     "defekt": "^9.3.1",
     "lodash.get": "^4.4.2"
