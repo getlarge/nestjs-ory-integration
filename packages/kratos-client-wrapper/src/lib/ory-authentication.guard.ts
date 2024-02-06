@@ -31,8 +31,8 @@ const defaultOptions: OryAuthenticationGuardOptions = {
       .getRequest()
       ?.headers?.authorization?.replace('Bearer ', ''),
   cookieResolver: (ctx) => ctx.switchToHttp().getRequest()?.headers?.cookie,
-  unauthorizedFactory(ctx, error) {
-    return new UnauthorizedException(error);
+  unauthorizedFactory() {
+    return new UnauthorizedException();
   },
 };
 

@@ -132,9 +132,8 @@ describe('Kratos client wrapper E2E', () => {
         Authorization: `Bearer ory_st_${randomBytes(8).toString('hex')}`,
       });
     expect(body).toEqual({
-      error: 'Forbidden',
-      message: 'Forbidden resource',
-      statusCode: 403,
+      message: 'Unauthorized',
+      statusCode: 401,
     });
   });
 });

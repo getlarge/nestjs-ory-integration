@@ -111,8 +111,7 @@ describe('Keto client wrapper E2E', () => {
         'x-current-user-id': subjectObject,
       });
     expect(body).toEqual({
-      error: 'Forbidden',
-      message: 'Forbidden resource',
+      message: 'Forbidden',
       statusCode: 403,
     });
   });

@@ -22,8 +22,8 @@ export interface OryAuthorizationGuardOptions {
 }
 
 const defaultOptions: OryAuthorizationGuardOptions = {
-  unauthorizedFactory: (ctx, error) => {
-    return new ForbiddenException(error);
+  unauthorizedFactory: () => {
+    return new ForbiddenException();
   },
 };
 
@@ -43,7 +43,7 @@ export const OryAuthorizationGuard = (
       if (!factories?.length) {
         return true;
       }
-      const { unauthorizedFactory } = {
+      const { postCheck, unauthorizedFactory } = {
         ...defaultOptions,
         ...options,
       };
@@ -60,13 +60,13 @@ export const OryAuthorizationGuard = (
         } catch (error) {
           throw unauthorizedFactory(context, error);
         }
-        if (options.postCheck) {
-          options.postCheck(relationTuple, isPermitted);
+        if (postCheck) {
+          postCheck(relationTuple, isPermitted);
         }
         if (!isPermitted) {
           throw unauthorizedFactory(
             context,
-            new Error(`Unauthorized access for ${relationTuple}`)
+            new Error(`Unauthorized access for ${relationTuple.toString()}`)
           );
         }
       }
