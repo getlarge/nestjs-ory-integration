@@ -1,6 +1,7 @@
 import {
   createPermissionCheckQuery,
   createRelationQuery,
+  RelationTupleBuilder,
   relationTupleBuilder,
 } from '@getlarge/keto-relations-parser';
 import { INestApplication } from '@nestjs/common';
@@ -22,22 +23,40 @@ describe('Keto client wrapper E2E', () => {
   let oryRelationshipsService: OryRelationshipsService;
   const dockerComposeFile = resolve(join(__dirname, 'docker-compose.yaml'));
 
-  const route = '/Example';
+  const createOryRelation = async (relationTuple: RelationTupleBuilder) => {
+    await oryRelationshipsService.createRelationship({
+      createRelationshipBody: createRelationQuery(
+        relationTuple.toJSON()
+      ).unwrapOrThrow(),
+    });
+    const { data } = await oryPermissionService.checkPermission(
+      createPermissionCheckQuery(relationTuple.toJSON()).unwrapOrThrow()
+    );
+    expect(data.allowed).toEqual(true);
+  };
 
-  const createOryRelation = async (object: string, subjectObject: string) => {
+  const createOwnerRelation = async (object: string, subjectObject: string) => {
     const relationTuple = relationTupleBuilder()
       .subject('User', subjectObject)
       .isIn('owners')
-      .of('Toy', object)
-      .toJSON();
-    await oryRelationshipsService.createRelationship({
-      createRelationshipBody:
-        createRelationQuery(relationTuple).unwrapOrThrow(),
-    });
-    const { data } = await oryPermissionService.checkPermission(
-      createPermissionCheckQuery(relationTuple).unwrapOrThrow()
-    );
-    expect(data.allowed).toEqual(true);
+      .of('Toy', object);
+    await createOryRelation(relationTuple);
+  };
+
+  const createAdminRelation = async (subjectObject: string) => {
+    const relationTuple = relationTupleBuilder()
+      .subject('User', subjectObject)
+      .isIn('members')
+      .of('Group', 'admin');
+    await createOryRelation(relationTuple);
+  };
+
+  const createPuppetmasterRelation = async (object: string) => {
+    const relationTuple = relationTupleBuilder()
+      .subject('Group', 'admin', 'members')
+      .isIn('puppetmasters')
+      .of('Toy', object);
+    await createOryRelation(relationTuple);
   };
 
   beforeAll(() => {
@@ -91,10 +110,10 @@ describe('Keto client wrapper E2E', () => {
   it('should pass authorization when relation exists in Ory Keto', async () => {
     const object = 'car';
     const subjectObject = 'Bob';
-    await createOryRelation(object, subjectObject);
+    await createOwnerRelation(object, subjectObject);
 
     const { body } = await request(app.getHttpServer())
-      .get(`${route}/${object}`)
+      .get(`/Example/${object}`)
       .set({
         'x-current-user-id': subjectObject,
       });
@@ -106,7 +125,7 @@ describe('Keto client wrapper E2E', () => {
     const subjectObject = 'Alice';
 
     const { body } = await request(app.getHttpServer())
-      .get(`${route}/${object}`)
+      .get(`/Example/${object}`)
       .set({
         'x-current-user-id': subjectObject,
       });
@@ -114,5 +133,20 @@ describe('Keto client wrapper E2E', () => {
       message: 'Forbidden',
       statusCode: 403,
     });
+  });
+
+  it('should pass authorization when relations exist in Ory Keto', async () => {
+    const object = 'tractor';
+    const subjectObject = 'Bob';
+    await createOwnerRelation(object, subjectObject);
+    await createAdminRelation(subjectObject);
+    await createPuppetmasterRelation(object);
+
+    const { body } = await request(app.getHttpServer())
+      .get(`/Example/complex/${object}`)
+      .set({
+        'x-current-user-id': subjectObject,
+      });
+    expect(body).toEqual({ message: 'OK' });
   });
 });

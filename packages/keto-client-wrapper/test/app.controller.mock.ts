@@ -32,4 +32,58 @@ export class ExampleController {
   getExample(@Param('id') id?: string) {
     return this.exampleService.getExample();
   }
+
+  @OryPermissionChecks({
+    type: 'AND',
+    conditions: [
+      (ctx) => {
+        const req = ctx.switchToHttp().getRequest();
+        const currentUserId = req.headers['x-current-user-id'] as string;
+        const resourceId = req.params.id;
+        return new RelationTupleBuilder()
+          .subject('User', currentUserId)
+          .isIn('owners')
+          .of('Toy', resourceId)
+          .toString();
+      },
+      {
+        type: 'OR',
+        conditions: [
+          (ctx) => {
+            const req = ctx.switchToHttp().getRequest();
+            const currentUserId = req.headers['x-current-user-id'] as string;
+            const resourceId = req.params.id;
+            return new RelationTupleBuilder()
+              .subject('User', currentUserId)
+              .isIn('puppetmasters')
+              .of('Toy', resourceId)
+              .toString();
+          },
+          (ctx) => {
+            const req = ctx.switchToHttp().getRequest();
+            const currentUserId = req.headers['x-current-user-id'] as string;
+            const resourceId = req.params.id;
+            return new RelationTupleBuilder()
+              .subject('User', currentUserId)
+              .isAllowedTo('steal')
+              .of('Toy', resourceId)
+              .toString();
+          },
+        ],
+      },
+    ],
+  })
+  @UseGuards(
+    OryAuthorizationGuard({
+      postCheck(relationTuple, isPermitted) {
+        Logger.log('relationTuple', relationTuple);
+        Logger.log('isPermitted', isPermitted);
+      },
+    })
+  )
+  @Get('complex/:id')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getExampleComplex(@Param('id') id?: string) {
+    return this.exampleService.getExample();
+  }
 }
