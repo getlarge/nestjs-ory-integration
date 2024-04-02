@@ -1,5 +1,5 @@
-import lodashGet from 'lodash.get';
 
+import { get } from '../util/get';
 import { TwoWayMap } from '../util/two-way-map';
 import type { ReplaceableString } from './relation-tuple-with-replacements';
 import type { ReplacementValues } from './replacement-values';
@@ -41,9 +41,7 @@ function generateReplacerFunctions<T extends ReplacementValues>(
   sortedFoundReplacements.forEach(({ start, endExcl, prop }) => {
     const strPart = str.substring(pos, Math.max(0, start)); // let calculation happen before
     resultStringParts.push(() => strPart);
-    resultStringParts.push((replacements) =>
-      String(lodashGet(replacements, prop))
-    );
+    resultStringParts.push((replacements) => String(get(replacements, prop)));
 
     pos = endExcl;
   });
@@ -71,7 +69,7 @@ export const generateReplacerFunction = <T extends ReplacementValues>(
     return () => str;
   } else if (isWholeStringReplacement) {
     return (replacements) =>
-      String(lodashGet(replacements, foundReplacements[0].prop));
+      String(get(replacements, foundReplacements[0].prop));
   }
 
   const foundReplacementsSortedByStartIndexASC = foundReplacements.sort(

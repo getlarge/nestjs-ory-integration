@@ -1,6 +1,5 @@
 import type { RelationQuery, Relationship } from '@ory/client';
 import { error, Result, value } from 'defekt';
-import get from 'lodash.get';
 
 import { TupleToRelationshipError } from '../errors/tuple-to-relationship.error';
 import { UnknownError } from '../errors/unknown.error';
@@ -9,6 +8,7 @@ import {
   isRelationTupleWithReplacements,
 } from '../is-relation-tuple';
 import { RelationTuple } from '../relation-tuple';
+import { get } from '../util/get';
 import { RelationTupleWithReplacements } from '../with-replacements/relation-tuple-with-replacements';
 import { ReplacementValues } from '../with-replacements/replacement-values';
 
@@ -35,7 +35,7 @@ const resolveTupleProperty = <
   tuple: U,
   replacements?: U extends RelationTupleWithReplacements<T> ? T : never
 ): string | undefined => {
-  const factory = get(tuple, property);
+  const factory = get(tuple, property as keyof U);
   if (typeof factory === 'function') {
     return factory(replacements ?? ({} as T));
   }
