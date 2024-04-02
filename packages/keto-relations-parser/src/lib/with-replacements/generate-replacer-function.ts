@@ -1,4 +1,3 @@
-
 import { get } from '../util/get';
 import { TwoWayMap } from '../util/two-way-map';
 import type { ReplaceableString } from './relation-tuple-with-replacements';
