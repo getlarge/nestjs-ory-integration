@@ -1,6 +1,6 @@
 import {
   createPermissionCheckQuery,
-  RelationTuple,
+  parseRelationTuple,
 } from '@getlarge/keto-relations-parser';
 import {
   CanActivate,
@@ -10,15 +10,34 @@ import {
   mixin,
   Type,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import type { Reflector } from '@nestjs/core';
+import type { Observable } from 'rxjs';
 
-import { getOryPermissionChecks } from './ory-permission-checks.decorator';
+import {
+  EnhancedRelationTupleFactory,
+  getOryPermissionChecks,
+} from './ory-permission-checks.decorator';
 import { OryPermissionsService } from './ory-permissions';
 
 export interface OryAuthorizationGuardOptions {
   errorFactory?: (error: Error) => Error;
-  postCheck?: (relationTuple: RelationTuple, isPermitted: boolean) => void;
+  postCheck?: (relationTuple: string | string[], isPermitted: boolean) => void;
   unauthorizedFactory: (ctx: ExecutionContext, error: unknown) => Error;
+}
+
+export abstract class IAuthorizationGuard implements CanActivate {
+  abstract options: OryAuthorizationGuardOptions;
+  abstract canActivate(
+    context: ExecutionContext
+  ): boolean | Promise<boolean> | Observable<boolean>;
+
+  abstract evaluateConditions(
+    factory: EnhancedRelationTupleFactory,
+    context: ExecutionContext
+  ): Promise<{
+    allowed: boolean;
+    relationTuple: string | string[];
+  }>;
 }
 
 const defaultOptions: OryAuthorizationGuardOptions = {
@@ -29,7 +48,7 @@ const defaultOptions: OryAuthorizationGuardOptions = {
 
 export const OryAuthorizationGuard = (
   options: Partial<OryAuthorizationGuardOptions> = {}
-): Type<CanActivate> => {
+): Type<IAuthorizationGuard> => {
   @Injectable()
   class AuthorizationGuard implements CanActivate {
     constructor(
@@ -37,36 +56,75 @@ export const OryAuthorizationGuard = (
       readonly oryService: OryPermissionsService
     ) {}
 
+    get options(): OryAuthorizationGuardOptions {
+      return {
+        ...defaultOptions,
+        ...options,
+      };
+    }
+
+    async evaluateConditions(
+      factory: EnhancedRelationTupleFactory,
+      context: ExecutionContext
+    ): Promise<{
+      allowed: boolean;
+      relationTuple: string | string[];
+    }> {
+      if (typeof factory === 'string' || typeof factory === 'function') {
+        const { unauthorizedFactory } = this.options;
+
+        const relationTuple =
+          typeof factory === 'string' ? factory : factory(context);
+        const result = createPermissionCheckQuery(
+          parseRelationTuple(relationTuple).unwrapOrThrow()
+        );
+
+        if (result.hasError()) {
+          throw unauthorizedFactory(context, result.error);
+        }
+
+        try {
+          const { data } = await this.oryService.checkPermission(result.value);
+          return { allowed: data.allowed, relationTuple };
+        } catch (error) {
+          throw unauthorizedFactory(context, error);
+        }
+      }
+      const evaluatedConditions = await Promise.all(
+        factory.conditions.map((cond) => this.evaluateConditions(cond, context))
+      );
+      const results = evaluatedConditions.flatMap(({ allowed }) => allowed);
+      const allowed =
+        factory.type === 'AND' ? results.every(Boolean) : results.some(Boolean);
+
+      return {
+        allowed,
+        relationTuple: evaluatedConditions.flatMap(
+          ({ relationTuple }) => relationTuple
+        ),
+      };
+    }
+
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const factories =
         getOryPermissionChecks(this.reflector, context.getHandler()) ?? [];
       if (!factories?.length) {
         return true;
       }
-      const { postCheck, unauthorizedFactory } = {
-        ...defaultOptions,
-        ...options,
-      };
-      for (const { relationTupleFactory } of factories) {
-        const relationTuple = relationTupleFactory(context);
-        const result = createPermissionCheckQuery(relationTuple);
-        if (result.hasError()) {
-          throw unauthorizedFactory(context, result.error);
-        }
-        let isPermitted = false;
-        try {
-          const { data } = await this.oryService.checkPermission(result.value);
-          isPermitted = data.allowed;
-        } catch (error) {
-          throw unauthorizedFactory(context, error);
-        }
+      const { postCheck, unauthorizedFactory } = this.options;
+      for (const factory of factories) {
+        const { allowed, relationTuple } = await this.evaluateConditions(
+          factory,
+          context
+        );
+
         if (postCheck) {
-          postCheck(relationTuple, isPermitted);
+          postCheck(relationTuple, allowed);
         }
-        if (!isPermitted) {
+        if (!allowed) {
           throw unauthorizedFactory(
             context,
-            new Error(`Unauthorized access for ${relationTuple.toString()}`)
+            new Error(`Unauthorized access for ${relationTuple}`)
           );
         }
       }
