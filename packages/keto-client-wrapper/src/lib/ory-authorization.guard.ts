@@ -10,7 +10,7 @@ import {
   mixin,
   Type,
 } from '@nestjs/common';
-import type { Reflector } from '@nestjs/core';
+import { Reflector } from '@nestjs/core';
 import type { Observable } from 'rxjs';
 
 import {
