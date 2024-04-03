@@ -2,9 +2,9 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
-  Logger,
   mixin,
   Type,
+  UnauthorizedException,
 } from '@nestjs/common';
 import type { Session } from '@ory/client';
 
@@ -18,6 +18,7 @@ export interface OryAuthenticationGuardOptions {
     ctx: ExecutionContext,
     session: Session
   ) => void | Promise<void>;
+  unauthorizedFactory: (ctx: ExecutionContext, error: unknown) => Error;
 }
 
 const defaultOptions: OryAuthenticationGuardOptions = {
@@ -30,6 +31,9 @@ const defaultOptions: OryAuthenticationGuardOptions = {
       .getRequest()
       ?.headers?.authorization?.replace('Bearer ', ''),
   cookieResolver: (ctx) => ctx.switchToHttp().getRequest()?.headers?.cookie,
+  unauthorizedFactory() {
+    return new UnauthorizedException();
+  },
 };
 
 export const OryAuthenticationGuard = (
@@ -37,8 +41,6 @@ export const OryAuthenticationGuard = (
 ): Type<CanActivate> => {
   @Injectable()
   class AuthenticationGuard implements CanActivate {
-    readonly logger = new Logger(AuthenticationGuard.name);
-
     constructor(readonly oryService: OryFrontendService) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -47,29 +49,32 @@ export const OryAuthenticationGuard = (
         sessionTokenResolver,
         isValidSession,
         postValidationHook,
+        unauthorizedFactory,
       } = {
         ...defaultOptions,
         ...options,
       };
 
+      let session: Session;
       try {
         const cookie = cookieResolver(context);
         const xSessionToken = sessionTokenResolver(context);
-        const { data: session } = await this.oryService.toSession({
+        const { data } = await this.oryService.toSession({
           cookie,
           xSessionToken,
         });
-        if (!isValidSession(session)) {
-          return false;
-        }
-        if (typeof postValidationHook === 'function') {
-          await postValidationHook(context, session);
-        }
-        return true;
+        session = data;
       } catch (error) {
-        this.logger.error(error);
-        return false;
+        throw unauthorizedFactory(context, error);
       }
+
+      if (!isValidSession(session)) {
+        throw unauthorizedFactory(context, new Error('Invalid session'));
+      }
+      if (typeof postValidationHook === 'function') {
+        await postValidationHook(context, session);
+      }
+      return true;
     }
   }
   return mixin(AuthenticationGuard);

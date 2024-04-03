@@ -2,7 +2,7 @@ import { error, Result, value } from 'defekt';
 
 import { RelationTupleSyntaxError } from './errors/relation-tuple-syntax.error';
 import { UnknownError } from './errors/unknown.error';
-import { RelationTuple } from './relation-tuple';
+import { type IRelationTuple, RelationTuple } from './relation-tuple';
 
 type Namespace = string;
 type TupleObject = string;
@@ -102,12 +102,7 @@ export function parseRelationTuple(
   ] = match.map((str) => str?.trim() ?? '');
 
   try {
-    const result: RelationTuple = {
-      namespace: namespace,
-      object: object,
-      relation: relation,
-      subjectIdOrSet: '',
-    };
+    const result = new RelationTuple(namespace, object, relation, '');
 
     if (subjectRelation) {
       result.subjectIdOrSet = {
@@ -142,7 +137,7 @@ export function parseRelationTuple(
  * @returns
  */
 export const relationTupleToString = (
-  tuple: Partial<RelationTuple>
+  tuple: Partial<IRelationTuple>
 ): RelationTupleString => {
   const base: `${string}:${string}#${string}` = `${tuple.namespace}:${tuple.object}#${tuple.relation}`;
   if (!tuple.subjectIdOrSet) {

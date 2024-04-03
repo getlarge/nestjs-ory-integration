@@ -9,6 +9,9 @@ on:
 env:
   CI: true
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-CI
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -41,7 +44,7 @@ jobs:
 
       - uses: nrwl/nx-set-shas@v4
 
-      - uses: 8BitJonny/gh-get-current-pr@2.2.0
+      - uses: 8BitJonny/gh-get-current-pr@3.0.0
         id: current-pr
 
       - if: steps.current-pr.outputs.number != 'null' && github.ref_name != 'main'
@@ -52,6 +55,13 @@ jobs:
 
       # requires kratos and keto to be running
       - run: npx nx affected -t lint,test,build --parallel=3
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage
+          overwrite: true
+          retention-days: 1
 
   sonarcloud:
     name: SonarCloud
@@ -65,6 +75,11 @@ jobs:
 
       - uses: martinbeentjes/npm-get-version-action@v1.3.1
         id: package-version
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          path: coverage
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

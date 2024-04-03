@@ -1,6 +1,6 @@
 {
   "name": "@getlarge/kratos-client-wrapper",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "license": "MIT",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/kratos-client-wrapper",
   "dependencies": {
