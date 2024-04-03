@@ -1,3 +1,16 @@
+## 0.1.2 (2024-04-03)
+
+
+### 🩹 Fixes
+
+- update useFactory arguments to allow any type in ory-permissions, ory-relationships, ory-frontend, and ory-identities module interfaces ([b776b5d](https://github.com/getlarge/nestjs-ory-integration/commit/b776b5d))
+
+
+### ❤️  Thank You
+
+- Edouard @getlarge
+- getlarge @getlarge
+
 ## 0.1.1 (2024-04-03)
 
 This was a version bump only for kratos-client-wrapper to align it with other projects, there were no code changes.
