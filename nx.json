@@ -14,12 +14,15 @@
     ]
   },
   "release": {
-    "projects": ["*"],
+    "projects": ["packages/*"],
     "projectsRelationship": "independent",
     "changelog": {
       "projectChangelogs": {
         "createRelease": "github"
       }
+    },
+    "version": {
+      "conventionalCommits": true
     },
     "git": {
       "commit": true,
@@ -29,6 +32,7 @@
   "targetDefaults": {
     "build": {
       "cache": true,
+      "inputs": ["production", "^production"],
       "dependsOn": ["^build"]
     },
     "lint": {
@@ -58,7 +62,12 @@
         "packageRoot": "dist/{projectRoot}",
         "registry": "https://registry.npmjs.org/"
       },
-      "dependsOn": ["build"]
+      "dependsOn": [
+        {
+          "target": "build",
+          "params": "forward"
+        }
+      ]
     }
   },
   "nxCloudAccessToken": "ZDU0ZWUwNDktM2YzZC00ODgzLWFiNTktYzQzNDVmOWZlNTE0fHJlYWQtd3JpdGU="
