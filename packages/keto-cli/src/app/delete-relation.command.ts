@@ -4,7 +4,7 @@ import {
   parseRelationTuple,
 } from '@getlarge/keto-relations-parser';
 import { Logger } from '@nestjs/common';
-import { Configuration, type RelationQuery } from '@ory/client';
+import { Configuration, RelationQuery } from '@ory/client';
 import { Command, CommandRunner, Option } from 'nest-commander';
 
 interface CommandOptions
@@ -12,9 +12,9 @@ interface CommandOptions
   tuple: RelationQuery;
 }
 
-@Command({ name: 'create', description: 'Create relationship on Ory Keto' })
-export class CreateRelationCommand extends CommandRunner {
-  readonly logger = new Logger(CreateRelationCommand.name);
+@Command({ name: 'delete', description: 'Delete relationship on Ory Keto' })
+export class DeleteRelationCommand extends CommandRunner {
+  readonly logger = new Logger(DeleteRelationCommand.name);
 
   constructor(
     private readonly oryRelationshipsService: OryRelationshipsService
@@ -30,16 +30,14 @@ export class CreateRelationCommand extends CommandRunner {
         ...options,
       });
     }
-    await this.oryRelationshipsService.createRelationship({
-      createRelationshipBody: tuple,
-    });
-    this.logger.debug('Created relation');
+    await this.oryRelationshipsService.deleteRelationships(tuple);
+    this.logger.debug('Deleted relation');
     this.logger.log(tuple);
   }
 
   @Option({
     flags: '-t, --tuple [string]',
-    description: 'Relationship tuple to create, using Zanzibar notation',
+    description: 'Relationship tuple to delete, using Zanzibar notation',
     required: true,
   })
   parseRelationTuple(val: string): RelationQuery {
@@ -47,7 +45,8 @@ export class CreateRelationCommand extends CommandRunner {
     if (res.hasError()) {
       throw res.error;
     }
-    return createRelationQuery(res.value).unwrapOrThrow();
+    const relationQuery = createRelationQuery(res.value);
+    return relationQuery.unwrapOrThrow();
   }
 
   @Option({
