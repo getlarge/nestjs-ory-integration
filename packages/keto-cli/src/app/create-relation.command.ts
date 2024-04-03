@@ -52,7 +52,7 @@ export class CreateRelationCommand extends CommandRunner {
 
   @Option({
     flags: '-b, --basePath [string]',
-    description: 'Ory Keto Admin URL',
+    description: 'Ory Keto Admin API URL',
     required: false,
   })
   parseBasePath(val: string): string | undefined {

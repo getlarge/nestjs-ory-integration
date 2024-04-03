@@ -148,10 +148,19 @@ export class GetRelationsCommand extends CommandRunner {
 
   @Option({
     flags: '-b, --basePath [string]',
-    description: 'Ory Keto Public URL',
+    description: 'Ory Keto Admin API URL',
     required: false,
   })
   parseBasePath(val: string): string | undefined {
+    return val;
+  }
+
+  @Option({
+    flags: '-a, --accessToken [string]',
+    description: 'Ory Keto Access Token',
+    required: false,
+  })
+  parseAccessToken(val: string): string | undefined {
     return val;
   }
 }
