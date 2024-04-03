@@ -21,12 +21,7 @@
       "dependsOn": ["build"]
     },
     "nx-release-publish": {
-      "executor": "@nx/js:release-publish",
-      "options": {
-        "packageRoot": "dist/packages/kratos-client-wrapper",
-        "registry": "https://registry.npmjs.org/"
-      },
-      "dependsOn": ["build"]
+      "executor": "@nx/js:release-publish"
     },
     "lint": {
       "executor": "@nx/eslint:lint",
