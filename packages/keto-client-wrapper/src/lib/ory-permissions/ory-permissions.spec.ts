@@ -20,6 +20,7 @@ describe('OryPermissionsService', () => {
           provide: OryBaseService,
           useValue: {
             axios: {
+              defaults: {},
               request: jest.fn(),
             },
           },
