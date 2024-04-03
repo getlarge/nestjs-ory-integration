@@ -1,5 +1,6 @@
 import { CommandFactory } from 'nest-commander';
 
+import { version } from '../package.json';
 import { AppModule } from './app/app.module';
 
 async function bootstrap(): Promise<void> {
@@ -7,8 +8,8 @@ async function bootstrap(): Promise<void> {
     logger: ['log', 'error', 'warn', 'debug', 'verbose'],
     enablePositionalOptions: true,
     enablePassThroughOptions: true,
-    cliName: 'keto-cli',
-    version: '0.0.1',
+    cliName: '@getlarge/keto-cli',
+    version,
     usePlugins: true,
   });
 }

@@ -6,24 +6,30 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { CheckPermissionCommand } from './check-permission.command';
+import { OryKetoEnvironmentVariables, validate } from './environment-variables';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({}),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validate,
+      cache: true,
+    }),
     OryPermissionsModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        basePath: configService.get(
-          'ORY_KETO_PUBLIC_URL',
-          'http://localhost:4466'
-        ),
+      useFactory: (
+        configService: ConfigService<OryKetoEnvironmentVariables, true>
+      ) => ({
+        basePath: configService.get('ORY_KETO_PUBLIC_URL'),
       }),
     }),
     OryRelationshipsModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        accessToken: configService.get('ORY_KETO_API_KEY', ''),
-        basePath: configService.get('ORY_KETO_ADMIN_URL', ''),
+      useFactory: (
+        configService: ConfigService<OryKetoEnvironmentVariables, true>
+      ) => ({
+        accessToken: configService.get('ORY_KETO_API_KEY'),
+        basePath: configService.get('ORY_KETO_ADMIN_URL'),
       }),
     }),
   ],
