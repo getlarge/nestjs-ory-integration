@@ -74,17 +74,17 @@ describe('CreateRelationCommand', () => {
             '--tuple',
             'Group:admin#members@User:1',
             '--basePath',
-            'http://localhost:4466',
+            'http://localhost:4467',
           ],
           {
             tuple: expectedQuery,
-            basePath: 'http://localhost:4466',
+            basePath: 'http://localhost:4467',
           }
         )
       ).resolves.toBeUndefined();
 
       expect(oryRelationshipsService.config.basePath).toBe(
-        'http://localhost:4466'
+        'http://localhost:4467'
       );
       expect(oryRelationshipsService.createRelationship).toHaveBeenCalledWith({
         createRelationshipBody: expectedQuery,

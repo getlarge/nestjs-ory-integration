@@ -23,7 +23,6 @@ export class CreateRelationCommand extends CommandRunner {
   }
 
   async run(passedParams: string[], options: CommandOptions): Promise<void> {
-    console.log('options', options);
     const { tuple } = options;
     if (options.accessToken || options.basePath) {
       this.oryRelationshipsService.config = new Configuration({
