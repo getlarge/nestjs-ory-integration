@@ -1,0 +1,19 @@
+{
+  "name": "@getlarge/kratos-cli",
+  "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/kratos-cli",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@nestjs/common": "^10.0.2"
+  },
+  "type": "commonjs",
+  "bin": {
+    "@getlarge/kratos-cli": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts"
+}
