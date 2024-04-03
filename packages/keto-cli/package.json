@@ -2,9 +2,20 @@
   "name": "@getlarge/keto-cli",
   "version": "0.0.1",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@getlarge/keto-client-wrapper": "*",
+    "@nestjs/common": "^10.0.2",
+    "@nestjs/config": "^3.1.1",
+    "@getlarge/keto-relations-parser": "*",
+    "@ory/client": "^1.4.9",
+    "nest-commander": "^3.12.5",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1"
   },
   "type": "commonjs",
+  "bin": {
+    "@getlarge/keto-cli": "./src/index.js"
+  },
   "main": "./src/index.js",
   "typings": "./src/index.d.ts"
 }

@@ -29,6 +29,9 @@
       "options": {
         "jestConfig": "packages/keto-cli/jest.config.ts"
       }
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish"
     }
   },
   "tags": []
