@@ -63,4 +63,13 @@ export class ExpandPermissionsCommand extends CommandRunner {
   parseDepth(val: string): number {
     return val ? parseInt(val, 10) : 3;
   }
+
+  @Option({
+    flags: '-b, --basePath [string]',
+    description: 'Ory Keto Public URL',
+    required: false,
+  })
+  parseBasePath(val: string): string | undefined {
+    return val;
+  }
 }
