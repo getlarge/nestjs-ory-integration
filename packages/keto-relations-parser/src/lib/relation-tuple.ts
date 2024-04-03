@@ -1,6 +1,12 @@
 import { relationTupleToString } from './relation-tuple-parser';
 
-export class SubjectSet {
+export interface ISubjectSet {
+  namespace: string;
+  object: string;
+  relation?: string;
+}
+
+export class SubjectSet implements ISubjectSet {
   namespace: string;
   object: string;
   relation?: string;
@@ -21,7 +27,7 @@ export interface IRelationTuple {
   namespace: string;
   object: string;
   relation: string;
-  subjectIdOrSet: string | SubjectSet;
+  subjectIdOrSet: string | ISubjectSet;
 }
 
 export class RelationTuple implements IRelationTuple {

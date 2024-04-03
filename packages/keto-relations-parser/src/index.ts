@@ -13,7 +13,12 @@ export {
   createRelationQuery,
   createRelationship,
 } from './lib/keto-converters/tuple-to-relationships-parameters';
-export { RelationTuple, SubjectSet } from './lib/relation-tuple';
+export {
+  IRelationTuple,
+  ISubjectSet,
+  RelationTuple,
+  SubjectSet,
+} from './lib/relation-tuple';
 export {
   RelationTupleBuilder,
   relationTupleBuilder,

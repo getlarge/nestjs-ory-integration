@@ -12,6 +12,7 @@ This is a mono repository containing the following packages:
 | [keto-client-wrapper](./packages/keto-client-wrapper/README.md)     | A NestJS library to integrate [Ory Keto](https://www.ory.sh/keto/docs/) API                                            | [![npm](https://img.shields.io/npm/v/@getlarge/keto-client-wrapper.svg?style=flat)](https://npmjs.org/package/@getlarge/keto-client-wrapper)     |
 | [keto-relations-parser](./packages/keto-relations-parser/README.md) | A TS library to parse a string representation of a Relation tuple using [Zanzibar](https://zanzibar.academy) notation. | [![npm](https://img.shields.io/npm/v/@getlarge/keto-relations-parser.svg?style=flat)](https://npmjs.org/package/@getlarge/keto-relations-parser) |
 | [kratos-client-wrapper](./packages/kratos-client-wrapper/README.md) | A NestJS library to integrate [Ory Kratos](https://www.ory.sh/kratos/docs/) API                                        | [![npm](https://img.shields.io/npm/v/@getlarge/kratos-client-wrapper.svg?style=flat)](https://npmjs.org/package/@getlarge/kratos-client-wrapper) |
+| [keto-cli](./packages/keto-cli/README.md)                           | A CLI to interact with the [Ory Keto](https://www.ory.sh/keto/docs/) API                                               | [![npm](https://img.shields.io/npm/v/@getlarge/keto-cli.svg?style=flat)](https://npmjs.org/package/@getlarge/keto-cli)                           |
 
 ## Installation and usage
 

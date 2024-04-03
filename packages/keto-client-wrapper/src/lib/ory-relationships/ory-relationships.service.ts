@@ -19,5 +19,18 @@ export class OryRelationshipsService extends RelationshipApi {
       options.basePath,
       baseService.axios as ConstructorParameters<typeof RelationshipApi>[2]
     );
+
+    this.configuration ??= new Configuration({
+      basePath: options.basePath,
+      accessToken: options.accessToken,
+    });
+  }
+
+  get config(): Configuration {
+    return this.configuration as Configuration;
+  }
+
+  set config(config: Configuration) {
+    this.configuration = config;
   }
 }

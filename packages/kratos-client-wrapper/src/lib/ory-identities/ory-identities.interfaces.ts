@@ -35,7 +35,8 @@ export interface OryIdentitiesModuleAsyncOptions
   useExisting?: Type<OryIdentitiesModuleOptionsFactory>;
   useClass?: Type<OryIdentitiesModuleOptionsFactory>;
   useFactory?: (
-    ...args: unknown[]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...args: any[]
   ) => Promise<IOryIdentitiesModuleOptions> | IOryIdentitiesModuleOptions;
   inject?: (InjectionToken | OptionalFactoryDependency)[];
 }

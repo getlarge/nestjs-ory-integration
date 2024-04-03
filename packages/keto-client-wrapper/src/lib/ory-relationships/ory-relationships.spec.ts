@@ -24,6 +24,7 @@ describe('OryRelationshipsService', () => {
           provide: OryBaseService,
           useValue: {
             axios: {
+              defaults: {},
               request: jest.fn(),
             },
           },

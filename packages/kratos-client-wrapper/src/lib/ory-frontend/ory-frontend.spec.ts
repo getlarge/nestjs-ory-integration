@@ -20,6 +20,7 @@ describe('OryFrontendService', () => {
           provide: OryBaseService,
           useValue: {
             axios: {
+              defaults: {},
               request: jest.fn(),
             },
           },
