@@ -6,6 +6,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { CheckPermissionCommand } from './check-permission.command';
+import { CreateRelationCommand } from './create-relation.command';
 import { OryKetoEnvironmentVariables, validate } from './environment-variables';
 
 @Module({
@@ -33,6 +34,6 @@ import { OryKetoEnvironmentVariables, validate } from './environment-variables';
       }),
     }),
   ],
-  providers: [CheckPermissionCommand],
+  providers: [CheckPermissionCommand, CreateRelationCommand],
 })
 export class AppModule {}

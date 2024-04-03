@@ -25,7 +25,7 @@ export class CheckPermissionCommand extends CommandRunner {
 
   async run(passedParams: string[], options: CommandOptions): Promise<void> {
     const { tuple } = options;
-    if (options.accessToken || options.basePath) {
+    if (options.basePath) {
       this.oryPermissionsService.config = new Configuration({
         ...this.oryPermissionsService.config,
         ...options,
