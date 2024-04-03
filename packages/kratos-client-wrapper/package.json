@@ -3,6 +3,9 @@
   "version": "0.1.2",
   "license": "MIT",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/kratos-client-wrapper",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "tslib": "^2.3.0"
   },
