@@ -9,6 +9,9 @@ on:
 env:
   CI: true
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-CI
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -41,7 +44,7 @@ jobs:
 
       - uses: nrwl/nx-set-shas@v4
 
-      - uses: 8BitJonny/gh-get-current-pr@2.2.0
+      - uses: 8BitJonny/gh-get-current-pr@3.0.0
         id: current-pr
 
       - if: steps.current-pr.outputs.number != 'null' && github.ref_name != 'main'
