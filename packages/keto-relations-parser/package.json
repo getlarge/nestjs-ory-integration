@@ -1,6 +1,6 @@
 {
   "name": "@getlarge/keto-relations-parser",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/keto-relations-parser",
   "dependencies": {

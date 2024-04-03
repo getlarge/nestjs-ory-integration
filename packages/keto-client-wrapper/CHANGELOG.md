@@ -1,3 +1,20 @@
+## 0.2.0 (2024-04-03)
+
+
+### 🚀 Features
+
+- **keto-client-wrapper:** support logic operators ([85bdce3](https://github.com/getlarge/nestjs-ory-integration/commit/85bdce3))
+
+
+### 🩹 Fixes
+
+- **keto-client-wrapper:** do NOT import injected class as type ([18ff575](https://github.com/getlarge/nestjs-ory-integration/commit/18ff575))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.1.0 (2024-02-06)
 
 
