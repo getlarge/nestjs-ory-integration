@@ -8,7 +8,8 @@ export const get = <TObject extends object, TKey extends keyof TObject>(
       .call(path, regexp)
       .filter(Boolean)
       .reduce(
-        (res: object, key: string) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (res: any, key: string) =>
           res !== null && res !== undefined ? res[key] : res,
         obj
       );
