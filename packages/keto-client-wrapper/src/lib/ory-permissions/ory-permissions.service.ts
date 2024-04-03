@@ -24,7 +24,7 @@ export class OryPermissionsService extends PermissionApi {
   }
 
   get config(): Configuration {
-    return this.configuration;
+    return this.configuration as Configuration;
   }
 
   set config(config: Configuration) {
