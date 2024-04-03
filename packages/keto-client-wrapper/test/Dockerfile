@@ -1,4 +1,4 @@
-FROM oryd/keto:v0.11.1
+FROM oryd/keto:v0.12
 
 COPY ./keto.yaml /home/ory/keto.yaml
 COPY ./namespaces.ts /home/ory/namespaces.ts
