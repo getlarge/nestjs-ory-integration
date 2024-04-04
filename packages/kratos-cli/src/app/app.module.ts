@@ -6,6 +6,11 @@ import {
   OryKratosEnvironmentVariables,
   validate,
 } from './environment-variables';
+import { LoginCommand, LoginQuestions } from './login.command';
+import {
+  RegistrationCommand,
+  RegistrationQuestions,
+} from './registration.command';
 
 @Module({
   imports: [
@@ -23,6 +28,11 @@ import {
       }),
     }),
   ],
-  providers: [],
+  providers: [
+    LoginCommand,
+    LoginQuestions,
+    RegistrationCommand,
+    RegistrationQuestions,
+  ],
 })
 export class AppModule {}
