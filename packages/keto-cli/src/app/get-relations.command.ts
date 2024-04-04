@@ -117,7 +117,7 @@ export class GetRelationsCommand extends CommandRunner {
   }
 
   @Option({
-    flags: '-sn, --subject-namespace [string]',
+    flags: '-sn, --subjectNamespace [string]',
     description:
       'namespace of the subject of the relationship tuple to get relations from',
     required: false,
@@ -127,7 +127,7 @@ export class GetRelationsCommand extends CommandRunner {
   }
 
   @Option({
-    flags: '-so, --subject-object [string]',
+    flags: '-so, --subjectObject [string]',
     description:
       'object of the subject of the relationship tuple to get relations from',
     required: false,
@@ -137,7 +137,7 @@ export class GetRelationsCommand extends CommandRunner {
   }
 
   @Option({
-    flags: '-sr, --subject-relation [string]',
+    flags: '-sr, --subjectRelation [string]',
     description:
       'relation of the subject of the relationship tuple to get relations from',
     required: false,

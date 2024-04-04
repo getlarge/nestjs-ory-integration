@@ -10,8 +10,7 @@ import {
 } from '@ory/client';
 import { Command, CommandRunner, Option } from 'nest-commander';
 
-interface CommandOptions
-  extends Pick<Configuration, 'basePath' | 'accessToken'> {
+interface CommandOptions extends Pick<Configuration, 'basePath'> {
   tuple: PermissionApiCheckPermissionRequest;
 }
 

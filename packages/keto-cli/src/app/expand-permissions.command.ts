@@ -32,7 +32,7 @@ export class ExpandPermissionsCommand extends CommandRunner {
         ...options,
       });
     }
-    const tree = await this.oryPermissionsService.expandPermissions({
+    const { data: tree } = await this.oryPermissionsService.expandPermissions({
       ...tuple,
       maxDepth: depth,
     });

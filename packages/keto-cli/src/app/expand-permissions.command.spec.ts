@@ -39,7 +39,7 @@ describe('ExpandPermissionsCommand', () => {
   });
 
   describe('run', () => {
-    it('should process tuple and check permission', async () => {
+    it('should process tuple and expand permission', async () => {
       const tuple = {
         namespace: 'Group',
         object: 'admin',
@@ -49,6 +49,31 @@ describe('ExpandPermissionsCommand', () => {
       oryPermissionsService.expandPermissions = jest.fn().mockResolvedValue({
         data: {
           type: 'union',
+          children: [
+            {
+              type: 'leaf',
+              tuple: {
+                namespace: '',
+                object: '',
+                relation: '',
+                subject_set: {
+                  namespace: 'User',
+                  object: '1',
+                  relation: '',
+                },
+              },
+            },
+          ],
+          tuple: {
+            namespace: '',
+            object: '',
+            relation: '',
+            subject_set: {
+              namespace: 'Group',
+              object: 'admin',
+              relation: 'members',
+            },
+          },
         },
       });
 
