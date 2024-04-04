@@ -18,5 +18,17 @@ export class OryFrontendService extends FrontendApi {
       options.basePath,
       baseService.axios as ConstructorParameters<typeof FrontendApi>[2]
     );
+
+    this.configuration ??= new Configuration({
+      basePath: options.basePath,
+    });
+  }
+
+  get config(): Configuration {
+    return this.configuration as Configuration;
+  }
+
+  set config(config: Configuration) {
+    this.configuration = config;
   }
 }

@@ -10,8 +10,7 @@ import {
 } from '@ory/client';
 import { Command, CommandRunner, Option } from 'nest-commander';
 
-interface CommandOptions
-  extends Pick<Configuration, 'basePath' | 'accessToken'> {
+interface CommandOptions extends Pick<Configuration, 'basePath'> {
   tuple: PermissionApiCheckPermissionRequest;
 }
 
@@ -31,8 +30,8 @@ export class CheckPermissionCommand extends CommandRunner {
         ...options,
       });
     }
-    const isAllowed = await this.oryPermissionsService.checkPermission(tuple);
-    this.logger.log(`Permission ${isAllowed ? 'granted' : 'denied'}`);
+    const { data } = await this.oryPermissionsService.checkPermission(tuple);
+    this.logger.log(`Permission ${data.allowed ? 'granted' : 'denied'}`);
   }
 
   @Option({
@@ -50,8 +49,8 @@ export class CheckPermissionCommand extends CommandRunner {
   }
 
   @Option({
-    flags: '-b, --base-path [string]',
-    description: 'Ory Keto Admin URL',
+    flags: '-b, --basePath [string]',
+    description: 'Ory Keto Public API URL',
     required: false,
   })
   parseBasePath(val: string): string {

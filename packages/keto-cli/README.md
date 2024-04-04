@@ -5,11 +5,7 @@
 [npm-image]: https://img.shields.io/npm/v/@getlarge/keto-cli.svg?style=flat
 [npm-url]: https://npmjs.org/package/@getlarge/keto-cli
 
-This library is a wrapper around the [Ory Keto](https://www.ory.sh/keto/docs/) client - [@ory/client](https://github.com/ory/client-js). It provides :
-
-- `OryRelationshipsModule`: a module to interact with the Ory Keto Relationships API
-- `OryPermissionsModule`: a module to interact with the Ory Keto Permissions API
-- `OryAuthorizationGuard`: a guard to protect your routes based on the Ory Keto permissions
+This CLI interacts with the [Ory Keto](https://www.ory.sh/keto/docs/) API.
 
 ## Install
 
@@ -23,7 +19,8 @@ npm install @getlarge/keto-cli
 
 ```sh
 # base path is the Ory Keto Public API URL - it can be passed via ORY_KETO_PUBLIC_URL environment variable
-npx @getlarge/keto-cli check --tuple Group:admin#members@User:1 --basePath http://localhost:4466
+npx @getlarge/keto-cli check --tuple Group:admin#members@User:1 \
+--basePath http://localhost:4466
 ```
 
 ### To create a relationship
@@ -31,7 +28,8 @@ npx @getlarge/keto-cli check --tuple Group:admin#members@User:1 --basePath http:
 ```sh
 # base path is the Ory Keto Admin API URL - it can be passed via ORY_KETO_PUBLIC_URL environment variable
 # access token is the Ory Keto Admin API access token - it should be passed via ORY_KETO_API_KEY environment variable
-npx @getlarge/keto-cli create --tuple Group:admin#members@User:1 --basePath http://localhost:4467 --accessToken my-access-token
+npx @getlarge/keto-cli create --tuple Group:admin#members@User:1 \
+--basePath http://localhost:4467 --accessToken my-access-token
 ```
 
 ### To delete a relationship
@@ -39,13 +37,15 @@ npx @getlarge/keto-cli create --tuple Group:admin#members@User:1 --basePath http
 ```sh
 # base path is the Ory Keto Admin API URL - it can be passed via ORY_KETO_PUBLIC_URL environment variable
 # access token is the Ory Keto Admin API access token - it should be passed via ORY_KETO_API_KEY environment variable
-npx @getlarge/keto-cli delete --tuple Group:admin#members@User:1 --basePath http://localhost:4467 --accessToken my-access-token
+npx @getlarge/keto-cli delete --tuple Group:admin#members@User:1 \
+--basePath http://localhost:4467 --accessToken my-access-token
 ```
 
 ### To expand a relation tuple
 
 ```sh
-npx @getlarge/keto-cli expand --tuple Group:admin#members --depth 2 --basePath http://localhost:4466
+npx @getlarge/keto-cli expand --tuple Group:admin#members --depth 2 \
+--basePath http://localhost:4466
 ```
 
 ### To list all relationships
@@ -53,7 +53,8 @@ npx @getlarge/keto-cli expand --tuple Group:admin#members --depth 2 --basePath h
 ```sh
 # base path is the Ory Keto Admin API URL - it can be passed via ORY_KETO_PUBLIC_URL environment variable
 # access token is the Ory Keto Admin API access token - it should be passed via ORY_KETO_API_KEY environment variable
-npx @getlarge/keto-cli get --namespace Group --object admin --basePath http://localhost:4467 --accessToken my-access-token
+npx @getlarge/keto-cli get --namespace Group --object admin \
+--basePath http://localhost:4467 --accessToken my-access-token
 ```
 
 ## Development

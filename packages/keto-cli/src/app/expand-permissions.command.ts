@@ -32,7 +32,7 @@ export class ExpandPermissionsCommand extends CommandRunner {
         ...options,
       });
     }
-    const tree = await this.oryPermissionsService.expandPermissions({
+    const { data: tree } = await this.oryPermissionsService.expandPermissions({
       ...tuple,
       maxDepth: depth,
     });
@@ -66,7 +66,7 @@ export class ExpandPermissionsCommand extends CommandRunner {
 
   @Option({
     flags: '-b, --basePath [string]',
-    description: 'Ory Keto Public URL',
+    description: 'Ory Keto Public API URL',
     required: false,
   })
   parseBasePath(val: string): string | undefined {

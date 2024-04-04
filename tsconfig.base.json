@@ -26,6 +26,7 @@
       "@getlarge/keto-relations-parser": [
         "packages/keto-relations-parser/src/index.ts"
       ],
+      "@getlarge/kratos-cli": ["packages/kratos-cli/src/index.ts"],
       "@getlarge/kratos-client-wrapper": [
         "packages/kratos-client-wrapper/src/index.ts"
       ]

@@ -26,11 +26,7 @@
             "checkObsoleteDependencies": true,
             "checkVersionMismatches": true,
             "includeTransitiveDependencies": true,
-            "ignoredDependencies": [
-              "@getlarge/base-client-wrapper",
-              "@nestjs/testing",
-              "supertest"
-            ]
+            "ignoredDependencies": ["@getlarge/base-client-wrapper"]
           }
         ]
       }
