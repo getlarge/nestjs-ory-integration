@@ -73,14 +73,14 @@ export class LoginCommand extends CommandRunner {
         password,
       },
     });
-    this.logger.debug('checking session token : ', sessionToken);
+    this.logger.debug('checking session token:', sessionToken);
 
     const { data } = await this.oryFrontendService.toSession({
       xSessionToken: sessionToken,
     });
 
     this.logger.log(
-      `Logged in with session: ${data.id}, token ${sessionToken}`
+      `Logged in with session: ${data.id}, token ${sessionToken}, identity ${data.identity?.id}`
     );
   }
 

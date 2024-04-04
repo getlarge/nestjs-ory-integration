@@ -57,12 +57,12 @@ export class RegistrationCommand extends CommandRunner {
       )
     ).password;
 
-    this.logger.log('init registration flow');
+    this.logger.debug('init registration flow');
     const {
       data: { id: flowId },
     } = await this.oryFrontendService.createNativeRegistrationFlow();
 
-    this.logger.log('complete login flow');
+    this.logger.debug('complete login flow');
     const { data } = await this.oryFrontendService.updateRegistrationFlow({
       flow: flowId,
       updateRegistrationFlowBody: {
@@ -71,7 +71,6 @@ export class RegistrationCommand extends CommandRunner {
         method: 'password',
       },
     });
-    this.logger.debug(data);
 
     this.logger.log(
       `Registered with email: ${email} and identity.id: ${data.identity.id}`
