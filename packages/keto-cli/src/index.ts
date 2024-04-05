@@ -7,8 +7,8 @@ import { AppModule } from './app/app.module';
 async function bootstrap(): Promise<void> {
   await CommandFactory.run(AppModule, {
     logger: process.env['DEBUG:KETO_CLI']
-      ? ['log', 'error', 'warn', 'debug']
-      : ['log', 'error', 'warn'],
+      ? ['log', 'error', 'warn', 'debug', 'verbose']
+      : ['error', 'warn'],
     enablePositionalOptions: true,
     enablePassThroughOptions: true,
     cliName: '@getlarge/keto-cli',
