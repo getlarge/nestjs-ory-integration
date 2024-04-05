@@ -1,3 +1,16 @@
+## 0.0.7 (2024-04-05)
+
+
+### 🚀 Features
+
+- **keto-relations-parser:** export extra types ([715ecac](https://github.com/getlarge/nestjs-ory-integration/commit/715ecac))
+
+
+### ❤️  Thank You
+
+- Edouard @getlarge
+- getlarge @getlarge
+
 ## 0.0.6 (2024-04-04)
 
 

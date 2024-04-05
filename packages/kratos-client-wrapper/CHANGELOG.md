@@ -1,3 +1,21 @@
+## 0.1.4 (2024-04-05)
+
+
+### 🚀 Features
+
+- **kratos-client-wrapper:** allow Ory client configuration override ([6b24918](https://github.com/getlarge/nestjs-ory-integration/commit/6b24918))
+
+
+### 🩹 Fixes
+
+- update useFactory arguments to allow any type in ory-permissions, ory-relationships, ory-frontend, and ory-identities module interfaces ([b776b5d](https://github.com/getlarge/nestjs-ory-integration/commit/b776b5d))
+
+
+### ❤️  Thank You
+
+- Edouard @getlarge
+- getlarge @getlarge
+
 ## 0.1.3 (2024-04-04)
 
 

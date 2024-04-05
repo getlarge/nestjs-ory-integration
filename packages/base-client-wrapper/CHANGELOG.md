@@ -1,3 +1,7 @@
+## 0.1.4 (2024-04-05)
+
+This was a version bump only for base-client-wrapper to align it with other projects, there were no code changes.
+
 ## 0.1.3 (2024-04-04)
 
 This was a version bump only for base-client-wrapper to align it with other projects, there were no code changes.
