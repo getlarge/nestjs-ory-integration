@@ -13,6 +13,7 @@ import {
 
 interface CommandOptions extends Pick<Configuration, 'basePath'> {
   email: string;
+  password?: string;
 }
 
 @QuestionSet({ name: 'login-questions' })
@@ -20,12 +21,17 @@ export class LoginQuestions {
   @Question({
     message: 'Password:',
     name: 'password',
+    type: 'password',
   })
   parsePassword(val: string) {
+    if (!val) {
+      throw new Error('Password is required');
+    }
     return val;
   }
 }
 
+// TODO: find a solution to allow dynamic question sets based on Ory kratos identity schema
 @Command({
   name: 'login',
   arguments: '[password]',
@@ -43,6 +49,7 @@ export class LoginCommand extends CommandRunner {
 
   async run(inputs: string[], options: CommandOptions): Promise<void> {
     const { email } = options;
+    let { password } = options;
     if (options.basePath) {
       this.oryFrontendService.config = new Configuration({
         ...this.oryFrontendService.config,
@@ -50,12 +57,14 @@ export class LoginCommand extends CommandRunner {
       });
     }
 
-    const password = (
-      await this.inquirer.ask<{ password: string }>(
-        'login-questions',
-        undefined
-      )
-    ).password;
+    if (!password) {
+      password = (
+        await this.inquirer.ask<{ password: string }>(
+          'login-questions',
+          undefined
+        )
+      ).password;
+    }
 
     this.logger.debug('init login flow');
     const {
@@ -94,6 +103,15 @@ export class LoginCommand extends CommandRunner {
       return val;
     }
     throw new Error('Invalid email address');
+  }
+
+  @Option({
+    flags: '-p, --password [string]',
+    description: 'Password to login with',
+    required: false,
+  })
+  parsePassword(val: string): string {
+    return val;
   }
 
   @Option({
