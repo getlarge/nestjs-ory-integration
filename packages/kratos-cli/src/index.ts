@@ -6,7 +6,9 @@ import { AppModule } from './app/app.module';
 
 async function bootstrap(): Promise<void> {
   await CommandFactory.run(AppModule, {
-    logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+    logger: process.env['DEBUG:KRATOS_CLI']
+      ? ['log', 'error', 'warn', 'debug']
+      : ['log', 'error', 'warn'],
     enablePositionalOptions: true,
     enablePassThroughOptions: true,
     cliName: '@getlarge/kratos-cli',
