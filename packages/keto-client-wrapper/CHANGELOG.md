@@ -1,3 +1,23 @@
+## 0.2.4 (2024-04-05)
+
+
+### 🚀 Features
+
+- **keto-cli:** create CLI to interact with Keto API ([35ff1a6](https://github.com/getlarge/nestjs-ory-integration/commit/35ff1a6))
+
+- **keto-client-wrapper:** allow override Ory client configuration ([7ad906d](https://github.com/getlarge/nestjs-ory-integration/commit/7ad906d))
+
+
+### 🩹 Fixes
+
+- update useFactory arguments to allow any type in ory-permissions, ory-relationships, ory-frontend, and ory-identities module interfaces ([b776b5d](https://github.com/getlarge/nestjs-ory-integration/commit/b776b5d))
+
+
+### ❤️  Thank You
+
+- Edouard @getlarge
+- getlarge @getlarge
+
 ## 0.2.3 (2024-04-05)
 
 
