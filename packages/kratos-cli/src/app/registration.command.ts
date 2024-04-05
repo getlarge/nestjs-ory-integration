@@ -13,6 +13,7 @@ import {
 
 interface CommandOptions extends Pick<Configuration, 'basePath'> {
   email: string;
+  password?: string;
 }
 
 @QuestionSet({ name: 'registration-questions' })
@@ -20,11 +21,17 @@ export class RegistrationQuestions {
   @Question({
     message: 'Password:',
     name: 'password',
+    type: 'password',
   })
   parsePassword(val: string) {
+    if (!val) {
+      throw new Error('Password is required');
+    }
     return val;
   }
 }
+
+// TODO: find a solution to allow dynamic question sets based on Ory kratos identity schema
 
 @Command({
   name: 'register',
@@ -43,6 +50,7 @@ export class RegistrationCommand extends CommandRunner {
 
   async run(inputs: string[], options: CommandOptions): Promise<void> {
     const { email } = options;
+    let { password } = options;
     if (options.basePath) {
       this.oryFrontendService.config = new Configuration({
         ...this.oryFrontendService.config,
@@ -50,19 +58,21 @@ export class RegistrationCommand extends CommandRunner {
       });
     }
 
-    const password = (
-      await this.inquirer.ask<{ password: string }>(
-        'registration-questions',
-        undefined
-      )
-    ).password;
+    if (!password) {
+      password = (
+        await this.inquirer.ask<{ password: string }>(
+          'registration-questions',
+          undefined
+        )
+      ).password;
+    }
 
     this.logger.debug('init registration flow');
     const {
       data: { id: flowId },
     } = await this.oryFrontendService.createNativeRegistrationFlow();
 
-    this.logger.debug('complete login flow');
+    this.logger.debug('complete registration flow');
     const { data } = await this.oryFrontendService.updateRegistrationFlow({
       flow: flowId,
       updateRegistrationFlowBody: {
@@ -78,7 +88,7 @@ export class RegistrationCommand extends CommandRunner {
   }
 
   @Option({
-    flags: '-e, --email [string]',
+    flags: '-e, --email <string>',
     description: 'Email address to login with',
     required: true,
   })
@@ -87,6 +97,15 @@ export class RegistrationCommand extends CommandRunner {
       return val;
     }
     throw new Error('Invalid email address');
+  }
+
+  @Option({
+    flags: '-p, --password [string]',
+    description: 'Password to login with',
+    required: false,
+  })
+  parsePassword(val: string): string {
+    return val;
   }
 
   @Option({
