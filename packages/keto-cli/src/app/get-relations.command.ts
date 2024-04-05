@@ -64,7 +64,7 @@ export class GetRelationsCommand extends CommandRunner {
       result.push(...relationships);
     }
     this.logger.debug('Found relationships');
-    this.logger.log(result);
+    console.log(JSON.stringify(result, null, 2));
   }
 
   private async *fetchPaginatedRelationships(

@@ -32,7 +32,7 @@ export class CheckPermissionCommand extends CommandRunner {
     }
     const { data } = await this.oryPermissionsService.checkPermission(tuple);
     this.logger.debug(`Permission ${data.allowed ? 'granted' : 'denied'}`);
-    this.logger.debug(data.allowed);
+    console.log(data.allowed);
   }
 
   @Option({

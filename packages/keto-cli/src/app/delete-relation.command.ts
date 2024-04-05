@@ -32,7 +32,7 @@ export class DeleteRelationCommand extends CommandRunner {
     }
     await this.oryRelationshipsService.deleteRelationships(tuple);
     this.logger.debug('Deleted relation');
-    this.logger.log(tuple);
+    console.log(JSON.stringify(tuple, null, 2));
   }
 
   @Option({

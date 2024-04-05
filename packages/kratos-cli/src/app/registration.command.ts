@@ -85,10 +85,12 @@ export class RegistrationCommand extends CommandRunner {
     this.logger.debug(
       `Registered with email: ${email} and identity.id: ${data.identity.id}`
     );
-    this.logger.log({
-      email,
-      identityId: data.identity.id,
-    });
+    console.log(
+      JSON.stringify({
+        email,
+        identityId: data.identity.id,
+      })
+    );
   }
 
   @Option({

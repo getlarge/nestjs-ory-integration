@@ -36,7 +36,7 @@ export class ExpandPermissionsCommand extends CommandRunner {
       ...tuple,
       maxDepth: depth,
     });
-    this.logger.log(tree);
+    console.log(JSON.stringify(tree, null, 2));
   }
 
   @Option({

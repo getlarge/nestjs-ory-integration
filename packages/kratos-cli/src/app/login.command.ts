@@ -91,11 +91,13 @@ export class LoginCommand extends CommandRunner {
     this.logger.debug(
       `Logged in with session: ${data.id}, token ${sessionToken}, identity ${data.identity?.id}`
     );
-    this.logger.log({
-      session: data.id,
-      token: sessionToken,
-      identity: data.identity?.id,
-    });
+    console.log(
+      JSON.stringify({
+        session: data.id,
+        token: sessionToken,
+        identity: data.identity?.id,
+      })
+    );
   }
 
   @Option({

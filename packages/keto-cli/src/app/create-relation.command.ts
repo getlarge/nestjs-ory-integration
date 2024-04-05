@@ -34,7 +34,7 @@ export class CreateRelationCommand extends CommandRunner {
       createRelationshipBody: tuple,
     });
     this.logger.debug('Created relation');
-    this.logger.log(tuple);
+    console.log(JSON.stringify(tuple, null, 2));
   }
 
   @Option({
