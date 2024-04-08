@@ -24,7 +24,7 @@
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "17.2.8",
     "@nx/eslint-plugin": "17.2.8",
-    "@nx/jest": "17.2.8",
+    "@nx/jest": "18.2.3",
     "@nx/js": "17.2.8",
     "@nx/nest": "17.2.8",
     "@nx/node": "17.2.8",
