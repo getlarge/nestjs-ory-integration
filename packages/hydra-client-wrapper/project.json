@@ -1,0 +1,35 @@
+{
+  "name": "hydra-client-wrapper",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/hydra-client-wrapper/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/hydra-client-wrapper",
+        "tsConfig": "packages/hydra-client-wrapper/tsconfig.lib.json",
+        "packageJson": "packages/hydra-client-wrapper/package.json",
+        "main": "packages/hydra-client-wrapper/src/index.ts",
+        "assets": ["packages/hydra-client-wrapper/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs hydra-client-wrapper {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/hydra-client-wrapper/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
