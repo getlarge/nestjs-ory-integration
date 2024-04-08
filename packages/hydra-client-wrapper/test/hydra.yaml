@@ -15,7 +15,7 @@ urls:
 
 secrets:
   system:
-    - youReallyNeedToChangeThis
+    - super-system-secret-secret
 
 oidc:
   subject_identifiers:
@@ -23,4 +23,6 @@ oidc:
       - pairwise
       - public
     pairwise:
-      salt: youReallyNeedToChangeThis
+      salt: super-secret-salt
+
+dsn: memory
