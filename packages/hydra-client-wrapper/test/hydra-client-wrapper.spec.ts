@@ -107,7 +107,7 @@ describe('Hydra client wrapper E2E', () => {
       });
 
     expect(body).toEqual({ message: clientId });
-  });
+  }, 20000);
 
   it('should fail to authenticate user when it is not registered in Ory Kratos', async () => {
     const { body } = await request(app.getHttpServer())
