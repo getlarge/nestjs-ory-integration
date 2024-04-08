@@ -19,6 +19,9 @@
       "command": "node tools/scripts/publish.mjs hydra-client-wrapper {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish"
+    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
@@ -28,6 +31,13 @@
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/hydra-client-wrapper/jest.config.ts"
+      }
+    },
+    "docker-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker buildx build ./test --platform linux/amd64,linux/arm64 -t ghcr.io/getlarge/nestjs-ory-integration/hydra --push",
+        "cwd": "packages/hydra-client-wrapper"
       }
     }
   },

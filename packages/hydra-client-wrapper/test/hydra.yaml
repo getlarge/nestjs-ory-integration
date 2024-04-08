@@ -1,0 +1,26 @@
+serve:
+  cookies:
+    same_site_mode: Lax
+
+urls:
+  self:
+    issuer: http://127.0.0.1:44440
+  consent: http://127.0.0.1:44550/consent
+  login: http://127.0.0.1:44550/login
+  logout: http://127.0.0.1:44550/logout
+  identity_provider:
+    publicUrl: http://127.0.0.1:44330
+    url: http://kratos:4434
+
+
+secrets:
+  system:
+    - youReallyNeedToChangeThis
+
+oidc:
+  subject_identifiers:
+    supported_types:
+      - pairwise
+      - public
+    pairwise:
+      salt: youReallyNeedToChangeThis

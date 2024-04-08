@@ -15,31 +15,41 @@ secrets:
   cookie:
     - cookie_secret_not_good_not_secure
 selfservice:
-  default_browser_return_url: http://127.0.0.1:8080/
+  default_browser_return_url: http://127.0.0.1:44550/
+  allowed_return_urls:
+    - http://127.0.0.1:44550
+
   methods:
-    code:
-      enabled: true
-    link:
-      config:
-        base_url: ''
-        lifespan: 15m
-      enabled: true
-    lookup_secret:
-      enabled: true
     password:
+      enabled: true
       config:
-        haveibeenpwned_enabled: true
-        identifier_similarity_check_enabled: true
-        ignore_network_errors: true
-        max_breaches: 1
-        min_password_length: 8
-      enabled: true
-    profile:
-      enabled: true
-    totp:
-      config:
-        issuer: Ticketing
-      enabled: true
+        min_password_length: 6
+        identifier_similarity_check_enabled: false
+        haveibeenpwned_enabled: false
+
+  flows:
+    error:
+      ui_url: http://127.0.0.1:44550/error
+
+    settings:
+      ui_url: http://127.0.0.1:44550/settings
+      privileged_session_max_age: 15m
+      required_aal: highest_available
+
+    logout:
+      after:
+        default_browser_return_url: http://127.0.0.1:44550/login
+
+    login:
+      ui_url: http://127.0.0.1:44550/login
+
+    registration:
+      ui_url: http://127.0.0.1:44550/registration
+      after:
+        password:
+          hooks:
+            - hook: session
+
 serve:
   admin:
     base_url: http://kratos:4434/
