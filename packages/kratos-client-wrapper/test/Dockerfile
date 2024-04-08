@@ -1,4 +1,4 @@
-FROM oryd/kratos:v1.0.0
+FROM oryd/kratos:v1.1.0
 
 COPY ./kratos.yaml /home/ory/kratos.yaml
 COPY ./identity.schema.json /home/ory/identity.schema.json
