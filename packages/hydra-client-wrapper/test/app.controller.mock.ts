@@ -14,7 +14,7 @@ export class ExampleController {
         if (!token.client_id) {
           throw new Error('Client ID not found in token');
         }
-        const client = await this.oryService.getOAuth2Client({
+        const { data: client } = await this.oryService.getOAuth2Client({
           id: token.client_id,
         });
         req.client = client;

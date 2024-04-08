@@ -6,19 +6,13 @@ import { join, resolve } from 'node:path';
 import { Issuer, TokenSet } from 'openid-client';
 import request from 'supertest';
 
-import {
-  OryOAuth2Module,
-  OryOAuth2Service,
-  OryOidcModule,
-  OryOidcService,
-} from '../src';
+import { OryOAuth2Module, OryOAuth2Service, OryOidcModule } from '../src';
 import { ExampleController } from './app.controller.mock';
 import { ExampleService } from './app.service.mock';
 
 describe('Hydra client wrapper E2E', () => {
   let app: INestApplication;
   let oryOAuth2Service: OryOAuth2Service;
-  let oryOidcService: OryOidcService;
   const dockerComposeFile = resolve(join(__dirname, 'docker-compose.yaml'));
   const route = '/Example';
 
@@ -34,11 +28,6 @@ describe('Hydra client wrapper E2E', () => {
       },
     });
 
-    const { data: client } = await oryOidcService.getOidcDynamicClient({
-      id: data.client_id as string,
-    });
-    expect(client).toBeDefined();
-
     return {
       clientId: data.client_id as string,
       clientSecret: data.client_secret as string,
@@ -49,15 +38,18 @@ describe('Hydra client wrapper E2E', () => {
     clientId: string,
     clientSecret: string
   ): Promise<TokenSet> => {
-    const issuer = await Issuer.discover('http://localhost:4444');
+    const issuer = await Issuer.discover('http://localhost:44440');
     const client = new issuer.Client({
       client_id: clientId,
       client_secret: clientSecret,
     });
-    return client.grant({
+    const token = await client.grant({
       grant_type: 'client_credentials',
       scope: 'offline',
     });
+    expect(token).toHaveProperty('access_token');
+    expect(token.access_token?.startsWith('ory_at_')).toBeTruthy();
+    return token;
   };
 
   beforeAll(() => {
@@ -94,7 +86,6 @@ describe('Hydra client wrapper E2E', () => {
     }).compile();
 
     oryOAuth2Service = module.get(OryOAuth2Service);
-    oryOidcService = module.get(OryOidcService);
 
     app = module.createNestApplication();
     await app.init();
