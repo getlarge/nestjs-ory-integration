@@ -1,8 +1,17 @@
 {
   "name": "@getlarge/hydra-client-wrapper",
   "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/hydra-client-wrapper",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@nestjs/common": "^10.0.2",
+    "@ory/client": "^1.4.9",
+    "axios": "1.6.5",
+    "@nestjs/axios": "^3.0.1"
   },
   "type": "commonjs",
   "main": "./src/index.js",

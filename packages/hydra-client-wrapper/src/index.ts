@@ -1,1 +1,2 @@
-export * from './lib/hydra-client-wrapper.module';
+export * from './lib/ory-oauth2';
+export * from './lib/ory-oidc';
