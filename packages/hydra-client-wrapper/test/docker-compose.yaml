@@ -1,0 +1,42 @@
+version: '2.7'
+
+networks:
+  ory:
+    driver: bridge
+
+services:
+  kratos:
+    image: ghcr.io/getlarge/nestjs-ory-integration/kratos:latest
+    ports:
+      - '44330:4433' # public
+      - '44340:4434' # admin
+    networks:
+      - ory
+    environment:
+      - OAUTH2_PROVIDER_URL=http://hydra:4445
+    restart: unless-stopped
+
+  kratos-selfservice-ui-node:
+    image: oryd/kratos-selfservice-ui-node:v1.1.0
+    ports:
+      - '44550:4455'
+    environment:
+      - PORT=4455
+      - KRATOS_PUBLIC_URL=http://kratos:4433
+      - KRATOS_BROWSER_URL=http://127.0.0.1:44330
+      - COOKIE_SECRET=changeme
+      - CSRF_COOKIE_NAME=cookie_name
+      - CSRF_COOKIE_SECRET=changeme
+      - DANGEROUSLY_DISABLE_SECURE_CSRF_COOKIES=true
+    networks:
+      - ory
+    restart: on-failure
+
+  hydra:
+    image: ghcr.io/getlarge/nestjs-ory-integration/hydra:latest
+    ports:
+      - '44440:4444' # public
+      - '44450:4445' # admin
+    networks:
+      - ory
+    restart: unless-stopped
