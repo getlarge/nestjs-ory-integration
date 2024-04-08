@@ -29,6 +29,12 @@ jobs:
           - '44660:4466'
           - '44670:4467'
 
+      hydra:
+        image: ghcr.io/getlarge/nestjs-ory-integration/hydra:latest
+        ports:
+          - '44440:4444'
+          - '44450:4445'
+
     steps:
       - uses: actions/checkout@v4
         with:
