@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/base-client-wrapper/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -17,12 +18,11 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/base-client-wrapper/**/*.ts",
-          "packages/base-client-wrapper/**/package.json",
-          "packages/base-client-wrapper/**/project.json"
+          "{projectRoot}/**/*.ts",
+          "{projectRoot}/**/package.json",
+          "{projectRoot}/**/project.json"
         ]
       }
     },
@@ -34,6 +34,5 @@
         "codeCoverage": true
       }
     }
-  },
-  "tags": []
+  }
 }

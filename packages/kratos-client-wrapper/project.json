@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/kratos-client-wrapper/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -25,12 +26,11 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/kratos-client-wrapper/**/*.ts",
-          "packages/kratos-client-wrapper/**/project.json",
-          "packages/kratos-client-wrapper/**/package.json"
+          "{projectRoot}/**/*.ts",
+          "{projectRoot}/**/project.json",
+          "{projectRoot}/**/package.json"
         ]
       }
     },
@@ -49,6 +49,5 @@
         "cwd": "packages/kratos-client-wrapper"
       }
     }
-  },
-  "tags": []
+  }
 }

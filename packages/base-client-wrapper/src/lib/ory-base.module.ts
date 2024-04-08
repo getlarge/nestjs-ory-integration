@@ -12,6 +12,7 @@ import {
 import { OryBaseService } from './ory-base.service';
 
 declare module 'axios' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface AxiosRequestConfig extends AxiosExtraRequestConfig {}
 }
 
