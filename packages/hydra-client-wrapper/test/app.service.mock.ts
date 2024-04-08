@@ -5,7 +5,7 @@ import { OAuth2Client } from '@ory/client';
 export class ExampleService {
   getExample(client: OAuth2Client) {
     return {
-      message: client.client_id
+      message: client.client_id,
     };
   }
 }
