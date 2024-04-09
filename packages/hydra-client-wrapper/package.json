@@ -1,6 +1,6 @@
 {
   "name": "@getlarge/hydra-client-wrapper",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "license": "MIT",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/hydra-client-wrapper",
   "publishConfig": {

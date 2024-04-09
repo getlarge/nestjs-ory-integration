@@ -1,3 +1,15 @@
+## 0.2.0 (2024-04-09)
+
+
+### 🚀 Features
+
+- **hydra-client-wrapper:** add isValidToken option in `OryOAuth2AuthenticationGuard` ([9304364](https://github.com/getlarge/nestjs-ory-integration/commit/9304364))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.1.1 (2024-04-09)
 
 
