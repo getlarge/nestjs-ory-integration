@@ -32,7 +32,13 @@
       }
     },
     "nx-release-publish": {
-      "executor": "@nx/js:release-publish"
+      "executor": "@nx/js:release-publish",
+      "dependsOn": [
+        {
+          "target": "build",
+          "params": "forward"
+        }
+      ]
     }
   },
   "tags": []
