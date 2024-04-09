@@ -18,6 +18,7 @@ export interface IOryOAuth2AuthenticationGuard {
 export interface OryOAuth2AuthenticationGuardOptions {
   scopeResolver: (ctx: ExecutionContext) => string;
   accessTokenResolver: (ctx: ExecutionContext) => string;
+  isValidToken: (token: IntrospectedOAuth2Token) => boolean;
   postValidationHook?: (
     this: IOryOAuth2AuthenticationGuard,
     ctx: ExecutionContext,
@@ -32,6 +33,7 @@ const defaultOptions: OryOAuth2AuthenticationGuardOptions = {
       .switchToHttp()
       .getRequest()
       ?.headers?.authorization?.replace('Bearer ', ''),
+  isValidToken: (token) => token.active,
   scopeResolver: () => '',
   unauthorizedFactory() {
     return new UnauthorizedException();
@@ -48,6 +50,7 @@ export const OryOAuth2AuthenticationGuard = (
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const {
         accessTokenResolver,
+        isValidToken,
         postValidationHook,
         scopeResolver,
         unauthorizedFactory,
@@ -72,8 +75,8 @@ export const OryOAuth2AuthenticationGuard = (
       } catch (error) {
         throw unauthorizedFactory(context, error);
       }
-      if (!decodedToken.active) {
-        throw unauthorizedFactory(context, new Error('Token is not active'));
+      if (!isValidToken(decodedToken)) {
+        throw unauthorizedFactory(context, new Error('Invalid token'));
       }
       if (typeof postValidationHook === 'function') {
         await postValidationHook.bind(this)(context, decodedToken);
