@@ -1,3 +1,15 @@
+## 0.1.7 (2024-04-09)
+
+
+### 🩹 Fixes
+
+- **kratos-client-wrapper:** fail fast when token is missing ([c0dbd2e](https://github.com/getlarge/nestjs-ory-integration/commit/c0dbd2e))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.1.6 (2024-04-05)
 
 

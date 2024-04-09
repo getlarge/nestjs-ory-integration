@@ -1,3 +1,15 @@
+## 0.1.1 (2024-04-09)
+
+
+### 🩹 Fixes
+
+- **hydra-client-wrapper:** fail fast when token is missing ([61f049e](https://github.com/getlarge/nestjs-ory-integration/commit/61f049e))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.1.0 (2024-04-08)
 
 
