@@ -56,10 +56,14 @@ export const OryOAuth2AuthenticationGuard = (
         ...options,
       };
 
+      const scope = scopeResolver(context);
+      const token = accessTokenResolver(context);
+      if (!token) {
+        throw unauthorizedFactory(context, new Error('No token provided'));
+      }
+
       let decodedToken: IntrospectedOAuth2Token;
       try {
-        const scope = scopeResolver(context);
-        const token = accessTokenResolver(context);
         const { data } = await this.oryService.introspectOAuth2Token({
           token,
           ...(scope && { scope }),

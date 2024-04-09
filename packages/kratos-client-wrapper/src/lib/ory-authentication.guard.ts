@@ -10,11 +10,17 @@ import type { Session } from '@ory/client';
 
 import { OryFrontendService } from './ory-frontend';
 
+export interface IOryAuthenticationGuard {
+  canActivate(context: ExecutionContext): Promise<boolean>;
+  oryService: OryFrontendService;
+}
+
 export interface OryAuthenticationGuardOptions {
   cookieResolver: (ctx: ExecutionContext) => string;
   isValidSession: (session: Session) => boolean;
   sessionTokenResolver: (ctx: ExecutionContext) => string;
   postValidationHook?: (
+    this: IOryAuthenticationGuard,
     ctx: ExecutionContext,
     session: Session
   ) => void | Promise<void>;
@@ -55,10 +61,13 @@ export const OryAuthenticationGuard = (
         ...options,
       };
 
+      const cookie = cookieResolver(context);
+      const xSessionToken = sessionTokenResolver(context);
+      if (!cookie && !xSessionToken) {
+        throw unauthorizedFactory(context, new Error('No session token'));
+      }
       let session: Session;
       try {
-        const cookie = cookieResolver(context);
-        const xSessionToken = sessionTokenResolver(context);
         const { data } = await this.oryService.toSession({
           cookie,
           xSessionToken,
@@ -72,7 +81,7 @@ export const OryAuthenticationGuard = (
         throw unauthorizedFactory(context, new Error('Invalid session'));
       }
       if (typeof postValidationHook === 'function') {
-        await postValidationHook(context, session);
+        await postValidationHook.bind(this)(context, session);
       }
       return true;
     }
