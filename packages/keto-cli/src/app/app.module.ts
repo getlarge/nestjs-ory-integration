@@ -24,6 +24,7 @@ import { GetRelationsCommand } from './get-relations.command';
       useFactory: (
         configService: ConfigService<OryKetoEnvironmentVariables, true>
       ) => ({
+        accessToken: configService.get('ORY_KETO_API_KEY'),
         basePath: configService.get('ORY_KETO_PUBLIC_URL'),
       }),
     }),
