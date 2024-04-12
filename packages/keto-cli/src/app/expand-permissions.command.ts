@@ -26,7 +26,7 @@ export class ExpandPermissionsCommand extends CommandRunner {
 
   async run(passedParams: string[], options: CommandOptions): Promise<void> {
     const { depth, tuple } = options;
-    if (options.basePath) {
+    if (options.basePath || options.accessToken) {
       this.oryPermissionsService.config = new Configuration({
         ...this.oryPermissionsService.config,
         ...options,
@@ -70,6 +70,15 @@ export class ExpandPermissionsCommand extends CommandRunner {
     required: false,
   })
   parseBasePath(val: string): string | undefined {
+    return val;
+  }
+
+  @Option({
+    flags: '-a, --accessToken [string]',
+    description: 'Ory Keto Access Token',
+    required: false,
+  })
+  parseAccessToken(val: string): string | undefined {
     return val;
   }
 }
