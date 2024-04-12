@@ -14,6 +14,7 @@ export class OryPermissionsService extends PermissionApi {
     super(
       new Configuration({
         basePath: options.basePath,
+        accessToken: options.accessToken,
       }),
       options.basePath,
       baseService.axios as ConstructorParameters<typeof PermissionApi>[2]

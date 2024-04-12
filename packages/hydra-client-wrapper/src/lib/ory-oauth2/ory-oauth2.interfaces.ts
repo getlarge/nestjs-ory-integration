@@ -8,7 +8,7 @@ import {
 
 export interface IOryOAuth2ModuleOptions extends OryBaseModuleOptions {
   basePath: string;
-  accessToken: string;
+  accessToken?: string;
 }
 
 export class OryOAuth2ModuleOptions
@@ -16,7 +16,7 @@ export class OryOAuth2ModuleOptions
   implements IOryOAuth2ModuleOptions
 {
   basePath: string;
-  accessToken: string;
+  accessToken?: string;
   constructor(options: IOryOAuth2ModuleOptions) {
     super(options);
     this.basePath = options.basePath;

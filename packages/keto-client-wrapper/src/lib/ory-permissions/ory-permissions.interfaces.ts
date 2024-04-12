@@ -8,6 +8,7 @@ import {
 
 export interface IOryPermissionsModuleOptions extends OryBaseModuleOptions {
   basePath: string;
+  accessToken?: string;
 }
 
 export class OryPermissionsModuleOptions
@@ -15,9 +16,11 @@ export class OryPermissionsModuleOptions
   implements IOryPermissionsModuleOptions
 {
   basePath: string;
+  accessToken?: string;
   constructor(options: IOryPermissionsModuleOptions) {
     super(options);
     this.basePath = options.basePath;
+    this.accessToken = options.accessToken;
   }
 }
 
