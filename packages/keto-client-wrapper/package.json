@@ -2,6 +2,7 @@
   "name": "@getlarge/keto-client-wrapper",
   "version": "0.2.6",
   "license": "MIT",
+  "description": "NestJS Module wrapper for the Ory Keto API",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/keto-client-wrapper",
   "publishConfig": {
     "access": "public"
