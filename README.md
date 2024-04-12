@@ -26,7 +26,10 @@ Check the README of each package for more details.
 
 ## Examples
 
-Check the [ticketing repository](https://github.com/getlarge/ticketing) for a real-world example of how to use these packages.
+Check out the following projects for examples of using these packages:
+
+- [ticketing repository](https://github.com/getlarge/ticketing) is a real-world example of using Ory Kratos, Keto, and Hydra.
+- [cat fostering repository](https://github.com/getlarge/cat-fostering) is a small-scale example of using Ory Kratos, Keto via Ory Network.
 
 ## Misc
 
