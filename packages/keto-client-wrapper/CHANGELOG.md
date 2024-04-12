@@ -1,3 +1,15 @@
+## 0.2.6 (2024-04-12)
+
+
+### 🩹 Fixes
+
+- **keto-client-wrapper:** enable passing access token to Ory Keto permission API ([40dd56e](https://github.com/getlarge/nestjs-ory-integration/commit/40dd56e))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.2.5 (2024-04-05)
 
 

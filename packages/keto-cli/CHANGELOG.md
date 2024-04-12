@@ -1,3 +1,15 @@
+## 0.2.2 (2024-04-12)
+
+
+### 🩹 Fixes
+
+- **keto-cli:** support access token in commands using Ory permission API ([ed4177a](https://github.com/getlarge/nestjs-ory-integration/commit/ed4177a))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.2.1 (2024-04-05)
 
 
