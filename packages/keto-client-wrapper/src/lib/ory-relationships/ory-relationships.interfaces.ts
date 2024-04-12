@@ -8,7 +8,7 @@ import {
 
 export interface IOryRelationshipsModuleOptions extends OryBaseModuleOptions {
   basePath: string;
-  accessToken: string;
+  accessToken?: string;
 }
 
 export class OryRelationshipsModuleOptions
@@ -16,7 +16,7 @@ export class OryRelationshipsModuleOptions
   implements IOryRelationshipsModuleOptions
 {
   basePath: string;
-  accessToken: string;
+  accessToken?: string;
   constructor(options: IOryRelationshipsModuleOptions) {
     super(options);
     this.basePath = options.basePath;

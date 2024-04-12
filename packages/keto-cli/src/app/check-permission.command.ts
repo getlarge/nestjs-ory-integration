@@ -10,7 +10,8 @@ import {
 } from '@ory/client';
 import { Command, CommandRunner, Option } from 'nest-commander';
 
-interface CommandOptions extends Pick<Configuration, 'basePath'> {
+interface CommandOptions
+  extends Pick<Configuration, 'basePath' | 'accessToken'> {
   tuple: PermissionApiCheckPermissionRequest;
 }
 
@@ -24,7 +25,7 @@ export class CheckPermissionCommand extends CommandRunner {
 
   async run(passedParams: string[], options: CommandOptions): Promise<void> {
     const { tuple } = options;
-    if (options.basePath) {
+    if (options.basePath || options.accessToken) {
       this.oryPermissionsService.config = new Configuration({
         ...this.oryPermissionsService.config,
         ...options,
@@ -55,6 +56,15 @@ export class CheckPermissionCommand extends CommandRunner {
     required: false,
   })
   parseBasePath(val: string): string {
+    return val;
+  }
+
+  @Option({
+    flags: '-a, --accessToken [string]',
+    description: 'Ory Keto Access Token',
+    required: false,
+  })
+  parseAccessToken(val: string): string | undefined {
     return val;
   }
 }
