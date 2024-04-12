@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/getlarge/nestjs-ory-integration/" target="blank"><img src="https://ipfs.io/ipfs/QmZYYdxRQFabKqkbc64FB8br6bPeZTv1TJmCBomt2ncycj?filename=ory-nestjs-min.png" width="120" alt="NestOry Logo" /></a>
+  <a href="https://github.com/getlarge/nestjs-ory-integration/" target="blank"><img src="https://ipfs.io/ipfs/QmQ6CMaraTMrv8byJfY64mDM6o7citx1pgEobMKWEJaSCB?filename=ory-nestjs-min.png" width="120" alt="NestOry Logo" /></a>
 </p>
 
 # NestJS Ory Integration
