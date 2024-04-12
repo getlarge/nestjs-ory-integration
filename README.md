@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://github.com/getlarge/nestjs-ory-integration/" target="blank"><img src="https://ipfs.io/ipfs/QmZYYdxRQFabKqkbc64FB8br6bPeZTv1TJmCBomt2ncycj?filename=ory-nestjs-min.png" width="120" alt="NestOry Logo" /></a>
+</p>
+
 # NestJS Ory Integration
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
