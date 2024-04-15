@@ -11,7 +11,7 @@
     "tslib": "^2.3.0",
     "@getlarge/keto-client-wrapper": "0.2.6",
     "@nestjs/common": "^10.0.2",
-    "@nestjs/config": "^3.1.1",
+    "@nestjs/config": "^3.2.2",
     "@getlarge/keto-relations-parser": "0.0.9",
     "@ory/client": "^1.4.9",
     "nest-commander": "^3.12.5",
