@@ -11,6 +11,7 @@ import {
   RegistrationCommand,
   RegistrationQuestions,
 } from './registration.command';
+import { VerificationCommand } from './verification.command';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import {
     LoginQuestions,
     RegistrationCommand,
     RegistrationQuestions,
+    VerificationCommand,
   ],
 })
 export class AppModule {}
