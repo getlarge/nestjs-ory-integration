@@ -1,3 +1,15 @@
+## 0.3.0 (2024-04-15)
+
+
+### 🚀 Features
+
+- **kratos-cli:** add verification command ([a8591fd](https://github.com/getlarge/nestjs-ory-integration/commit/a8591fd))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.2.1 (2024-04-05)
 
 

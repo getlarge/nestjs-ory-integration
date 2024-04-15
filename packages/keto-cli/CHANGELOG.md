@@ -1,3 +1,15 @@
+## 0.2.3 (2024-04-15)
+
+
+### 🩹 Fixes
+
+- **keto-cli:** return missing accessToken option in OryPermissionsModule factory [skip ci] ([2563cde](https://github.com/getlarge/nestjs-ory-integration/commit/2563cde))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.2.2 (2024-04-12)
 
 
