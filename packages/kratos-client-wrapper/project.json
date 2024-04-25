@@ -54,6 +54,13 @@
         "command": "docker buildx build ./test --platform linux/amd64,linux/arm64 -t ghcr.io/getlarge/nestjs-ory-integration/kratos --push",
         "cwd": "packages/kratos-client-wrapper"
       }
+    },
+    "biome-lint": {
+      "executor": "@gitopslovers/nx-biome:biome-lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/kratos-client-wrapper/**/*.ts"]
+      }
     }
   }
 }

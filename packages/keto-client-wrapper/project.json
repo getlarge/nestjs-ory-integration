@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/keto-client-wrapper/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -47,7 +48,13 @@
         "command": "docker buildx build ./test --platform linux/amd64,linux/arm64 -t ghcr.io/getlarge/nestjs-ory-integration/keto --push",
         "cwd": "packages/keto-client-wrapper"
       }
+    },
+    "biome-lint": {
+      "executor": "@gitopslovers/nx-biome:biome-lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/keto-client-wrapper/**/*.ts"]
+      }
     }
-  },
-  "tags": []
+  }
 }

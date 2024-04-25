@@ -33,6 +33,13 @@
         "jestConfig": "packages/base-client-wrapper/jest.config.ts",
         "codeCoverage": true
       }
+    },
+    "biome-lint": {
+      "executor": "@gitopslovers/nx-biome:biome-lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/**/*.ts"]
+      }
     }
   }
 }

@@ -20,6 +20,8 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "@gitopslovers/nx-biome": "^1.2.3",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "18.2.3",

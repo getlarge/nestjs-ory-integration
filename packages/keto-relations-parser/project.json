@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/keto-relations-parser/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -39,7 +40,13 @@
         "jestConfig": "packages/keto-relations-parser/jest.config.ts",
         "codeCoverage": true
       }
+    },
+    "biome-lint": {
+      "executor": "@gitopslovers/nx-biome:biome-lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/keto-relations-parser/**/*.ts"]
+      }
     }
-  },
-  "tags": []
+  }
 }

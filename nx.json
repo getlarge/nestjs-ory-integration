@@ -10,7 +10,8 @@
     "production": [
       "!{projectRoot}/test/**",
       "!{projectRoot}/**/*.{spec,test}.ts",
-      "!{projectRoot}/node_modules/**"
+      "!{projectRoot}/node_modules/**",
+      "!{projectRoot}/.biome.json"
     ]
   },
   "release": {
@@ -25,7 +26,8 @@
       "conventionalCommits": true,
       "generatorOptions": {
         "skipLockFileUpdate": true
-      }
+      },
+      "preVersionCommand": "nx run-many --targets=build --skip-nx-cache"
     },
     "git": {
       "commit": true,
@@ -71,6 +73,10 @@
         "{workspaceRoot}/.eslintignore",
         "{workspaceRoot}/eslint.config.js"
       ]
+    },
+    "@gitopslovers/nx-biome:biome-lint": {
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/.biome.json"]
     }
   },
   "nxCloudAccessToken": "ZDU0ZWUwNDktM2YzZC00ODgzLWFiNTktYzQzNDVmOWZlNTE0fHJlYWQtd3JpdGU=",
