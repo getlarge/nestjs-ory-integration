@@ -1,9 +1,9 @@
-import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
+import type { INestApplication } from '@nestjs/common';
+import { Test, type TestingModule } from '@nestjs/testing';
 import { execSync } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
 import { join, resolve } from 'node:path';
-import { Issuer, TokenSet } from 'openid-client';
+import { Issuer, type TokenSet } from 'openid-client';
 import request from 'supertest';
 
 import { OryOAuth2Module, OryOAuth2Service, OryOidcModule } from '../src';
@@ -34,6 +34,7 @@ describe('Hydra client wrapper E2E', () => {
     };
   };
 
+  // TODO: increase timeout
   const exchangeToken = async (
     clientId: string,
     clientSecret: string

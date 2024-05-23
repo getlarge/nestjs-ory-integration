@@ -1,13 +1,18 @@
-import { HttpModule, HttpModuleOptions, HttpService } from '@nestjs/axios';
-import { DynamicModule, Module, Provider, Type } from '@nestjs/common';
+import { HttpModule, type HttpModuleOptions, HttpService } from '@nestjs/axios';
+import {
+  type DynamicModule,
+  Module,
+  type Provider,
+  type Type,
+} from '@nestjs/common';
 import axios from 'axios';
 
 import {
-  AxiosExtraRequestConfig,
-  IOryBaseModuleOptions,
-  OryBaseModuleAsyncOptions,
+  type AxiosExtraRequestConfig,
+  type IOryBaseModuleOptions,
+  type OryBaseModuleAsyncOptions,
   OryBaseModuleOptions,
-  OryBaseModuleOptionsFactory,
+  type OryBaseModuleOptionsFactory,
 } from './ory-base.interfaces';
 import { OryBaseService } from './ory-base.service';
 
