@@ -1,12 +1,16 @@
-import { defekt } from 'defekt';
+import { CustomErrorConstructor, defekt } from 'defekt';
 
 export type TupleToRelationshipErrorDetail = {
   tuple: unknown;
 };
 
-export class TupleToRelationshipError extends defekt<
-  { errors: Array<TupleToRelationshipErrorDetail> },
+const Defekt: CustomErrorConstructor<
+  {
+    errors: Array<TupleToRelationshipErrorDetail>;
+  },
   'TupleToRelationshipError'
->({
+> = defekt({
   code: 'TupleToRelationshipError',
-}) {}
+});
+
+export class TupleToRelationshipError extends Defekt {}

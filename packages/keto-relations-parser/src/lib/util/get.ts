@@ -1,8 +1,12 @@
-export const get = <TObject extends object, TKey extends keyof TObject>(
+export const get = <
+  TObject extends object,
+  TKey extends keyof TObject,
+  R = unknown
+>(
   obj: TObject,
   path: TKey,
   defaultValue = undefined
-) => {
+): R => {
   const travel = (regexp: RegExp) =>
     String.prototype.split
       .call(path, regexp)

@@ -1,5 +1,7 @@
-import { defekt } from 'defekt';
+import { CustomErrorConstructor, defekt } from 'defekt';
 
-export class UnknownError extends defekt<unknown, 'UnknownError'>({
+const Defekt: CustomErrorConstructor<unknown, 'UnknownError'> = defekt({
   code: 'UnknownError',
-}) {}
+});
+
+export class UnknownError extends Defekt {}

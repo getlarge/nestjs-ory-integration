@@ -1,4 +1,4 @@
-import { defekt } from 'defekt';
+import { CustomErrorConstructor, defekt } from 'defekt';
 
 export type RelationTupleSyntaxErrorDetail = {
   wholeInput: string;
@@ -7,9 +7,11 @@ export type RelationTupleSyntaxErrorDetail = {
   offendingSymbol?: string;
 };
 
-export class RelationTupleSyntaxError extends defekt<
-  { errors: Array<RelationTupleSyntaxErrorDetail> },
+const Defekt: CustomErrorConstructor<
+  {
+    errors: Array<RelationTupleSyntaxErrorDetail>;
+  },
   'RelationTupleSyntaxError'
->({
-  code: 'RelationTupleSyntaxError',
-}) {}
+> = defekt({ code: 'RelationTupleSyntaxError' });
+
+export class RelationTupleSyntaxError extends Defekt {}

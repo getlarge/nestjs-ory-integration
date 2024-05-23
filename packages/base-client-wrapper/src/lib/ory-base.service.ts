@@ -1,5 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { setTimeout } from 'node:timers/promises';
 
 import { isAxiosError, isOryError, OryError } from './ory-error';
 
@@ -33,7 +34,7 @@ export class OryBaseService implements OnModuleInit {
             this.logger.debug(
               `Retrying request to ${config.url} in ${retryDelay}ms`
             );
-            await new Promise((resolve) => setTimeout(resolve, retryDelay));
+            await setTimeout(retryDelay);
             return this.httpService.axiosRef(config);
           }
           const oryError = new OryError(error);
