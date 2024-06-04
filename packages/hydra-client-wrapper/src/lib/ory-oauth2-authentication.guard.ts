@@ -16,15 +16,28 @@ export interface IOryOAuth2AuthenticationGuard {
 }
 
 export interface OryOAuth2AuthenticationGuardOptions {
-  scopeResolver: (ctx: ExecutionContext) => string | Promise<string>;
-  accessTokenResolver: (ctx: ExecutionContext) => string | Promise<string>;
-  isValidToken: (token: IntrospectedOAuth2Token) => boolean;
+  scopeResolver: (
+    this: IOryOAuth2AuthenticationGuard,
+    ctx: ExecutionContext
+  ) => string | Promise<string>;
+  accessTokenResolver: (
+    this: IOryOAuth2AuthenticationGuard,
+    ctx: ExecutionContext
+  ) => string | Promise<string>;
+  isValidToken: (
+    this: IOryOAuth2AuthenticationGuard,
+    token: IntrospectedOAuth2Token
+  ) => boolean;
   postValidationHook?: (
     this: IOryOAuth2AuthenticationGuard,
     ctx: ExecutionContext,
     token: IntrospectedOAuth2Token
   ) => void | Promise<void>;
-  unauthorizedFactory: (ctx: ExecutionContext, error: unknown) => Error;
+  unauthorizedFactory: (
+    this: IOryOAuth2AuthenticationGuard,
+    ctx: ExecutionContext,
+    error: unknown
+  ) => Error;
 }
 
 const defaultOptions: OryOAuth2AuthenticationGuardOptions = {
@@ -59,10 +72,13 @@ export const OryOAuth2AuthenticationGuard = (
         ...options,
       };
 
-      const scope = await scopeResolver(context);
-      const token = await accessTokenResolver(context);
+      const scope = await scopeResolver.bind(this)(context);
+      const token = await accessTokenResolver.bind(this)(context);
       if (!token) {
-        throw unauthorizedFactory(context, new Error('No token provided'));
+        throw unauthorizedFactory.bind(this)(
+          context,
+          new Error('No token provided')
+        );
       }
 
       let decodedToken: IntrospectedOAuth2Token;
@@ -73,10 +89,13 @@ export const OryOAuth2AuthenticationGuard = (
         });
         decodedToken = data;
       } catch (error) {
-        throw unauthorizedFactory(context, error);
+        throw unauthorizedFactory.bind(this)(context, error);
       }
-      if (!isValidToken(decodedToken)) {
-        throw unauthorizedFactory(context, new Error('Invalid token'));
+      if (!isValidToken.bind(this)(decodedToken)) {
+        throw unauthorizedFactory.bind(this)(
+          context,
+          new Error('Invalid token')
+        );
       }
       if (typeof postValidationHook === 'function') {
         await postValidationHook.bind(this)(context, decodedToken);
