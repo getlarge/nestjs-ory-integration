@@ -16,15 +16,25 @@ export interface IOryAuthenticationGuard {
 }
 
 export interface OryAuthenticationGuardOptions {
-  cookieResolver: (ctx: ExecutionContext) => string;
-  isValidSession: (session: Session) => boolean;
-  sessionTokenResolver: (ctx: ExecutionContext) => string;
+  cookieResolver: (
+    this: IOryAuthenticationGuard,
+    ctx: ExecutionContext
+  ) => string | Promise<string>;
+  isValidSession: (this: IOryAuthenticationGuard, session: Session) => boolean;
+  sessionTokenResolver: (
+    this: IOryAuthenticationGuard,
+    ctx: ExecutionContext
+  ) => string | Promise<string>;
   postValidationHook?: (
     this: IOryAuthenticationGuard,
     ctx: ExecutionContext,
     session: Session
   ) => void | Promise<void>;
-  unauthorizedFactory: (ctx: ExecutionContext, error: unknown) => Error;
+  unauthorizedFactory: (
+    this: IOryAuthenticationGuard,
+    ctx: ExecutionContext,
+    error: unknown
+  ) => Error;
 }
 
 const defaultOptions: OryAuthenticationGuardOptions = {
@@ -61,10 +71,13 @@ export const OryAuthenticationGuard = (
         ...options,
       };
 
-      const cookie = cookieResolver(context);
-      const xSessionToken = sessionTokenResolver(context);
+      const cookie = await cookieResolver.bind(this)(context);
+      const xSessionToken = await sessionTokenResolver.bind(this)(context);
       if (!cookie && !xSessionToken) {
-        throw unauthorizedFactory(context, new Error('No session token'));
+        throw unauthorizedFactory.bind(this)(
+          context,
+          new Error('No session token')
+        );
       }
       let session: Session;
       try {
@@ -74,11 +87,14 @@ export const OryAuthenticationGuard = (
         });
         session = data;
       } catch (error) {
-        throw unauthorizedFactory(context, error);
+        throw unauthorizedFactory.bind(this)(context, error);
       }
 
-      if (!isValidSession(session)) {
-        throw unauthorizedFactory(context, new Error('Invalid session'));
+      if (!isValidSession.bind(this)(session)) {
+        throw unauthorizedFactory.bind(this)(
+          context,
+          new Error('Invalid session')
+        );
       }
       if (typeof postValidationHook === 'function') {
         await postValidationHook.bind(this)(context, session);

@@ -20,9 +20,16 @@ import {
 import { OryPermissionsService } from './ory-permissions';
 
 export interface OryAuthorizationGuardOptions {
-  errorFactory?: (error: Error) => Error;
-  postCheck?: (relationTuple: string | string[], isPermitted: boolean) => void;
-  unauthorizedFactory: (ctx: ExecutionContext, error: unknown) => Error;
+  postCheck?: (
+    this: IAuthorizationGuard,
+    relationTuple: string | string[],
+    isPermitted: boolean
+  ) => void;
+  unauthorizedFactory: (
+    this: IAuthorizationGuard,
+    ctx: ExecutionContext,
+    error: unknown
+  ) => Error;
 }
 
 export abstract class IAuthorizationGuard implements CanActivate {
@@ -80,14 +87,14 @@ export const OryAuthorizationGuard = (
         );
 
         if (result.hasError()) {
-          throw unauthorizedFactory(context, result.error);
+          throw unauthorizedFactory.bind(this)(context, result.error);
         }
 
         try {
           const { data } = await this.oryService.checkPermission(result.value);
           return { allowed: data.allowed, relationTuple };
         } catch (error) {
-          throw unauthorizedFactory(context, error);
+          throw unauthorizedFactory.bind(this)(context, error);
         }
       }
       const evaluatedConditions = await Promise.all(
@@ -119,10 +126,10 @@ export const OryAuthorizationGuard = (
         );
 
         if (postCheck) {
-          postCheck(relationTuple, allowed);
+          postCheck.bind(this)(relationTuple, allowed);
         }
         if (!allowed) {
-          throw unauthorizedFactory(
+          throw unauthorizedFactory.bind(this)(
             context,
             new Error(`Unauthorized access for ${relationTuple}`)
           );
