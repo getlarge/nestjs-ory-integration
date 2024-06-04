@@ -16,9 +16,9 @@ export interface IOryAuthenticationGuard {
 }
 
 export interface OryAuthenticationGuardOptions {
-  cookieResolver: (ctx: ExecutionContext) => string;
+  cookieResolver: (ctx: ExecutionContext) => string | Promise<string>;
   isValidSession: (session: Session) => boolean;
-  sessionTokenResolver: (ctx: ExecutionContext) => string;
+  sessionTokenResolver: (ctx: ExecutionContext) => string | Promise<string>;
   postValidationHook?: (
     this: IOryAuthenticationGuard,
     ctx: ExecutionContext,
@@ -61,8 +61,8 @@ export const OryAuthenticationGuard = (
         ...options,
       };
 
-      const cookie = cookieResolver(context);
-      const xSessionToken = sessionTokenResolver(context);
+      const cookie = await cookieResolver(context);
+      const xSessionToken = await sessionTokenResolver(context);
       if (!cookie && !xSessionToken) {
         throw unauthorizedFactory(context, new Error('No session token'));
       }

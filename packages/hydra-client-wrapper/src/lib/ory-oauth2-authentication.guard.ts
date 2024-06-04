@@ -16,8 +16,8 @@ export interface IOryOAuth2AuthenticationGuard {
 }
 
 export interface OryOAuth2AuthenticationGuardOptions {
-  scopeResolver: (ctx: ExecutionContext) => string;
-  accessTokenResolver: (ctx: ExecutionContext) => string;
+  scopeResolver: (ctx: ExecutionContext) => string | Promise<string>;
+  accessTokenResolver: (ctx: ExecutionContext) => string | Promise<string>;
   isValidToken: (token: IntrospectedOAuth2Token) => boolean;
   postValidationHook?: (
     this: IOryOAuth2AuthenticationGuard,
@@ -59,8 +59,8 @@ export const OryOAuth2AuthenticationGuard = (
         ...options,
       };
 
-      const scope = scopeResolver(context);
-      const token = accessTokenResolver(context);
+      const scope = await scopeResolver(context);
+      const token = await accessTokenResolver(context);
       if (!token) {
         throw unauthorizedFactory(context, new Error('No token provided'));
       }
