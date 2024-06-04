@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@getlarge/keto-client-wrapper": "0.2.6",
+    "@getlarge/keto-client-wrapper": "0.3.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/config": "^3.1.1",
     "@getlarge/keto-relations-parser": "0.0.9",

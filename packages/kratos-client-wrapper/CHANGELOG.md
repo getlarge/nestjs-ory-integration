@@ -1,3 +1,17 @@
+## 0.2.0 (2024-06-04)
+
+
+### 🚀 Features
+
+- support async resolvers ([1a5f80b](https://github.com/getlarge/nestjs-ory-integration/commit/1a5f80b))
+
+- bind this (Guard instance) to the Guard options factories ([f1b7d85](https://github.com/getlarge/nestjs-ory-integration/commit/f1b7d85))
+
+
+### ❤️  Thank You
+
+- getlarge @getlarge
+
 ## 0.1.8 (2024-04-12)
 
 
