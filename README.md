@@ -9,7 +9,9 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=getlarge_nestjs-ory-integration&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=getlarge_nestjs-ory-integration)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-This is a mono repository containing the following packages:
+🍃This suite of libraries will make the integration or Ory Kratos, Keto and Hydra a breeze in your next NestJS projects!
+
+📦This is a mono repository containing the following packages:
 
 | Package                                                             | Description                                                                                                            | Version                                                                                                                                          |
 | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -33,4 +35,4 @@ Check out the following projects for examples of using these packages:
 
 ## Misc
 
-You can read the [blog post](https://dev.to/getlarge/creating-ory-integration-libraries-for-nestjs-6pj) detailing the journey of creating these libraries.
+You can read the [blog post](https://dev.to/getlarge/integrating-ory-in-production-with-nestjs-3nic) describing the journey of creating these libraries.
