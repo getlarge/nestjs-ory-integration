@@ -1,0 +1,31 @@
+{
+  "formatter": { "enabled": true, "lineWidth": 120 },
+  "linter": {
+    "enabled": true,
+    "rules": { "recommended": false },
+    "ignore": ["**/*", "**/node_modules"]
+  },
+  "overrides": [
+    {
+      "include": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "linter": {
+        "rules": {
+          "correctness": { "noUnreachable": "error", "useYield": "error" },
+          "style": {
+            "noParameterAssign": "error",
+            "noVar": "error",
+            "useConst": "error"
+          },
+          "suspicious": {
+            "noEmptyBlockStatements": "error",
+            "noFallthroughSwitchClause": "error",
+            "useAwait": "error"
+          }
+        }
+      }
+    },
+    { "include": ["*.ts", "*.tsx"] },
+    { "include": ["*.js", "*.jsx"] },
+    { "include": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"] }
+  ]
+}
