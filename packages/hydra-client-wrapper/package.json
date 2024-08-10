@@ -4,6 +4,7 @@
   "license": "MIT",
   "description": "NestJS Module wrapper for the Ory Hydra API",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/hydra-client-wrapper",
+  "author": "Edouard Maleix <ed@getlarge.eu>",
   "publishConfig": {
     "access": "public"
   },

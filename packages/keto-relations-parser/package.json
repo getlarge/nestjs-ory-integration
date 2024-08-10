@@ -4,6 +4,7 @@
   "license": "MIT",
   "description": "A parser for Ory Keto relation policies",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/keto-relations-parser",
+  "author": "Edouard Maleix <ed@getlarge.eu>",
   "publishConfig": {
     "access": "public"
   },
