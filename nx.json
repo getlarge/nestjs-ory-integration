@@ -72,6 +72,11 @@
         "{workspaceRoot}/.eslintignore",
         "{workspaceRoot}/eslint.config.js"
       ]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "nxCloudAccessToken": "ODFiNmMyMzAtODQ1OS00NGQzLWJjYmYtNzA2MmNlMTc2NTc5fHJlYWQtd3JpdGU=",

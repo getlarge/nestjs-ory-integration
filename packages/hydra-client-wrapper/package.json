@@ -12,10 +12,10 @@
     "tslib": "^2.7.0"
   },
   "peerDependencies": {
-    "axios": "1.7.7",
-    "@nestjs/axios": "^3.0.3",
-    "@nestjs/common": "^10.4.4",
-    "@ory/client": "^1.15.5"
+    "@nestjs/axios": "^3",
+    "@nestjs/common": "^10",
+    "axios": "^1.6 || ^1.7",
+    "@ory/client": "^1"
   },
   "type": "commonjs",
   "main": "./src/index.js",

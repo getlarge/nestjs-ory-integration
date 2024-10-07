@@ -4,10 +4,13 @@
   "version": "0.1.6",
   "license": "MIT",
   "dependencies": {
-    "@nestjs/axios": "^3.0.3",
-    "@nestjs/common": "^10.4.4",
     "tslib": "^2.7.0",
     "axios": "1.7.7"
+  },
+  "peerDependencies": {
+    "@nestjs/axios": "^3",
+    "@nestjs/common": "^10",
+    "axios": "^1.6 || ^1.7"
   },
   "type": "commonjs",
   "main": "./src/index.js",
