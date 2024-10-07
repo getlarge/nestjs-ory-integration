@@ -11,13 +11,15 @@
   "dependencies": {
     "tslib": "^2.7.0",
     "@getlarge/keto-client-wrapper": "0.3.1",
-    "@nestjs/common": "^10.4.4",
-    "@nestjs/config": "^3.2.3",
     "@getlarge/keto-relations-parser": "0.0.10",
-    "@ory/client": "^1.15.5",
-    "nest-commander": "^3.12.5",
+    "nest-commander": "^3.12.5"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^10",
+    "@nestjs/config": "^3",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.1"
+    "class-validator": "^0.14.1",
+    "@ory/client": "^1"
   },
   "type": "commonjs",
   "bin": {
