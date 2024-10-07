@@ -75,7 +75,7 @@ describe('Tuple to relationships parameters', () => {
   });
 
   describe('createFlattenRelationQuery', () => {
-    it('should create a flattened RelationQuery from a RelationTuple', () => {
+    it('should create a flattened RelationQuery from a RelationTuple with a subjectId', () => {
       const result = createFlattenRelationQuery(tuple);
       expect(result.hasError()).toBe(false);
       expect(result.hasValue()).toBe(true);
@@ -84,6 +84,23 @@ describe('Tuple to relationships parameters', () => {
         object: tuple.object,
         relation: tuple.relation,
         subjectId: tuple.subjectIdOrSet,
+      });
+    });
+
+    it('should create a flattened RelationQuery from a RelationTuple with a subjectSet', () => {
+      const result = createFlattenRelationQuery({
+        ...tuple,
+        subjectIdOrSet: { namespace: 'namespace', object: 'object' },
+      });
+      expect(result.hasError()).toBe(false);
+      expect(result.hasValue()).toBe(true);
+      expect(result.hasValue() && result.value).toEqual({
+        namespace: tuple.namespace,
+        object: tuple.object,
+        relation: tuple.relation,
+        subjectSetNamespace: 'namespace',
+        subjectSetObject: 'object',
+        subjectSetRelation: '',
       });
     });
 
@@ -104,7 +121,7 @@ describe('Tuple to relationships parameters', () => {
   });
 
   describe('createRelationship', () => {
-    it('should create a Relationship from a RelationTuple', () => {
+    it('should create a Relationship from a RelationTuple with a subjectId', () => {
       const result = createRelationship(tuple as RelationTuple);
       expect(result.hasError()).toBe(false);
       expect(result.hasValue()).toBe(true);
