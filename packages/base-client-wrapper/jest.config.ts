@@ -1,4 +1,3 @@
- 
 export default {
   displayName: 'base-client-wrapper',
   preset: '../../jest.preset.js',

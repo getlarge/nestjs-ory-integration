@@ -182,7 +182,7 @@ export class RelationTupleBuilder {
 
   // TODO: check if relation is plural
   private get isPlural(): boolean {
-    return false
+    return false;
   }
 
   // TODO: check if relation is a verb

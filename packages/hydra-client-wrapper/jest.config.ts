@@ -1,4 +1,3 @@
- 
 export default {
   displayName: 'hydra-client-wrapper',
   preset: '../../jest.preset.js',
