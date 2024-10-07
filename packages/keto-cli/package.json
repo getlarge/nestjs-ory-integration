@@ -1,6 +1,6 @@
 {
   "name": "@getlarge/keto-cli",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "description": "CLI wrapper for the Ory Keto API",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/keto-cli",
@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "tslib": "^2.7.0",
-    "@getlarge/keto-client-wrapper": "0.3.0",
+    "@getlarge/keto-client-wrapper": "0.3.1",
     "@nestjs/common": "^10.4.4",
     "@nestjs/config": "^3.2.3",
-    "@getlarge/keto-relations-parser": "0.0.9",
+    "@getlarge/keto-relations-parser": "0.0.10",
     "@ory/client": "^1.15.5",
     "nest-commander": "^3.12.5",
     "class-transformer": "^0.5.1",

@@ -1,3 +1,10 @@
+## 0.2.4 (2024-10-07)
+
+### 🧱 Updated Dependencies
+
+- Updated keto-relations-parser to 0.0.10
+- Updated keto-client-wrapper to 0.3.1
+
 ## 0.2.3 (2024-04-15)
 
 

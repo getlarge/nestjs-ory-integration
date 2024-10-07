@@ -1,3 +1,13 @@
+## 0.0.10 (2024-10-07)
+
+### 🩹 Fixes
+
+- **keto-relations-parser:** accept empty string in parameters ([4f76aea](https://github.com/getlarge/nestjs-ory-integration/commit/4f76aea))
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.0.9 (2024-04-05)
 
 
