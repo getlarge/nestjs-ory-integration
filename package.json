@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^2.1.1",
+    "@nestjs/platform-express": "^10.4.4",
     "@nestjs/schematics": "^10.1.4",
     "@nestjs/testing": "^10.4.4",
     "@nx/eslint": "20.0.0",

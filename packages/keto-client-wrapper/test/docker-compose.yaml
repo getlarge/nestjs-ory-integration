@@ -1,5 +1,3 @@
-version: '2.7'
-
 services:
   keto:
     image: ghcr.io/getlarge/nestjs-ory-integration/keto:latest
