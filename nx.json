@@ -1,23 +1,37 @@
 {
-  "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": true
+    }
+  },
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "production": [
       "!{projectRoot}/test/**",
       "!{projectRoot}/**/*.{spec,test}.ts",
-      "!{projectRoot}/node_modules/**"
+      "!{projectRoot}/node_modules/**",
+      "!{projectRoot}/eslint.config.js"
     ]
   },
   "release": {
     "projects": ["packages/*"],
     "projectsRelationship": "independent",
-    "changelog": { "projectChangelogs": { "createRelease": "github" } },
+    "changelog": {
+      "projectChangelogs": {
+        "createRelease": "github"
+      }
+    },
     "version": {
       "conventionalCommits": true,
-      "generatorOptions": { "skipLockFileUpdate": true }
+      "generatorOptions": {
+        "skipLockFileUpdate": true
+      }
     },
-    "git": { "commit": true, "tag": true }
+    "git": {
+      "commit": true,
+      "tag": true
+    }
   },
   "targetDefaults": {
     "build": {
@@ -28,15 +42,27 @@
     "@nx/jest:jest": {
       "cache": true,
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
-      "options": { "passWithNoTests": true },
-      "configurations": { "ci": { "ci": true, "codeCoverage": true } }
+      "options": {
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
     },
     "nx-release-publish": {
       "options": {
         "packageRoot": "dist/{projectRoot}",
         "registry": "https://registry.npmjs.org/"
       },
-      "dependsOn": [{ "target": "build", "params": "forward" }]
+      "dependsOn": [
+        {
+          "target": "build",
+          "params": "forward"
+        }
+      ]
     },
     "@nx/eslint:lint": {
       "cache": true,

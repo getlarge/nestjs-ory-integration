@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/keto-client-wrapper/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -48,6 +49,5 @@
         "cwd": "packages/keto-client-wrapper"
       }
     }
-  },
-  "tags": []
+  }
 }

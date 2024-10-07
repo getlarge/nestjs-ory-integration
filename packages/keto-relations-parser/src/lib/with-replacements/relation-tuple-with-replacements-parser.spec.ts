@@ -1,5 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-/* eslint-disable max-lines-per-function */
 import { type RelationTuple } from '../relation-tuple.js';
 import { applyReplacements } from './relation-tuple-with-replacements.js';
 import { parseRelationTupleWithReplacements } from './relation-tuple-with-replacements-parser.js';

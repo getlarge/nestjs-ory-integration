@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
   displayName: 'keto-client-wrapper',
   preset: '../../jest.preset.js',
