@@ -1,3 +1,17 @@
+## 0.2.5 (2024-10-07)
+
+### 🩹 Fixes
+
+- relax peer dependencies ([687b53b](https://github.com/getlarge/nestjs-ory-integration/commit/687b53b))
+
+### 🧱 Updated Dependencies
+
+- Updated keto-client-wrapper to 0.3.2
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.2.4 (2024-10-07)
 
 ### 🧱 Updated Dependencies

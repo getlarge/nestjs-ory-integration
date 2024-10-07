@@ -1,3 +1,17 @@
+## 0.3.1 (2024-10-07)
+
+### 🩹 Fixes
+
+- relax peer dependencies ([687b53b](https://github.com/getlarge/nestjs-ory-integration/commit/687b53b))
+
+### 🧱 Updated Dependencies
+
+- Updated kratos-client-wrapper to 0.2.1
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.3.0 (2024-04-15)
 
 

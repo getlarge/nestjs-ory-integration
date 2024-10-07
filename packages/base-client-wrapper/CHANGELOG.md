@@ -1,3 +1,13 @@
+## 0.1.7 (2024-10-07)
+
+### 🩹 Fixes
+
+- relax peer dependencies ([687b53b](https://github.com/getlarge/nestjs-ory-integration/commit/687b53b))
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.1.6 (2024-04-05)
 
 This was a version bump only for base-client-wrapper to align it with other projects, there were no code changes.
