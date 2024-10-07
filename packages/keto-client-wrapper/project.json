@@ -32,7 +32,11 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": ["{options.outputFile}"],
+      "lintFilePatterns": [
+        "packages/keto-client-wrapper/**/*.{ts,tsx,js,jsx}",
+        "packages/keto-client-wrapper/package.json"
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",

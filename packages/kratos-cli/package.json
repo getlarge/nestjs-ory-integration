@@ -9,14 +9,14 @@
     "access": "public"
   },
   "dependencies": {
-    "tslib": "^2.3.0",
-    "@nestjs/common": "^10.0.2",
+    "tslib": "^2.7.0",
+    "@nestjs/common": "^10.4.4",
     "@getlarge/kratos-client-wrapper": "0.2.0",
-    "@nestjs/config": "^3.1.1",
-    "nest-commander": "^3.12.5",
+    "@nestjs/config": "^3.2.3",
+    "nest-commander": "^3.15.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
-    "@ory/client": "^1.4.9"
+    "@ory/client": "^1.15.5"
   },
   "type": "commonjs",
   "bin": {
