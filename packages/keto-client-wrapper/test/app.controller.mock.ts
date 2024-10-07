@@ -21,9 +21,9 @@ export class ExampleController {
   })
   @UseGuards(
     OryAuthorizationGuard({
-      postCheck(relationTuple, isPermitted) {
-        Logger.log('relationTuple', relationTuple);
-        Logger.log('isPermitted', isPermitted);
+      postCheck(result) {
+        Logger.log('relationTuple', Object.keys(result.results)[0]);
+        Logger.log('isPermitted', result.allowed);
       },
     })
   )
@@ -75,9 +75,9 @@ export class ExampleController {
   })
   @UseGuards(
     OryAuthorizationGuard({
-      postCheck(relationTuple, isPermitted) {
-        Logger.log('relationTuple', relationTuple);
-        Logger.log('isPermitted', isPermitted);
+      postCheck(result) {
+        Logger.log('relationTuples', Object.keys(result.results));
+        Logger.log('isPermitted', result.allowed);
       },
     })
   )

@@ -70,8 +70,8 @@ describe('OryAuthorizationGuard', () => {
     it('should allow access for a single permitted relation tuple', async () => {
       const factory = () => 'user:123#access@resource:456';
       jest
-        .spyOn(oryPermissionsService, 'checkPermission')
-        .mockResolvedValue(mockAxiosResponse({ allowed: true }));
+        .spyOn(oryPermissionsService, 'batchCheckPermission')
+        .mockResolvedValue(mockAxiosResponse({ results: [{ allowed: true }] }));
 
       const result = await oryAuthorizationGuard.evaluateConditions(
         factory,
@@ -89,9 +89,12 @@ describe('OryAuthorizationGuard', () => {
         ],
       } satisfies EnhancedRelationTupleFactory;
       jest
-        .spyOn(oryPermissionsService, 'checkPermission')
-        .mockResolvedValueOnce(mockAxiosResponse({ allowed: true }))
-        .mockResolvedValueOnce(mockAxiosResponse({ allowed: false }));
+        .spyOn(oryPermissionsService, 'batchCheckPermission')
+        .mockResolvedValueOnce(
+          mockAxiosResponse({
+            results: [{ allowed: false }, { allowed: true }],
+          })
+        );
 
       const result = await oryAuthorizationGuard.evaluateConditions(
         factory,
@@ -109,9 +112,12 @@ describe('OryAuthorizationGuard', () => {
         ],
       } satisfies EnhancedRelationTupleFactory;
       jest
-        .spyOn(oryPermissionsService, 'checkPermission')
-        .mockResolvedValueOnce(mockAxiosResponse({ allowed: false }))
-        .mockResolvedValueOnce(mockAxiosResponse({ allowed: true }));
+        .spyOn(oryPermissionsService, 'batchCheckPermission')
+        .mockResolvedValueOnce(
+          mockAxiosResponse({
+            results: [{ allowed: false }, { allowed: true }],
+          })
+        );
 
       const result = await oryAuthorizationGuard.evaluateConditions(
         factory,
@@ -120,7 +126,7 @@ describe('OryAuthorizationGuard', () => {
       expect(result.allowed).toBe(true);
     });
 
-    it('should correctly evaluate nested AND/OR conditions', async () => {
+    it('should correctly evaluate nested AND/OR conditions - 1', async () => {
       const factory = {
         type: 'AND',
         conditions: [
@@ -135,10 +141,172 @@ describe('OryAuthorizationGuard', () => {
         ],
       } satisfies EnhancedRelationTupleFactory;
       jest
-        .spyOn(oryPermissionsService, 'checkPermission')
-        .mockResolvedValueOnce(mockAxiosResponse({ allowed: true }))
-        .mockResolvedValueOnce(mockAxiosResponse({ allowed: true }))
-        .mockResolvedValueOnce(mockAxiosResponse({ allowed: true }));
+        .spyOn(oryPermissionsService, 'batchCheckPermission')
+        .mockResolvedValueOnce(
+          mockAxiosResponse({
+            results: [{ allowed: true }, { allowed: false }, { allowed: true }],
+          })
+        );
+
+      const result = await oryAuthorizationGuard.evaluateConditions(
+        factory,
+        context
+      );
+      expect(result.allowed).toBe(true);
+    });
+
+    it('should correctly evaluate nested AND/OR conditions - 2', async () => {
+      const factory = {
+        type: 'AND',
+        conditions: [
+          {
+            type: 'OR',
+            conditions: [
+              () => 'user:123#access@resource:456',
+              () => 'user:123#access@resource:789',
+            ],
+          },
+          () => 'user:123#access@resource:101',
+        ],
+      } satisfies EnhancedRelationTupleFactory;
+      jest
+        .spyOn(oryPermissionsService, 'batchCheckPermission')
+        .mockResolvedValueOnce(
+          mockAxiosResponse({
+            results: [
+              { allowed: false },
+              { allowed: false },
+              { allowed: true },
+            ],
+          })
+        );
+
+      const result = await oryAuthorizationGuard.evaluateConditions(
+        factory,
+        context
+      );
+      expect(result.allowed).toBe(false);
+    });
+
+    it('should correctly evaluate nested AND/OR conditions - 3', async () => {
+      const factory = {
+        type: 'AND',
+        conditions: [
+          {
+            type: 'OR',
+            conditions: [
+              () => 'user:123#access@resource:456',
+              () => 'user:123#access@resource:789',
+            ],
+          },
+          () => 'user:123#access@resource:101',
+        ],
+      } satisfies EnhancedRelationTupleFactory;
+      jest
+        .spyOn(oryPermissionsService, 'batchCheckPermission')
+        .mockResolvedValueOnce(
+          mockAxiosResponse({
+            results: [
+              { allowed: true },
+              { allowed: false },
+              { allowed: false },
+            ],
+          })
+        );
+
+      const result = await oryAuthorizationGuard.evaluateConditions(
+        factory,
+        context
+      );
+      expect(result.allowed).toBe(false);
+    });
+
+    it('should correctly evaluate nested AND/OR conditions - 4', async () => {
+      const factory = {
+        type: 'AND',
+        conditions: [
+          {
+            type: 'OR',
+            conditions: [
+              {
+                type: 'OR',
+                conditions: [
+                  () => 'user:123#access@resource:456',
+                  () => 'user:123#access@resource:457',
+                ],
+              },
+              {
+                type: 'AND',
+                conditions: [
+                  () => 'user:123#access@resource:459',
+                  () => 'user:123#access@resource:460',
+                ],
+              },
+            ],
+          },
+          () => 'user:123#access@resource:101',
+        ],
+      } satisfies EnhancedRelationTupleFactory;
+      jest
+        .spyOn(oryPermissionsService, 'batchCheckPermission')
+        .mockResolvedValueOnce(
+          mockAxiosResponse({
+            results: [
+              { allowed: true },
+              { allowed: false },
+              { allowed: false },
+              { allowed: false },
+              { allowed: true },
+            ],
+          })
+        );
+
+      const result = await oryAuthorizationGuard.evaluateConditions(
+        factory,
+        context
+      );
+      expect(result.allowed).toBe(true);
+    });
+
+    it('should correctly evaluate nested AND/OR conditions - 5', async () => {
+      const factory = {
+        type: 'AND',
+        conditions: [
+          {
+            type: 'OR',
+            conditions: [
+              {
+                type: 'OR',
+                conditions: [
+                  () => 'user:123#access@resource:456',
+                  () => 'user:123#access@resource:457',
+                ],
+              },
+              {
+                type: 'AND',
+                conditions: [
+                  () => 'user:123#access@resource:459',
+                  () => 'user:123#access@resource:460',
+                ],
+              },
+            ],
+          },
+          () => 'user:123#access@resource:101',
+        ],
+      } satisfies EnhancedRelationTupleFactory;
+      jest
+        .spyOn(oryPermissionsService, 'batchCheckPermission')
+        .mockResolvedValueOnce(
+          mockAxiosResponse({
+            results: [
+              { allowed: true },
+              { allowed: false },
+              { allowed: true },
+              { allowed: true },
+              { allowed: true },
+            ],
+          })
+        );
 
       const result = await oryAuthorizationGuard.evaluateConditions(
         factory,
