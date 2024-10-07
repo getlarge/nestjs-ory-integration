@@ -69,7 +69,7 @@ describe('Kratos client wrapper E2E', () => {
 
   beforeAll(() => {
     if (!process.env['CI']) {
-      execSync(`docker-compose -f ${dockerComposeFile} up -d --wait`, {
+      execSync(`docker compose -f ${dockerComposeFile} up -d --wait`, {
         stdio: 'ignore',
       });
     }
@@ -77,7 +77,7 @@ describe('Kratos client wrapper E2E', () => {
 
   afterAll(() => {
     if (!process.env['CI']) {
-      execSync(`docker-compose -f ${dockerComposeFile} down`, {
+      execSync(`docker compose -f ${dockerComposeFile} down`, {
         stdio: 'ignore',
       });
     }

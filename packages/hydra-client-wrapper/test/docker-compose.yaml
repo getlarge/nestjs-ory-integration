@@ -1,5 +1,3 @@
-version: '2.7'
-
 networks:
   ory:
     driver: bridge

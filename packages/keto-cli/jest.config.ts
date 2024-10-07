@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'keto-cli',
   preset: '../../jest.preset.js',

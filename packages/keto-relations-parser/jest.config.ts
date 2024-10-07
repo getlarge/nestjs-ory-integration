@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'keto-relations-parser',
   preset: '../../jest.preset.js',

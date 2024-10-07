@@ -89,14 +89,14 @@ export function createRelationQuery<
               replacements
             ) ?? '',
         },
-        (v) => !v
+        (v) => v === undefined || v === null
       ) as unknown as RelationQuery['subject_set'];
     } else {
       result.subject_id =
         resolveTupleProperty('subjectIdOrSet', tuple, replacements) ?? '';
     }
 
-    return value(omitBy(result, (v) => !v));
+    return value(omitBy(result, (v) => v === undefined || v === null));
   } catch (e) {
     return error(new UnknownError({ data: e }));
   }
@@ -138,7 +138,7 @@ export function createFlattenRelationQuery<
         resolveTupleProperty('subjectIdOrSet', tuple, replacements) ?? '';
     }
 
-    return value(omitBy(result, (v) => !v));
+    return value(omitBy(result, (v) => v === undefined || v === null));
   } catch (e) {
     return error(new UnknownError({ data: e }));
   }

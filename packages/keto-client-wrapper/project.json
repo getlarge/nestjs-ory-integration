@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/keto-client-wrapper/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -31,7 +32,11 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": ["{options.outputFile}"],
+      "lintFilePatterns": [
+        "packages/keto-client-wrapper/**/*.{ts,tsx,js,jsx}",
+        "packages/keto-client-wrapper/package.json"
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -48,6 +53,5 @@
         "cwd": "packages/keto-client-wrapper"
       }
     }
-  },
-  "tags": []
+  }
 }

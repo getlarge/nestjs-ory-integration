@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'kratos-client-wrapper',
   preset: '../../jest.preset.js',
