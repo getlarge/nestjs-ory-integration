@@ -1,3 +1,13 @@
+## 0.2.2 (2024-10-07)
+
+### 🩹 Fixes
+
+- update authorization header parsing to be case-insensitive ([b3bafcf](https://github.com/getlarge/nestjs-ory-integration/commit/b3bafcf))
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.2.1 (2024-10-07)
 
 ### 🩹 Fixes

@@ -1,3 +1,9 @@
+## 0.3.2 (2024-10-07)
+
+### 🧱 Updated Dependencies
+
+- Updated kratos-client-wrapper to 0.2.2
+
 ## 0.3.1 (2024-10-07)
 
 ### 🩹 Fixes
