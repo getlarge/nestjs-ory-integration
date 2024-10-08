@@ -91,7 +91,10 @@ export function createRelationQuery<
         },
         (v) => v === undefined || v === null
       ) as unknown as RelationQuery['subject_set'];
-    } else if (typeof subjectIdOrSet === 'string') {
+    } else if (
+      typeof subjectIdOrSet === 'string' ||
+      typeof subjectIdOrSet === 'function'
+    ) {
       result.subject_id =
         resolveTupleProperty('subjectIdOrSet', tuple, replacements) ?? '';
     }
@@ -133,7 +136,10 @@ export function createFlattenRelationQuery<
       result.subjectSetRelation =
         resolveTupleProperty('subjectIdOrSet.relation', tuple, replacements) ??
         '';
-    } else if (typeof subjectIdOrSet === 'string') {
+    } else if (
+      typeof subjectIdOrSet === 'string' ||
+      typeof subjectIdOrSet === 'function'
+    ) {
       result.subjectId =
         resolveTupleProperty('subjectIdOrSet', tuple, replacements) ?? '';
     }
