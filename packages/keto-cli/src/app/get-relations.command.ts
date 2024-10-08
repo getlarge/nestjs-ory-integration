@@ -4,8 +4,11 @@ import {
   IRelationTuple,
 } from '@getlarge/keto-relations-parser';
 import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Configuration, Relationship } from '@ory/client';
 import { Command, CommandRunner, Option } from 'nest-commander';
+
+import { OryKetoEnvironmentVariables } from './environment-variables';
 
 interface CommandOptions
   extends Pick<Configuration, 'basePath' | 'accessToken'> {
@@ -22,7 +25,11 @@ export class GetRelationsCommand extends CommandRunner {
   readonly logger = new Logger(GetRelationsCommand.name);
 
   constructor(
-    private readonly oryRelationshipsService: OryRelationshipsService
+    private readonly oryRelationshipsService: OryRelationshipsService,
+    private readonly configService: ConfigService<
+      OryKetoEnvironmentVariables,
+      true
+    >
   ) {
     super();
   }
@@ -36,6 +43,10 @@ export class GetRelationsCommand extends CommandRunner {
       subjectObject,
       subjectRelation,
     } = options;
+    /**
+     * Use the correct base path since the SDK assign the GET /relation-tuples endpoint to the admin API
+     */
+    options.basePath ??= this.configService.get('ORY_KETO_PUBLIC_URL');
     if (options.basePath || options.accessToken) {
       this.oryRelationshipsService.config = new Configuration({
         ...this.oryRelationshipsService.config,
