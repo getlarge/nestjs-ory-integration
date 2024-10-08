@@ -1,3 +1,14 @@
+## 0.0.11 (2024-10-08)
+
+### 🩹 Fixes
+
+- allow subjectIdOrSet to be a function in relation query parameters ([4864c5a](https://github.com/getlarge/nestjs-ory-integration/commit/4864c5a))
+- refine type checks for subjectIdOrSet in relation query functions ([ebe9230](https://github.com/getlarge/nestjs-ory-integration/commit/ebe9230))
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.0.10 (2024-10-07)
 
 ### 🩹 Fixes
