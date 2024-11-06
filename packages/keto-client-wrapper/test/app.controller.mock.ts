@@ -1,9 +1,29 @@
 import { RelationTupleBuilder } from '@getlarge/keto-relations-parser';
-import { Controller, Get, Logger, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  ForbiddenException,
+  Get,
+  Logger,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
+import { inspect } from 'node:util';
 
 import { OryAuthorizationGuard } from '../src/lib/ory-authorization.guard';
 import { OryPermissionChecks } from '../src/lib/ory-permission-checks.decorator';
 import { ExampleService } from './app.service.mock';
+
+const AuthorizationGuard = () =>
+  OryAuthorizationGuard({
+    postCheck(relationTuple, isPermitted) {
+      Logger.log('relationTuple', relationTuple);
+      Logger.log('isPermitted', isPermitted);
+    },
+    unauthorizedFactory(ctx, error) {
+      console.error(inspect((error as any).error.response, false, null, true));
+      return new ForbiddenException();
+    },
+  });
 
 @Controller('Example')
 export class ExampleController {
@@ -19,14 +39,7 @@ export class ExampleController {
       .of('Toy', resourceId)
       .toString();
   })
-  @UseGuards(
-    OryAuthorizationGuard({
-      postCheck(relationTuple, isPermitted) {
-        Logger.log('relationTuple', relationTuple);
-        Logger.log('isPermitted', isPermitted);
-      },
-    })
-  )
+  @UseGuards(AuthorizationGuard())
   @Get(':id')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getExample(@Param('id') id?: string) {
@@ -73,17 +86,54 @@ export class ExampleController {
       },
     ],
   })
-  @UseGuards(
-    OryAuthorizationGuard({
-      postCheck(relationTuple, isPermitted) {
-        Logger.log('relationTuple', relationTuple);
-        Logger.log('isPermitted', isPermitted);
-      },
-    })
-  )
+  @UseGuards(AuthorizationGuard())
   @Get('complex/:id')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getExampleComplex(@Param('id') id?: string) {
+    return this.exampleService.getExample();
+  }
+
+  @OryPermissionChecks((ctx) => {
+    const req = ctx.switchToHttp().getRequest();
+    const currentUserId = req.headers['x-current-user-id'] as string;
+    const resourceId = req.params.id;
+    return new RelationTupleBuilder()
+      .subject('User', currentUserId)
+      .isAllowedTo('play')
+      .of('Toy', resourceId)
+      .toString();
+  })
+  @UseGuards(AuthorizationGuard())
+  @Get('play/:id')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  play(@Param('id') _id?: string) {
+    return this.exampleService.getExample();
+  }
+
+  @OryPermissionChecks({
+    type: 'OR',
+    conditions: [
+      (ctx) => {
+        const req = ctx.switchToHttp().getRequest();
+        const resourceId = req.params.id;
+        return `Toy:${resourceId}#owners`;
+      },
+      (ctx) => {
+        const req = ctx.switchToHttp().getRequest();
+        const currentUserId = req.headers['x-current-user-id'] as string;
+        const resourceId = req.params.id;
+        return new RelationTupleBuilder()
+          .subject('User', currentUserId)
+          .isIn('owners')
+          .of('Toy', resourceId)
+          .toString();
+      },
+    ],
+  })
+  @UseGuards(AuthorizationGuard())
+  @Get('poly/:id')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  poly(@Param('id') _id?: string) {
     return this.exampleService.getExample();
   }
 }
