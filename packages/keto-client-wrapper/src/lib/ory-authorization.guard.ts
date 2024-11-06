@@ -11,6 +11,7 @@ import {
   Type,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { PermissionApiExpandPermissionsRequest } from '@ory/client';
 import type { Observable } from 'rxjs';
 
 import {
@@ -91,8 +92,26 @@ export const OryAuthorizationGuard = (
         }
 
         try {
-          const { data } = await this.oryService.checkPermission(result.value);
-          return { allowed: data.allowed, relationTuple };
+          if (result.value.subjectId || result.value.subjectSetNamespace) {
+            const { data } = await this.oryService.checkPermission(
+              result.value
+            );
+            return { allowed: data.allowed, relationTuple };
+          }
+          /**
+           * !experimental and counter-inituitive: to use with care
+           * We check that this resolves to no children, meaning that the object has no relations with any subject => it is public
+           */
+          const { data } = await this.oryService.expandPermissions(
+            result.value as PermissionApiExpandPermissionsRequest
+          );
+          /**
+           * This Keto API endpoint has a quirk,it returns {code: 404, ... } when relation is not found
+           * ? maybe the check should be more complex based on data.type or data.children[n].type
+           **/
+          //
+          const allowed = !data.children || data.children.length === 0;
+          return { allowed, relationTuple };
         } catch (error) {
           throw unauthorizedFactory.bind(this)(context, error);
         }
