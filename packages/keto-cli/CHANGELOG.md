@@ -1,3 +1,9 @@
+## 0.2.7 (2024-11-06)
+
+### 🧱 Updated Dependencies
+
+- Updated keto-client-wrapper to 0.4.0
+
 ## 0.2.6 (2024-10-08)
 
 ### 🩹 Fixes
