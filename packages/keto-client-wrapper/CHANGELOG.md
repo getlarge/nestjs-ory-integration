@@ -1,3 +1,13 @@
+## 0.5.0 (2024-11-12)
+
+### 🚀 Features
+
+- **keto-client-wrapper:** export types ([dab1835](https://github.com/getlarge/nestjs-ory-integration/commit/dab1835))
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.4.0 (2024-11-06)
 
 ### 🚀 Features
