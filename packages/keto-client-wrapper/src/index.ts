@@ -3,8 +3,11 @@ export {
   OryAuthorizationGuardOptions,
 } from './lib/ory-authorization.guard';
 export {
+  EnhancedRelationTupleFactory,
   getOryPermissionChecks,
   OryPermissionChecks,
+  RelationTupleCondition,
+  RelationTupleFactory,
 } from './lib/ory-permission-checks.decorator';
 export {
   OryPermissionsModule,
