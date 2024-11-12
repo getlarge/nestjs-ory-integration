@@ -15,8 +15,9 @@ import { PermissionApiExpandPermissionsRequest } from '@ory/client';
 import type { Observable } from 'rxjs';
 
 import {
-  EnhancedRelationTupleFactory,
   getOryPermissionChecks,
+  RelationTupleCondition,
+  RelationTupleFactory,
 } from './ory-permission-checks.decorator';
 import { OryPermissionsService } from './ory-permissions';
 
@@ -40,7 +41,7 @@ export abstract class IAuthorizationGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean>;
 
   abstract evaluateConditions(
-    factory: EnhancedRelationTupleFactory,
+    factory: RelationTupleFactory | RelationTupleCondition,
     context: ExecutionContext
   ): Promise<{
     allowed: boolean;
@@ -72,7 +73,7 @@ export const OryAuthorizationGuard = (
     }
 
     async evaluateConditions(
-      factory: EnhancedRelationTupleFactory,
+      factory: RelationTupleFactory | RelationTupleCondition,
       context: ExecutionContext
     ): Promise<{
       allowed: boolean;
@@ -138,7 +139,11 @@ export const OryAuthorizationGuard = (
         return true;
       }
       const { postCheck, unauthorizedFactory } = this.options;
-      for (const factory of factories) {
+      for (const firstLevelFactory of factories) {
+        const factory =
+          typeof firstLevelFactory === 'function'
+            ? firstLevelFactory(context)
+            : firstLevelFactory;
         const { allowed, relationTuple } = await this.evaluateConditions(
           factory,
           context
