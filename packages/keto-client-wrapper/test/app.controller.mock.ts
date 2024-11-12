@@ -110,25 +110,21 @@ export class ExampleController {
     return this.exampleService.getExample();
   }
 
-  @OryPermissionChecks({
-    type: 'OR',
-    conditions: [
-      (ctx) => {
-        const req = ctx.switchToHttp().getRequest();
-        const resourceId = req.params.id;
-        return `Toy:${resourceId}#owners`;
-      },
-      (ctx) => {
-        const req = ctx.switchToHttp().getRequest();
-        const currentUserId = req.headers['x-current-user-id'] as string;
-        const resourceId = req.params.id;
-        return new RelationTupleBuilder()
+  @OryPermissionChecks((ctx) => {
+    const req = ctx.switchToHttp().getRequest();
+    const resourceId = req.params.id;
+    const currentUserId = req.headers['x-current-user-id'] as string;
+    return {
+      type: 'OR',
+      conditions: [
+        `Toy:${resourceId}#owners`,
+        new RelationTupleBuilder()
           .subject('User', currentUserId)
           .isIn('owners')
           .of('Toy', resourceId)
-          .toString();
-      },
-    ],
+          .toString(),
+      ],
+    };
   })
   @UseGuards(AuthorizationGuard())
   @Get('poly/:id')
