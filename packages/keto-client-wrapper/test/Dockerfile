@@ -1,4 +1,4 @@
-FROM oryd/keto:v0.12
+FROM getlarge/keto:v0.13.0
 
 COPY ./keto.yaml /home/ory/keto.yaml
 COPY ./namespaces.ts /home/ory/namespaces.ts
