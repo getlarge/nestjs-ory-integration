@@ -99,7 +99,7 @@ export const OryAuthorizationGuard = (
         const relationTuple =
           typeof factory === 'string' ? factory : factory(context);
         if (typeof relationTuple !== 'string') {
-         return this.flattenConditions(relationTuple, context, parentType);
+          return this.flattenConditions(relationTuple, context, parentType);
         }
         const result = createRelationship(
           parseRelationTuple(relationTuple).unwrapOrThrow()
