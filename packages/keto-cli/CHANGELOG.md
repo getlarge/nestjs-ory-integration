@@ -1,3 +1,30 @@
+## 0.2.8 (2024-11-12)
+
+### 🧱 Updated Dependencies
+
+- Updated keto-client-wrapper to 0.5.0
+
+## 0.2.7 (2024-11-06)
+
+### 🧱 Updated Dependencies
+
+- Updated keto-client-wrapper to 0.4.0
+
+## 0.2.6 (2024-10-08)
+
+### 🩹 Fixes
+
+- add ConfigService to GetRelationsCommand for dynamic base path configuration ([258a6a1](https://github.com/getlarge/nestjs-ory-integration/commit/258a6a1))
+
+### 🧱 Updated Dependencies
+
+- Updated keto-relations-parser to 0.0.11
+- Updated keto-client-wrapper to 0.3.3
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.2.5 (2024-10-07)
 
 ### 🩹 Fixes

@@ -12,7 +12,8 @@ export type RelationTupleCondition = {
 
 export type EnhancedRelationTupleFactory =
   | RelationTupleFactory
-  | RelationTupleCondition;
+  | RelationTupleCondition
+  | ((ctx: ExecutionContext) => RelationTupleCondition);
 
 /**
  * @description Decorator to add permission checks to a handler, will be consumed by the `OryAuthorizationGuard` {@link OryAuthorizationGuard} using the `getOryPermissionChecks` {@link getOryPermissionChecks} function

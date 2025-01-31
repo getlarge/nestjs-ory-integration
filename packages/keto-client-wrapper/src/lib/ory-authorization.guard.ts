@@ -11,12 +11,17 @@ import {
   Type,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Relationship } from '@ory/client';
+import type {
+  PermissionApiExpandPermissionsRequest,
+  Relationship,
+} from '@ory/client';
 import type { Observable } from 'rxjs';
 
 import {
   EnhancedRelationTupleFactory,
   getOryPermissionChecks,
+  RelationTupleCondition,
+  RelationTupleFactory,
 } from './ory-permission-checks.decorator';
 import { OryPermissionsService } from './ory-permissions';
 
@@ -54,7 +59,7 @@ export abstract class IAuthorizationGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean>;
 
   abstract evaluateConditions(
-    factory: EnhancedRelationTupleFactory,
+    factory: RelationTupleFactory | RelationTupleCondition,
     context: ExecutionContext
   ): Promise<EvaluationResult>;
 }
@@ -93,6 +98,9 @@ export const OryAuthorizationGuard = (
       if (typeof factory === 'string' || typeof factory === 'function') {
         const relationTuple =
           typeof factory === 'string' ? factory : factory(context);
+        if (typeof relationTuple !== 'string') {
+         return this.flattenConditions(relationTuple, context, parentType);
+        }
         const result = createRelationship(
           parseRelationTuple(relationTuple).unwrapOrThrow()
         );
@@ -139,57 +147,98 @@ export const OryAuthorizationGuard = (
       return false; // Fallback, should not reach here
     }
 
+    private constructEvaluationResult(
+      factory: EnhancedRelationTupleFactory,
+      flattenedConditions: ReturnType<AuthorizationGuard['flattenConditions']>,
+      permissionResults: boolean[]
+    ): EvaluationResult {
+      const evaluationResult: EvaluationResult = {
+        results: {},
+        allowed: false,
+      };
+      let index = 0;
+
+      function replaceWithResults(
+        condition: EnhancedRelationTupleFactory
+      ): EnhancedNestedCondition {
+        if (typeof condition === 'string' || typeof condition === 'function') {
+          const allowed = permissionResults[index];
+          const { relation, type } = flattenedConditions[index];
+          evaluationResult.results[relation] = {
+            allowed,
+            parentType: type,
+          };
+          index++;
+          return allowed;
+        }
+
+        return {
+          type: condition.type,
+          conditions: condition.conditions.map(replaceWithResults),
+        };
+      }
+
+      const logicalStructure = replaceWithResults(factory);
+      evaluationResult.allowed =
+        this.evaluateLogicalStructure(logicalStructure);
+
+      return evaluationResult;
+    }
+
     async evaluateConditions(
       factory: EnhancedRelationTupleFactory,
       context: ExecutionContext
     ): Promise<EvaluationResult> {
       const { unauthorizedFactory } = this.options;
       const flattenedConditions = this.flattenConditions(factory, context);
-      const tuples = flattenedConditions.map(({ tuple }) => tuple);
+      const partialTuples: { tuple: Relationship; index: number }[] = [];
+      const fullTuples: { tuple: Relationship; index: number }[] = [];
+
+      flattenedConditions.forEach(({ tuple }, index) => {
+        if (!tuple.subject_id && !tuple.subject_set) {
+          partialTuples.push({ tuple, index });
+        } else {
+          fullTuples.push({ tuple, index });
+        }
+      });
+
+      const permissionResults: boolean[] = new Array(
+        flattenedConditions.length
+      );
 
       try {
-        const { data } = await this.oryService
-          .batchCheckPermission({
-            batchCheckPermissionBody: { tuples },
-            maxDepth: this.options.maxDepth,
-          })
-          .catch((error) => {
-            console.error(error);
-            throw error;
-          });
-
-        const results = data.results;
-        const evaluationResult: EvaluationResult = {
-          results: {},
-          allowed: false,
-        };
-        let index = 0;
-        function replaceWithResults(
-          condition: EnhancedRelationTupleFactory
-        ): EnhancedNestedCondition {
-          if (
-            typeof condition === 'string' ||
-            typeof condition === 'function'
-          ) {
-            const { allowed } = results[index];
-            const { relation, type } = flattenedConditions[index];
-            evaluationResult.results[relation] = {
-              allowed,
-              parentType: type,
-            };
-            index++;
-            return allowed;
-          }
-
-          return {
-            type: condition.type,
-            conditions: condition.conditions.map(replaceWithResults),
-          };
+        for (const { tuple, index } of partialTuples) {
+          /**
+           * !experimental and counter-inituitive: to use with care
+           * We check that this resolves to no children, meaning that the object has no relations with any subject => it is public
+           */
+          const { data } = await this.oryService.expandPermissions(
+            tuple as PermissionApiExpandPermissionsRequest
+          );
+          /**
+           * This Keto API endpoint has a quirk,it returns {code: 404, ... } when relation is not found
+           * ? maybe the check should be more complex based on data.type or data.children[n].type
+           **/
+          permissionResults[index] =
+            !data.children || data.children.length === 0;
         }
 
-        const logicalStructure = replaceWithResults(factory);
-        evaluationResult.allowed =
-          this.evaluateLogicalStructure(logicalStructure);
+        const { data } = await this.oryService.batchCheckPermission({
+          batchCheckPermissionBody: {
+            tuples: fullTuples.map(({ tuple }) => tuple),
+          },
+          maxDepth: this.options.maxDepth,
+        });
+
+        fullTuples.forEach(({ index }, arrayIndex) => {
+          permissionResults[index] = data.results[arrayIndex].allowed;
+        });
+
+        const evaluationResult = this.constructEvaluationResult(
+          factory,
+          flattenedConditions,
+          permissionResults
+        );
 
         return evaluationResult;
       } catch (error) {

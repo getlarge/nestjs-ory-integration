@@ -1,3 +1,29 @@
+## 0.5.0 (2024-11-12)
+
+### 🚀 Features
+
+- **keto-client-wrapper:** export types ([dab1835](https://github.com/getlarge/nestjs-ory-integration/commit/dab1835))
+
+### ❤️  Thank You
+
+- getlarge
+
+## 0.4.0 (2024-11-06)
+
+### 🚀 Features
+
+- **keto-client-wrapper:** enhance OryAuthorizationGuard to handle partial public access ([137aa70](https://github.com/getlarge/nestjs-ory-integration/commit/137aa70))
+
+### ❤️  Thank You
+
+- getlarge
+
+## 0.3.3 (2024-10-08)
+
+### 🧱 Updated Dependencies
+
+- Updated keto-relations-parser to 0.0.11
+
 ## 0.3.2 (2024-10-07)
 
 ### 🩹 Fixes
