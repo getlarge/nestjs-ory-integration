@@ -27,7 +27,8 @@ export class OryPermissionsModuleOptions
     super(options);
     this.basePath = options.basePath;
     this.accessToken = options.accessToken;
-    this.supportBatchPermissionCheck = options.supportBatchPermissionCheck ?? false;
+    this.supportBatchPermissionCheck =
+      options.supportBatchPermissionCheck ?? false;
   }
 }
 
