@@ -6,6 +6,8 @@ import { OryPermissionsModuleOptions } from './ory-permissions.interfaces';
 
 @Injectable()
 export class OryPermissionsService extends PermissionApi {
+  readonly supportBatchPermissionCheck: boolean;
+
   constructor(
     @Inject(OryPermissionsModuleOptions)
     options: OryPermissionsModuleOptions,
@@ -22,6 +24,7 @@ export class OryPermissionsService extends PermissionApi {
     this.configuration ??= new Configuration({
       basePath: options.basePath,
     });
+    this.supportBatchPermissionCheck = options.supportBatchPermissionCheck;
   }
 
   get config(): Configuration {

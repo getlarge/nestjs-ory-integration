@@ -1,6 +1,8 @@
 import {
+  createPermissionCheckQuery,
   createRelationship,
   parseRelationTuple,
+  RelationTuple,
 } from '@getlarge/keto-relations-parser';
 import {
   CanActivate,
@@ -92,7 +94,7 @@ export const OryAuthorizationGuard = (
       factory: EnhancedRelationTupleFactory,
       context: ExecutionContext,
       parentType: 'AND' | 'OR' | null = null
-    ): { tuple: Relationship; relation: string; type: 'AND' | 'OR' | null }[] {
+    ): { tuple: RelationTuple; relation: string; type: 'AND' | 'OR' | null }[] {
       const { unauthorizedFactory } = this.options;
 
       if (typeof factory === 'string' || typeof factory === 'function') {
@@ -101,10 +103,7 @@ export const OryAuthorizationGuard = (
         if (typeof relationTuple !== 'string') {
           return this.flattenConditions(relationTuple, context, parentType);
         }
-        const result = createRelationship(
-          parseRelationTuple(relationTuple).unwrapOrThrow()
-        );
-
+        const result = parseRelationTuple(relationTuple);
         if (result.hasError()) {
           throw unauthorizedFactory.bind(this)(context, result.error);
         }
@@ -191,11 +190,11 @@ export const OryAuthorizationGuard = (
     ): Promise<EvaluationResult> {
       const { unauthorizedFactory } = this.options;
       const flattenedConditions = this.flattenConditions(factory, context);
-      const partialTuples: { tuple: Relationship; index: number }[] = [];
-      const fullTuples: { tuple: Relationship; index: number }[] = [];
+      const partialTuples: { tuple: RelationTuple; index: number }[] = [];
+      const fullTuples: { tuple: RelationTuple; index: number }[] = [];
 
       flattenedConditions.forEach(({ tuple }, index) => {
-        if (!tuple.subject_id && !tuple.subject_set) {
+        if (!tuple.subjectIdOrSet) {
           partialTuples.push({ tuple, index });
         } else {
           fullTuples.push({ tuple, index });
@@ -212,9 +211,10 @@ export const OryAuthorizationGuard = (
            * !experimental and counter-inituitive: to use with care
            * We check that this resolves to no children, meaning that the object has no relations with any subject => it is public
            */
-          const { data } = await this.oryService.expandPermissions(
-            tuple as PermissionApiExpandPermissionsRequest
-          );
+          const { data } = await this.oryService.expandPermissions({
+            ...(tuple as PermissionApiExpandPermissionsRequest),
+            maxDepth: this.options.maxDepth,
+          });
           /**
            * This Keto API endpoint has a quirk,it returns {code: 404, ... } when relation is not found
            * ? maybe the check should be more complex based on data.type or data.children[n].type
@@ -223,16 +223,28 @@ export const OryAuthorizationGuard = (
             !data.children || data.children.length === 0;
         }
 
-        const { data } = await this.oryService.batchCheckPermission({
-          batchCheckPermissionBody: {
-            tuples: fullTuples.map(({ tuple }) => tuple),
-          },
-          maxDepth: this.options.maxDepth,
-        });
-
-        fullTuples.forEach(({ index }, arrayIndex) => {
-          permissionResults[index] = data.results[arrayIndex].allowed;
-        });
+        if (this.oryService.supportBatchPermissionCheck) {
+          const { data } = await this.oryService.batchCheckPermission({
+            batchCheckPermissionBody: {
+              tuples: fullTuples.map(({ tuple }) =>
+                createRelationship(tuple).unwrapOrThrow()
+              ),
+            },
+            maxDepth: this.options.maxDepth,
+          });
+          fullTuples.forEach(({ index }, arrayIndex) => {
+            permissionResults[index] = data.results[arrayIndex].allowed;
+          });
+        } else {
+          await Promise.all(
+            fullTuples.map(async ({ tuple, index }) => {
+              const { data } = await this.oryService.checkPermission(
+                createPermissionCheckQuery(tuple).unwrapOrThrow()
+              );
+              permissionResults[index] = data.allowed;
+            })
+          );
+        }
 
         const evaluationResult = this.constructEvaluationResult(
           factory,

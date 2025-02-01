@@ -80,6 +80,7 @@ describe('Keto client wrapper E2E', () => {
       imports: [
         OryPermissionsModule.forRoot({
           basePath: 'http://localhost:44660',
+          supportBatchPermissionCheck: true,
         }),
         OryRelationshipsModule.forRootAsync({
           useFactory: () => ({
