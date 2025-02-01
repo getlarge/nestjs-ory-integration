@@ -92,7 +92,7 @@ export const OryAuthorizationGuard = (
       factory: EnhancedRelationTupleFactory,
       context: ExecutionContext,
       parentType: 'AND' | 'OR' | null = null
-    ): { tuple: Relationship; relation: string; type: 'AND' | 'OR' }[] {
+    ): { tuple: Relationship; relation: string; type: 'AND' | 'OR' | null }[] {
       const { unauthorizedFactory } = this.options;
 
       if (typeof factory === 'string' || typeof factory === 'function') {
@@ -113,7 +113,7 @@ export const OryAuthorizationGuard = (
           {
             tuple: result.value,
             relation: relationTuple,
-            type: parentType || 'AND',
+            type: parentType || null,
           },
         ];
       }
@@ -204,7 +204,7 @@ export const OryAuthorizationGuard = (
 
       const permissionResults: boolean[] = new Array(
         flattenedConditions.length
-      );
+      ).fill(false);
 
       try {
         for (const { tuple, index } of partialTuples) {
