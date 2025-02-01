@@ -14,6 +14,7 @@ module.exports = [
     .map((config) => ({
       ...config,
       files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+      ignores: ['**/node_modules/**', '**/dist/**'],
       rules: {
         ...config.rules,
         '@nx/enforce-module-boundaries': [
@@ -50,7 +51,7 @@ module.exports = [
     })),
   ...compat.config({ extends: ['plugin:@nx/typescript'] }).map((config) => ({
     ...config,
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.ts', '**/*.tsx', '**/*.cts', '**/*.mts'],
     rules: {
       ...config.rules,
       'no-extra-semi': 'off',
@@ -58,7 +59,7 @@ module.exports = [
   })),
   ...compat.config({ extends: ['plugin:@nx/javascript'] }).map((config) => ({
     ...config,
-    files: ['**/*.js', '**/*.jsx'],
+    files: ['**/*.js', '**/*.jsx', '**/*.cjs', '**/*.mjs'],
     rules: {
       ...config.rules,
       'no-extra-semi': 'off',

@@ -8,6 +8,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "devDependencies": {
+    "@getlarge/base-client-wrapper": "*",
+    "@getlarge/keto-relations-parser": "*"
+  },
   "dependencies": {
     "@getlarge/keto-relations-parser": "0.0.11",
     "tslib": "^2.7.0",
@@ -15,13 +19,17 @@
     "rxjs": "^7.8.0"
   },
   "peerDependencies": {
-    "@nestjs/axios": "^3",
-    "@nestjs/common": "^10",
-    "@nestjs/core": "^10",
+    "@nestjs/axios": "^3 || ^4",
+    "@nestjs/common": "^10 || ^11",
+    "@nestjs/core": "^10 || ^11",
     "axios": "^1.6 || ^1.7",
     "@ory/client": "^1"
   },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  }
 }

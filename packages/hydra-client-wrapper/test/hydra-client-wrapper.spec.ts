@@ -3,7 +3,7 @@ import { Test, type TestingModule } from '@nestjs/testing';
 import { execSync } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
 import { join, resolve } from 'node:path';
-import { Issuer, type TokenSet } from 'openid-client';
+import { Issuer } from 'openid-client';
 import request from 'supertest';
 
 import { OryOAuth2Module, OryOAuth2Service, OryOidcModule } from '../src';
@@ -17,7 +17,7 @@ describe('Hydra client wrapper E2E', () => {
   const route = '/Example';
 
   const createOAuth2Client = async (
-    email: string
+    email: string,
   ): Promise<{ clientId: string; clientSecret: string }> => {
     const { data } = await oryOAuth2Service.createOAuth2Client({
       oAuth2Client: {
@@ -34,11 +34,7 @@ describe('Hydra client wrapper E2E', () => {
     };
   };
 
-  // TODO: increase timeout
-  const exchangeToken = async (
-    clientId: string,
-    clientSecret: string
-  ): Promise<TokenSet> => {
+  const exchangeToken = async (clientId: string, clientSecret: string) => {
     const issuer = await Issuer.discover('http://localhost:44440');
     const client = new issuer.Client({
       client_id: clientId,

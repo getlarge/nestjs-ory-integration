@@ -12,5 +12,13 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "references": [
+    {
+      "path": "../keto-relations-parser/tsconfig.lib.json"
+    },
+    {
+      "path": "../base-client-wrapper/tsconfig.lib.json"
+    }
+  ]
 }

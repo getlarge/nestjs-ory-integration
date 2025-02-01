@@ -8,16 +8,23 @@
   "publishConfig": {
     "access": "public"
   },
+  "devDependencies": {
+    "@getlarge/base-client-wrapper": "*"
+  },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.7.0"
   },
   "peerDependencies": {
-    "@nestjs/axios": "^3",
-    "@nestjs/common": "^10",
+    "@nestjs/axios": "^3 || ^4",
+    "@nestjs/common": "^10 || ^11",
     "axios": "^1.6 || ^1.7",
     "@ory/client": "^1"
   },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  }
 }

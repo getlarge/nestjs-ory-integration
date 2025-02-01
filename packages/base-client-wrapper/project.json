@@ -6,33 +6,7 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/base-client-wrapper",
-        "tsConfig": "packages/base-client-wrapper/tsconfig.lib.json",
-        "packageJson": "packages/base-client-wrapper/package.json",
-        "main": "packages/base-client-wrapper/src/index.ts",
-        "assets": ["packages/base-client-wrapper/*.md"]
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "{projectRoot}/**/*.ts",
-          "{projectRoot}/**/package.json",
-          "{projectRoot}/**/project.json"
-        ]
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/base-client-wrapper/jest.config.ts",
-        "codeCoverage": true
-      }
+      "executor": "@nx/js:tsc"
     }
   }
 }

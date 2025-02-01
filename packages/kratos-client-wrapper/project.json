@@ -7,7 +7,6 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/kratos-client-wrapper",
         "tsConfig": "packages/kratos-client-wrapper/tsconfig.lib.json",
@@ -29,24 +28,6 @@
           "params": "forward"
         }
       ]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "{projectRoot}/**/*.ts",
-          "{projectRoot}/**/project.json",
-          "{projectRoot}/**/package.json"
-        ]
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/kratos-client-wrapper/jest.config.ts",
-        "codeCoverage": true
-      }
     },
     "docker-push": {
       "executor": "nx:run-commands",

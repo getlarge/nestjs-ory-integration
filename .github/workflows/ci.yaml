@@ -42,7 +42,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - run: npm ci
@@ -58,8 +58,7 @@ jobs:
 
       - run: npx nx format:check
 
-      # requires kratos and keto to be running
-      - run: npx nx affected -t lint,test,build --parallel=3
+      - run: npx nx affected -t lint,typecheck,test,build --parallel=2
 
       - uses: actions/upload-artifact@v4
         with:
@@ -87,9 +86,9 @@ jobs:
           path: coverage
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v4.2.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >

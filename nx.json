@@ -8,10 +8,22 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "production": [
+      "default",
+      "!{workspaceRoot}/**/*.md",
+      "!{workspaceRoot}/sonar-project.properties",
+      "!{workspaceRoot}/lint-staged.config.js",
+      "!{workspaceRoot}/eslint.config.js",
+      "!{workspaceRoot}/jest.config.ts",
+      "!{workspaceRoot}/jest.preset.js",
+      "!{workspaceRoot}/.gitignore",
+      "!{workspaceRoot}/.prettierignore",
+      "!{workspaceRoot}/.prettierrc",
+      "!{projectRoot}/*.md",
       "!{projectRoot}/test/**",
       "!{projectRoot}/**/*.{spec,test}.ts",
       "!{projectRoot}/node_modules/**",
-      "!{projectRoot}/eslint.config.js"
+      "!{projectRoot}/eslint.config.js",
+      "!{projectRoot}/jest.config.ts"
     ]
   },
   "release": {
@@ -37,18 +49,50 @@
     "build": {
       "cache": true,
       "inputs": ["production", "^production"],
-      "dependsOn": ["^build"]
-    },
-    "@nx/jest:jest": {
-      "cache": true,
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["^build"],
       "options": {
-        "passWithNoTests": true
+        "outputPath": "dist/{projectRoot}",
+        "tsConfig": "{projectRoot}/tsconfig.lib.json",
+        "packageJson": "{projectRoot}/package.json",
+        "main": "{projectRoot}/src/index.ts",
+        "assets": ["{projectRoot}/*.md"]
+      }
+    },
+    "lint": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "{workspaceRoot}/eslint.config.js",
+        "{projectRoot}/eslint.config.js",
+        {
+          "externalDependencies": ["eslint"]
+        }
+      ],
+      "options": {
+        "args": ["**/*.ts", "**/package.json", "**/project.json"]
+      }
+    },
+    "test": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/jest.preset.js",
+        {
+          "externalDependencies": ["jest"]
+        }
+      ],
+      "options": {
+        "passWithNoTests": true,
+        "coverage": true
       },
       "configurations": {
         "ci": {
           "ci": true,
-          "codeCoverage": true
+          "coverage": true
         }
       }
     },
@@ -63,22 +107,47 @@
           "params": "forward"
         }
       ]
-    },
-    "@nx/eslint:lint": {
-      "cache": true,
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.js"
-      ]
-    },
-    "@nx/js:tsc": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
     }
   },
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": {
+          "targetName": "build",
+          "configName": "tsconfig.lib.json",
+          "buildDepsName": "build-deps",
+          "watchDepsName": "watch-deps"
+        }
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
+    }
+  ],
+  "sync": {
+    "applyChanges": true,
+    "globalGenerators": ["@nx/js:typescript-sync"],
+    "generatorOptions": {
+      "@nx/js:typescript-sync": {
+        "verbose": true
+      }
+    },
+    "disabledTaskSyncGenerators": []
+  },
   "nxCloudAccessToken": "ODFiNmMyMzAtODQ1OS00NGQzLWJjYmYtNzA2MmNlMTc2NTc5fHJlYWQtd3JpdGU=",
-  "useInferencePlugins": false
+  "useInferencePlugins": true,
+  "useLegacyCache": false
 }

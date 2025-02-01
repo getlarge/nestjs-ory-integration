@@ -7,7 +7,6 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/hydra-client-wrapper",
         "tsConfig": "packages/hydra-client-wrapper/tsconfig.lib.json",
@@ -29,17 +28,6 @@
           "params": "forward"
         }
       ]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/hydra-client-wrapper/jest.config.ts"
-      }
     },
     "docker-push": {
       "executor": "nx:run-commands",

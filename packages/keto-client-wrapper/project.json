@@ -7,13 +7,12 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/keto-client-wrapper",
         "tsConfig": "packages/keto-client-wrapper/tsconfig.lib.json",
         "packageJson": "packages/keto-client-wrapper/package.json",
-        "main": "packages/keto-client-wrapper/src/index.ts",
         "external": ["keto-relations-parser"],
+        "main": "packages/keto-client-wrapper/src/index.ts",
         "assets": ["packages/keto-client-wrapper/*.md"]
       }
     },
@@ -29,22 +28,6 @@
           "params": "forward"
         }
       ]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "lintFilePatterns": [
-        "packages/keto-client-wrapper/**/*.{ts,tsx,js,jsx}",
-        "packages/keto-client-wrapper/package.json"
-      ]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/keto-client-wrapper/jest.config.ts",
-        "codeCoverage": true
-      }
     },
     "docker-push": {
       "executor": "nx:run-commands",

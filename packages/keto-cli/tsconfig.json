@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
@@ -13,6 +14,12 @@
   "files": [],
   "include": [],
   "references": [
+    {
+      "path": "../keto-relations-parser"
+    },
+    {
+      "path": "../keto-client-wrapper"
+    },
     {
       "path": "./tsconfig.lib.json"
     },
