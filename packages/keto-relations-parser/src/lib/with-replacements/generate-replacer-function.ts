@@ -5,7 +5,7 @@ import type { ReplacementValues } from './replacement-values';
 
 function findReplacementsInString<T extends ReplacementValues>(
   str: string,
-  possibleReplacements: TwoWayMap<keyof T, string>
+  possibleReplacements: TwoWayMap<keyof T, string>,
 ): Array<{ start: number; endExcl: number; prop: keyof T }> {
   const regexStr = `(${Array.from(possibleReplacements.values()).join('|')})`;
   const regex = new RegExp(regexStr, 'g');
@@ -32,7 +32,7 @@ function generateReplacerFunctions<T extends ReplacementValues>(
     endExcl: number;
     prop: keyof T;
   }>,
-  str: string
+  str: string,
 ): Array<ReplaceableString<T>> {
   const resultStringParts: Array<ReplaceableString<T>> = [];
 
@@ -54,7 +54,7 @@ function generateReplacerFunctions<T extends ReplacementValues>(
 
 export const generateReplacerFunction = <T extends ReplacementValues>(
   str: string,
-  possibleReplacements: TwoWayMap<keyof T, string>
+  possibleReplacements: TwoWayMap<keyof T, string>,
 ): ReplaceableString<T> => {
   const foundReplacements = findReplacementsInString(str, possibleReplacements);
 
@@ -72,12 +72,12 @@ export const generateReplacerFunction = <T extends ReplacementValues>(
   }
 
   const foundReplacementsSortedByStartIndexASC = foundReplacements.sort(
-    (a, b) => a.start - b.start
+    (a, b) => a.start - b.start,
   );
 
   const resultStringParts = generateReplacerFunctions(
     foundReplacementsSortedByStartIndexASC,
-    str
+    str,
   );
 
   return (replacements) => {

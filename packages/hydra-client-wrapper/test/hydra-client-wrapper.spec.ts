@@ -3,7 +3,8 @@ import { Test, type TestingModule } from '@nestjs/testing';
 import { execSync } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
 import { join, resolve } from 'node:path';
-import { Issuer, type TokenSet } from 'openid-client';
+import { URL } from 'node:url';
+import * as oauth2Client from 'openid-client';
 import request from 'supertest';
 
 import { OryOAuth2Module, OryOAuth2Service, OryOidcModule } from '../src';
@@ -17,7 +18,7 @@ describe('Hydra client wrapper E2E', () => {
   const route = '/Example';
 
   const createOAuth2Client = async (
-    email: string
+    email: string,
   ): Promise<{ clientId: string; clientSecret: string }> => {
     const { data } = await oryOAuth2Service.createOAuth2Client({
       oAuth2Client: {
@@ -34,18 +35,18 @@ describe('Hydra client wrapper E2E', () => {
     };
   };
 
-  // TODO: increase timeout
   const exchangeToken = async (
     clientId: string,
-    clientSecret: string
-  ): Promise<TokenSet> => {
-    const issuer = await Issuer.discover('http://localhost:44440');
-    const client = new issuer.Client({
-      client_id: clientId,
-      client_secret: clientSecret,
-    });
-    const token = await client.grant({
-      grant_type: 'client_credentials',
+    clientSecret: string,
+  ) => {
+    const config = await oauth2Client.discovery(
+      new URL('http://localhost:44440'),
+      clientId,
+      {},
+      oauth2Client.ClientSecretPost(clientSecret),
+      { algorithm: 'oidc', timeout: 5000 },
+    );
+    const token = await oauth2Client.clientCredentialsGrant(config, {
       scope: 'offline',
     });
     expect(token).toHaveProperty('access_token');
