@@ -195,7 +195,7 @@ describe('Keto client wrapper E2E', () => {
   });
 
   describe('GET /Example/poly/:id', () => {
-    it.only('should pass authorization when object has NO owner', async () => {
+    it('should pass authorization when object has NO owner', async () => {
       const object = 'ice-cream';
       const subjectObject = 'Honza';
 
