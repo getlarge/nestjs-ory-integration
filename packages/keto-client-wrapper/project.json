@@ -7,11 +7,11 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/keto-client-wrapper",
         "tsConfig": "packages/keto-client-wrapper/tsconfig.lib.json",
         "packageJson": "packages/keto-client-wrapper/package.json",
+        "external": ["keto-relations-parser"],
         "main": "packages/keto-client-wrapper/src/index.ts",
         "assets": ["packages/keto-client-wrapper/*.md"]
       }

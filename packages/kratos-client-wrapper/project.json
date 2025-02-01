@@ -7,7 +7,6 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/kratos-client-wrapper",
         "tsConfig": "packages/kratos-client-wrapper/tsconfig.lib.json",

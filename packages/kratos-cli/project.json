@@ -6,15 +6,7 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/kratos-cli",
-        "tsConfig": "packages/kratos-cli/tsconfig.lib.json",
-        "packageJson": "packages/kratos-cli/package.json",
-        "main": "packages/kratos-cli/src/index.ts",
-        "assets": ["packages/kratos-cli/*.md"]
-      }
+      "executor": "@nx/js:tsc"
     },
     "publish": {
       "command": "node tools/scripts/publish.mjs kratos-cli {args.ver} {args.tag}",

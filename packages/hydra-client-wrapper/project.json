@@ -7,7 +7,6 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/hydra-client-wrapper",
         "tsConfig": "packages/hydra-client-wrapper/tsconfig.lib.json",

@@ -6,15 +6,7 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/keto-cli",
-        "tsConfig": "packages/keto-cli/tsconfig.lib.json",
-        "packageJson": "packages/keto-cli/package.json",
-        "main": "packages/keto-cli/src/index.ts",
-        "assets": ["packages/keto-cli/*.md"]
-      }
+      "executor": "@nx/js:tsc"
     },
     "publish": {
       "command": "node tools/scripts/publish.mjs keto-cli {args.ver} {args.tag}",
