@@ -3,11 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "declaration": true,
-    "module": "Preserve",
-    "moduleResolution": "bundler",
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "target": "es2021",
     "strictNullChecks": true,
     "noImplicitAny": true,
@@ -15,15 +11,8 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src/**/*.ts",
-    "package.json"
-  ],
-  "exclude": [
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ],
+  "include": ["src/**/*.ts", "package.json"],
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "references": [
     {
       "path": "../keto-relations-parser/tsconfig.lib.json"

@@ -3,6 +3,7 @@
     "rootDir": ".",
     "composite": true,
     "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,

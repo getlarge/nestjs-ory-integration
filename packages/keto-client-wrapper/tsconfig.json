@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
