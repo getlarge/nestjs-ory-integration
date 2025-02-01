@@ -1,3 +1,24 @@
+## 0.6.0 (2025-02-01)
+
+### 🚀 Features
+
+- **keto-client-wrapper:** add conditional support for batch permission checks ([117a2d1](https://github.com/getlarge/nestjs-ory-integration/commit/117a2d1))
+- refactor OryAuthorizationGuard tests to use batchCheckPermission and improve logging ([96c0756](https://github.com/getlarge/nestjs-ory-integration/commit/96c0756))
+- update OryAuthorizationGuard to use batchCheckPermission ([22d788c](https://github.com/getlarge/nestjs-ory-integration/commit/22d788c))
+
+### 🩹 Fixes
+
+- **keto-client-wrapper:** format code ([a88f1f3](https://github.com/getlarge/nestjs-ory-integration/commit/a88f1f3))
+- **keto-client-wrapper:** update OryAuthorizationGuard to allow null type for parentType and fill empty array ([0828fdc](https://github.com/getlarge/nestjs-ory-integration/commit/0828fdc))
+- **keto-client-wrapper:** enhance error handling for Axios errors in mock controller ([ae4aff0](https://github.com/getlarge/nestjs-ory-integration/commit/ae4aff0))
+- **keto-client-wrapper:** update host configuration to allow external access ([7c7ef46](https://github.com/getlarge/nestjs-ory-integration/commit/7c7ef46))
+- **keto-client-wrapper:** update healthcheck command and parameters in Dockerfile ([1daeefe](https://github.com/getlarge/nestjs-ory-integration/commit/1daeefe))
+- **keto-client-wrapper:** increase retries in Dockerfile healthcheck ([acdb3c3](https://github.com/getlarge/nestjs-ory-integration/commit/acdb3c3))
+
+### ❤️  Thank You
+
+- getlarge
+
 ## 0.5.0 (2024-11-12)
 
 ### 🚀 Features
