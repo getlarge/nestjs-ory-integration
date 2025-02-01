@@ -58,8 +58,7 @@ jobs:
 
       - run: npx nx format:check
 
-      # requires kratos and keto to be running
-      - run: npx nx affected -t lint,test,build --parallel=3
+      - run: npx nx affected -t lint,typecheck,test,build --parallel=3
 
       - uses: actions/upload-artifact@v4
         with:
