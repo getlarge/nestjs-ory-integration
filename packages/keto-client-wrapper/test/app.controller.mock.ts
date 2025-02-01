@@ -3,10 +3,10 @@ import {
   Controller,
   ForbiddenException,
   Get,
-  Logger,
   Param,
   UseGuards,
 } from '@nestjs/common';
+import { isAxiosError } from 'axios';
 import { inspect } from 'node:util';
 
 import { OryAuthorizationGuard } from '../src/lib/ory-authorization.guard';
@@ -15,12 +15,20 @@ import { ExampleService } from './app.service.mock';
 
 const AuthorizationGuard = () =>
   OryAuthorizationGuard({
-    postCheck(relationTuple, isPermitted) {
-      Logger.log('relationTuple', relationTuple);
-      Logger.log('isPermitted', isPermitted);
+    postCheck(result) {
+      console.warn('evalation results', result.results);
+      console.warn('isPermitted', result.allowed);
     },
     unauthorizedFactory(ctx, error) {
-      console.error(inspect((error as any).error.response, false, null, true));
+      const axiosError =
+        typeof error === 'object' &&
+        error &&
+        'error' in error &&
+        isAxiosError(error.error)
+          ? error.error
+          : null;
+      if (axiosError)
+        console.error(inspect(axiosError.cause, false, null, true));
       return new ForbiddenException();
     },
   });

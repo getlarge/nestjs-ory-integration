@@ -4,5 +4,4 @@ services:
     ports:
       - '44660:4466' # public
       - '44670:4467' # admin
-    command: serve -c /home/ory/keto.yaml
     restart: on-failure

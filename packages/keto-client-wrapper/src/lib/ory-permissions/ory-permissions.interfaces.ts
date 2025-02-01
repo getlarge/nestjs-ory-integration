@@ -9,6 +9,11 @@ import {
 export interface IOryPermissionsModuleOptions extends OryBaseModuleOptions {
   basePath: string;
   accessToken?: string;
+  /**
+   * Support batch permission check. Default is false.
+   * Keep in mind that this feature is only supported in an unreleased version of Ory Keto.
+   */
+  supportBatchPermissionCheck?: boolean;
 }
 
 export class OryPermissionsModuleOptions
@@ -17,10 +22,13 @@ export class OryPermissionsModuleOptions
 {
   basePath: string;
   accessToken?: string;
+  supportBatchPermissionCheck: boolean;
   constructor(options: IOryPermissionsModuleOptions) {
     super(options);
     this.basePath = options.basePath;
     this.accessToken = options.accessToken;
+    this.supportBatchPermissionCheck =
+      options.supportBatchPermissionCheck ?? false;
   }
 }
 
