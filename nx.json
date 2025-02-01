@@ -59,16 +59,24 @@
         "args": ["**/*.ts", "**/package.json", "**/project.json"]
       }
     },
-    "@nx/jest:jest": {
+    "test": {
       "cache": true,
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/jest.preset.js",
+        {
+          "externalDependencies": ["jest"]
+        }
+      ],
       "options": {
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "coverage": false
       },
       "configurations": {
         "ci": {
           "ci": true,
-          "codeCoverage": true
+          "coverage": true
         }
       }
     },
@@ -83,12 +91,6 @@
           "params": "forward"
         }
       ]
-    },
-
-    "@nx/js:tsc": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
     }
   },
   "plugins": [
@@ -110,6 +112,12 @@
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
       }
     }
   ],

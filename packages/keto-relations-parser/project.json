@@ -17,14 +17,5 @@
           "params": "forward"
         }
       ]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/keto-relations-parser/jest.config.ts",
-        "codeCoverage": true
-      }
     }
-  }
 }

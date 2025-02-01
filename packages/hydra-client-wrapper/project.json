@@ -30,13 +30,6 @@
         }
       ]
     },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/hydra-client-wrapper/jest.config.ts"
-      }
-    },
     "docker-push": {
       "executor": "nx:run-commands",
       "options": {
