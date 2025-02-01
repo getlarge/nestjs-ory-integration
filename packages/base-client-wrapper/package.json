@@ -4,12 +4,11 @@
   "version": "0.1.7",
   "license": "MIT",
   "dependencies": {
-    "tslib": "^2.7.0",
-    "axios": "1.7.7"
+    "tslib": "^2.7.0"
   },
   "peerDependencies": {
-    "@nestjs/axios": "^3",
-    "@nestjs/common": "^10",
+    "@nestjs/axios": "^3 || ^4",
+    "@nestjs/common": "^10 || ^11",
     "axios": "^1.6 || ^1.7"
   },
   "exports": {
