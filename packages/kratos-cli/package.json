@@ -1,6 +1,6 @@
 {
   "name": "@getlarge/kratos-cli",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "MIT",
   "description": "CLI wrapper for the Ory Kratos API",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/kratos-cli",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "tslib": "^2.7.0",
-    "@getlarge/kratos-client-wrapper": "0.2.2",
+    "@getlarge/kratos-client-wrapper": "0.2.3",
     "nest-commander": "^3.16.0"
   },
   "peerDependencies": {

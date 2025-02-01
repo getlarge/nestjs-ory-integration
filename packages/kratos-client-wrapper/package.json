@@ -1,6 +1,6 @@
 {
   "name": "@getlarge/kratos-client-wrapper",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "license": "MIT",
   "description": "NestJS Module wrapper for the Ory Kratos API",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/kratos-client-wrapper",
@@ -9,7 +9,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@getlarge/base-client-wrapper": "*"
+    "@getlarge/base-client-wrapper": "0.1.8"
   },
   "dependencies": {
     "tslib": "^2.7.0"

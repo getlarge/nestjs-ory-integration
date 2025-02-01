@@ -1,3 +1,13 @@
+## 0.1.8 (2025-02-01)
+
+### 🩹 Fixes
+
+- ensure typecheck is passing ([6d88022](https://github.com/getlarge/nestjs-ory-integration/commit/6d88022))
+
+### ❤️ Thank You
+
+- getlarge
+
 ## 0.1.7 (2024-10-07)
 
 ### 🩹 Fixes

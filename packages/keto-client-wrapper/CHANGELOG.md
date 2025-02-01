@@ -1,3 +1,18 @@
+## 0.6.1 (2025-02-01)
+
+### 🩹 Fixes
+
+- ensure typecheck is passing ([6d88022](https://github.com/getlarge/nestjs-ory-integration/commit/6d88022))
+
+### 🧱 Updated Dependencies
+
+- Updated keto-relations-parser to 0.0.12
+- Updated base-client-wrapper to 0.1.8
+
+### ❤️ Thank You
+
+- getlarge
+
 ## 0.6.0 (2025-02-01)
 
 ### 🚀 Features

@@ -1,6 +1,6 @@
 {
   "name": "@getlarge/keto-client-wrapper",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "license": "MIT",
   "description": "NestJS Module wrapper for the Ory Keto API",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/keto-client-wrapper",
@@ -9,11 +9,11 @@
     "access": "public"
   },
   "devDependencies": {
-    "@getlarge/base-client-wrapper": "*",
+    "@getlarge/base-client-wrapper": "0.1.8",
     "@getlarge/keto-relations-parser": "*"
   },
   "dependencies": {
-    "@getlarge/keto-relations-parser": "0.0.11",
+    "@getlarge/keto-relations-parser": "0.0.12",
     "tslib": "^2.7.0",
     "defekt": "^9.3.1",
     "rxjs": "^7.8.0"
