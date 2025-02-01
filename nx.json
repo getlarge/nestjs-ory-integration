@@ -8,10 +8,14 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "production": [
+      "!{workspaceRoot}/eslint.config.js",
+      "!{workspaceRoot}/jest.config.ts",
+      "!{workspaceRoot}/jest.preset.js",
       "!{projectRoot}/test/**",
       "!{projectRoot}/**/*.{spec,test}.ts",
       "!{projectRoot}/node_modules/**",
-      "!{projectRoot}/eslint.config.js"
+      "!{projectRoot}/eslint.config.js",
+      "!{projectRoot}/jest.config.ts"
     ]
   },
   "release": {
@@ -78,6 +82,32 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": {
+          "targetName": "build",
+          "configName": "tsconfig.lib.json",
+          "buildDepsName": "build-deps",
+          "watchDepsName": "watch-deps"
+        }
+      }
+    }
+  ],
+  "sync": {
+    "applyChanges": true,
+    "globalGenerators": ["@nx/js:typescript-sync"],
+    "generatorOptions": {
+      "@nx/js:typescript-sync": {
+        "verbose": true
+      }
+    },
+    "disabledTaskSyncGenerators": []
   },
   "nxCloudAccessToken": "ODFiNmMyMzAtODQ1OS00NGQzLWJjYmYtNzA2MmNlMTc2NTc5fHJlYWQtd3JpdGU=",
   "useInferencePlugins": false,

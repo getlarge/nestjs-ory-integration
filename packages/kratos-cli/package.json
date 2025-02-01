@@ -20,10 +20,14 @@
     "class-validator": "^0.14.1",
     "@ory/client": "^1"
   },
-  "type": "commonjs",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
   "bin": {
     "@getlarge/kratos-cli": "./src/index.js"
-  },
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+  }
 }

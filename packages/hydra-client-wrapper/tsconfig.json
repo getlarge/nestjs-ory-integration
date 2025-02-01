@@ -14,6 +14,9 @@
   "include": [],
   "references": [
     {
+      "path": "../base-client-wrapper"
+    },
+    {
       "path": "./tsconfig.lib.json"
     },
     {

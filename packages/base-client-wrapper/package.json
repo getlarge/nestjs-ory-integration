@@ -12,7 +12,11 @@
     "@nestjs/common": "^10",
     "axios": "^1.6 || ^1.7"
   },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  }
 }

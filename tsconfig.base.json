@@ -1,39 +1,20 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
+    "composite": true,
+    "declaration": true,
     "sourceMap": true,
-    "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es2015",
     "module": "esnext",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@getlarge/base-client-wrapper": [
-        "packages/base-client-wrapper/src/index.ts"
-      ],
-      "@getlarge/hydra-client-wrapper": [
-        "packages/hydra-client-wrapper/src/index.ts"
-      ],
-      "@getlarge/keto-cli": ["packages/keto-cli/src/index.ts"],
-      "@getlarge/keto-client-wrapper": [
-        "packages/keto-client-wrapper/src/index.ts"
-      ],
-      "@getlarge/keto-relations-parser": [
-        "packages/keto-relations-parser/src/index.ts"
-      ],
-      "@getlarge/kratos-cli": ["packages/kratos-cli/src/index.ts"],
-      "@getlarge/kratos-client-wrapper": [
-        "packages/kratos-client-wrapper/src/index.ts"
-      ]
-    }
-  },
-  "exclude": ["node_modules", "tmp"]
+    "baseUrl": "."
+  }
 }

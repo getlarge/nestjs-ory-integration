@@ -19,8 +19,8 @@ function findReplacementsInString<T extends ReplacementValues>(
     return [
       {
         start: x.index,
-        endExcl: x.index + value.length,
-        prop: possibleReplacements.getByValue(value) as keyof T,
+        endExcl: x.index + (value?.length ?? 0),
+        prop: possibleReplacements.getByValue(value ?? '') as keyof T,
       },
     ];
   });
