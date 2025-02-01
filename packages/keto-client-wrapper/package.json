@@ -13,6 +13,7 @@
     "@getlarge/keto-relations-parser": "*"
   },
   "dependencies": {
+    "@getlarge/keto-relations-parser": "0.0.11",
     "tslib": "^2.7.0",
     "defekt": "^9.3.1",
     "rxjs": "^7.8.0"

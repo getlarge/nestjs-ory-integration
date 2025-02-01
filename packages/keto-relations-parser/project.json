@@ -5,6 +5,17 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/keto-relations-parser",
+        "tsConfig": "packages/keto-relations-parser/tsconfig.lib.json",
+        "packageJson": "packages/keto-relations-parser/package.json",
+        "main": "packages/keto-relations-parser/src/index.ts",
+        "assets": ["packages/keto-relations-parser/*.md"]
+      }
+    },
     "publish": {
       "command": "node tools/scripts/publish.mjs keto-relations-parser {args.ver} {args.tag}",
       "dependsOn": ["build"]
@@ -18,4 +29,5 @@
         }
       ]
     }
+  }
 }
