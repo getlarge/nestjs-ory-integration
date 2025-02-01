@@ -79,7 +79,7 @@
       ],
       "options": {
         "passWithNoTests": true,
-        "coverage": false
+        "coverage": true
       },
       "configurations": {
         "ci": {
