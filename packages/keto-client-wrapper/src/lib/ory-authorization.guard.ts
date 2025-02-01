@@ -13,10 +13,7 @@ import {
   Type,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import type {
-  PermissionApiExpandPermissionsRequest,
-  Relationship,
-} from '@ory/client';
+import type { PermissionApiExpandPermissionsRequest } from '@ory/client';
 import type { Observable } from 'rxjs';
 
 import {

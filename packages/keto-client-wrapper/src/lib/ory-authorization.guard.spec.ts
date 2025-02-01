@@ -37,7 +37,10 @@ describe('OryAuthorizationGuard', () => {
         OryPermissionsService,
         {
           provide: OryPermissionsModuleOptions,
-          useValue: { basePath: 'http://localhost' },
+          useValue: {
+            basePath: 'http://localhost',
+            supportBatchPermissionCheck: true,
+          },
         },
         {
           provide: OryBaseService,
@@ -69,9 +72,14 @@ describe('OryAuthorizationGuard', () => {
 
     it('should allow access for a single permitted relation tuple', async () => {
       const factory = () => 'user:123#access@resource:456';
+      Object.defineProperty(
+        oryPermissionsService,
+        'supportBatchPermissionCheck',
+        { value: false }
+      );
       jest
-        .spyOn(oryPermissionsService, 'batchCheckPermission')
-        .mockResolvedValue(mockAxiosResponse({ results: [{ allowed: true }] }));
+        .spyOn(oryPermissionsService, 'checkPermission')
+        .mockResolvedValue(mockAxiosResponse({ allowed: true }));
 
       const result = await oryAuthorizationGuard.evaluateConditions(
         factory,
