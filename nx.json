@@ -43,6 +43,22 @@
       "inputs": ["production", "^production"],
       "dependsOn": ["^build"]
     },
+    "lint": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "{workspaceRoot}/eslint.config.js",
+        "{projectRoot}/eslint.config.js",
+        {
+          "externalDependencies": ["eslint"]
+        }
+      ],
+      "options": {
+        "args": ["**/*.ts", "**/package.json", "**/project.json"]
+      }
+    },
     "@nx/jest:jest": {
       "cache": true,
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
@@ -68,15 +84,7 @@
         }
       ]
     },
-    "@nx/eslint:lint": {
-      "cache": true,
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.js"
-      ]
-    },
+
     "@nx/js:tsc": {
       "cache": true,
       "dependsOn": ["^build"],
@@ -97,6 +105,12 @@
           "watchDepsName": "watch-deps"
         }
       }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
     }
   ],
   "sync": {
@@ -110,6 +124,6 @@
     "disabledTaskSyncGenerators": []
   },
   "nxCloudAccessToken": "ODFiNmMyMzAtODQ1OS00NGQzLWJjYmYtNzA2MmNlMTc2NTc5fHJlYWQtd3JpdGU=",
-  "useInferencePlugins": false,
+  "useInferencePlugins": true,
   "useLegacyCache": true
 }
