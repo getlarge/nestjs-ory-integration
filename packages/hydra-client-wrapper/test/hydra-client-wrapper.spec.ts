@@ -35,10 +35,7 @@ describe('Hydra client wrapper E2E', () => {
     };
   };
 
-  const exchangeToken = async (
-    clientId: string,
-    clientSecret: string,
-  ) => {
+  const exchangeToken = async (clientId: string, clientSecret: string) => {
     const config = await oauth2Client.discovery(
       new URL('http://localhost:44440'),
       clientId,

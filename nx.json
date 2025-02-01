@@ -8,9 +8,17 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "production": [
+      "default",
+      "!{workspaceRoot}/**/*.md",
+      "!{workspaceRoot}/sonar-project.properties",
+      "!{workspaceRoot}/lint-staged.config.js",
       "!{workspaceRoot}/eslint.config.js",
       "!{workspaceRoot}/jest.config.ts",
       "!{workspaceRoot}/jest.preset.js",
+      "!{workspaceRoot}/.gitignore",
+      "!{workspaceRoot}/.prettierignore",
+      "!{workspaceRoot}/.prettierrc",
+      "!{projectRoot}/*.md",
       "!{projectRoot}/test/**",
       "!{projectRoot}/**/*.{spec,test}.ts",
       "!{projectRoot}/node_modules/**",
