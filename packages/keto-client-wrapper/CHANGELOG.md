@@ -1,3 +1,13 @@
+## 0.6.2 (2025-02-05)
+
+### 🩹 Fixes
+
+- solve Ory Keto config issue ([f39ec1b](https://github.com/getlarge/nestjs-ory-integration/commit/f39ec1b))
+
+### ❤️ Thank You
+
+- getlarge
+
 ## 0.6.1 (2025-02-01)
 
 ### 🩹 Fixes
