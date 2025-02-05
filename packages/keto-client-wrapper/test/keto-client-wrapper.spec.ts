@@ -26,11 +26,11 @@ describe('Keto client wrapper E2E', () => {
   const createOryRelation = async (relationTuple: RelationTupleBuilder) => {
     await oryRelationshipsService.createRelationship({
       createRelationshipBody: createRelationQuery(
-        relationTuple.toJSON()
+        relationTuple.toJSON(),
       ).unwrapOrThrow(),
     });
     const { data } = await oryPermissionService.checkPermission(
-      createPermissionCheckQuery(relationTuple.toJSON()).unwrapOrThrow()
+      createPermissionCheckQuery(relationTuple.toJSON()).unwrapOrThrow(),
     );
     expect(data.allowed).toEqual(true);
   };
@@ -144,6 +144,22 @@ describe('Keto client wrapper E2E', () => {
 
       const { body } = await request(app.getHttpServer())
         .get(`/Example/complex/${object}`)
+        .set({
+          'x-current-user-id': subjectObject,
+        });
+      expect(body).toEqual({ message: 'OK' });
+    });
+  });
+
+  describe('GET /Example/complex2/:id', () => {
+    it('should pass authorization when relations exist in Ory Keto', async () => {
+      const object = 'bike';
+      const subjectObject = 'Renata';
+      await createAdminRelation(subjectObject);
+      await createPuppetmasterRelation(object);
+
+      const { body } = await request(app.getHttpServer())
+        .get(`/Example/complex2/${object}`)
         .set({
           'x-current-user-id': subjectObject,
         });

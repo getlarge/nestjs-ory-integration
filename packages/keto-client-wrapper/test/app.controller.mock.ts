@@ -101,6 +101,61 @@ export class ExampleController {
     return this.exampleService.getExample();
   }
 
+  @OryPermissionChecks({
+    type: 'OR',
+    conditions: [
+      {
+        type: 'AND',
+        conditions: [
+          (ctx) => {
+            const req = ctx.switchToHttp().getRequest();
+            const currentUserId = req.headers['x-current-user-id'] as string;
+            const resourceId = req.params.id;
+            return new RelationTupleBuilder()
+              .subject('User', currentUserId)
+              .isAllowedTo('play')
+              .of('Toy', resourceId)
+              .toString();
+          },
+          (ctx) => {
+            const req = ctx.switchToHttp().getRequest();
+            const currentUserId = req.headers['x-current-user-id'] as string;
+            const resourceId = req.params.id;
+            return new RelationTupleBuilder()
+              .subject('User', currentUserId)
+              .isAllowedTo('break')
+              .of('Toy', resourceId)
+              .toString();
+          },
+        ],
+      },
+      (ctx) => {
+        const req = ctx.switchToHttp().getRequest();
+        const currentUserId = req.headers['x-current-user-id'] as string;
+        return new RelationTupleBuilder()
+          .subject('User', currentUserId)
+          .isIn('members')
+          .of('Group', 'admin')
+          .toString();
+      },
+      (ctx) => {
+        const req = ctx.switchToHttp().getRequest();
+        const currentUserId = req.headers['x-current-user-id'] as string;
+        return new RelationTupleBuilder()
+          .subject('User', currentUserId)
+          .isIn('members')
+          .of('Group', 'superadmin')
+          .toString();
+      },
+    ],
+  })
+  @UseGuards(AuthorizationGuard())
+  @Get('complex2/:id')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getExampleComplex2(@Param('id') id?: string) {
+    return this.exampleService.getExample();
+  }
+
   @OryPermissionChecks((ctx) => {
     const req = ctx.switchToHttp().getRequest();
     const currentUserId = req.headers['x-current-user-id'] as string;
