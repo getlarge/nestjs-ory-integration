@@ -1,7 +1,9 @@
 /* eslint-disable */
 
+import { execSync } from 'node:child_process';
+
 module.exports = async function () {
-  // Put clean up logic here (e.g. stopping services, docker-compose, etc.).
-  // Hint: `globalThis` is shared between setup and teardown.
+  execSync('docker-compose -f e2e/ory-integration/docker-compose.yml down');
+
   console.log(globalThis.__TEARDOWN_MESSAGE__);
 };

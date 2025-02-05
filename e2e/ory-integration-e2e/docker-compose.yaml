@@ -1,0 +1,61 @@
+services:
+  kratos:
+    image: ghcr.io/getlarge/nestjs-ory-integration/kratos:latest
+    ports:
+      - '44330:4433'
+      - '44340:4434'
+    networks:
+      - ory
+    environment:
+      - OAUTH2_PROVIDER_URL=http://hydra:4445
+    restart: unless-stopped
+
+  kratos-selfservice-ui-node:
+    image: oryd/kratos-selfservice-ui-node:v1.1.0
+    ports:
+      - '44550:4455'
+    environment:
+      - PORT=4455
+      - KRATOS_PUBLIC_URL=http://kratos:4433
+      - KRATOS_BROWSER_URL=http://127.0.0.1:44330
+      - COOKIE_SECRET=changeme
+      - CSRF_COOKIE_NAME=cookie_name
+      - CSRF_COOKIE_SECRET=changeme
+      - DANGEROUSLY_DISABLE_SECURE_CSRF_COOKIES=true
+    networks:
+      - ory
+    restart: on-failure
+
+  hydra:
+    image: ghcr.io/getlarge/nestjs-ory-integration/hydra:latest
+    ports:
+      - '44440:4444'
+      - '44450:4445'
+    networks:
+      - ory
+    restart: unless-stopped
+
+  keto:
+    image: ghcr.io/getlarge/nestjs-ory-integration/keto:latest
+    ports:
+      - '44660:4466'
+      - '44670:4467'
+    restart: on-failure
+
+  api:
+    image: ghcr.io/getlarge/nestjs-ory-integration/ory-integration:${DOCKER_API_TAG:-dev}
+    pull_policy: never
+    ports:
+      - 3000:3000
+    depends_on:
+      - kratos
+      - hydra
+      - keto
+    environment:
+      PORT: 3000
+      ORY_KETO_ADMIN_URL: http://keto:4467
+      ORY_KETO_PUBLIC_URL: http://keto:4466
+      ORY_KRATOS_ADMIN_URL: http://kratos:4434
+      ORY_KRATOS_PUBLIC_URL: http://kratos:4433
+      ORY_HYDRA_ADMIN_URL: http://hydra:4445
+      ORY_HYDRA_PUBLIC_URL: http://hydra:4444

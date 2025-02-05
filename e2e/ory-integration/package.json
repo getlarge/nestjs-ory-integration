@@ -50,12 +50,29 @@
             "buildTarget": "ory-integration:build:production"
           }
         }
+      },
+      "docker-push": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "docker buildx build . --platform linux/amd64,linux/arm64 -t ghcr.io/getlarge/nestjs-ory-integration/ory-integration:latest --push",
+          "cwd": "e2e/ory-integration"
+        }
       }
     }
   },
   "dependencies": {
     "@nestjs/common": "^11.0.7",
     "@nestjs/core": "^11.0.7",
-    "@nx/webpack": "20.4.0"
+    "@nx/webpack": "20.4.0",
+    "@getlarge/hydra-client-wrapper": "0.3.2",
+    "@getlarge/keto-client-wrapper": "0.6.1",
+    "@getlarge/kratos-client-wrapper": "0.2.3",
+    "@ory/client": "^1.16.5",
+    "tslib": "^2.7.0",
+    "axios": "1.7.9",
+    "@nestjs/axios": "^4.0.0",
+    "@getlarge/keto-relations-parser": "0.0.12",
+    "rxjs": "^7.8.0",
+    "defekt": "^9.3.1"
   }
 }

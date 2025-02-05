@@ -1,10 +1,18 @@
+import { execSync } from 'node:child_process';
+
 /* eslint-disable */
 var __TEARDOWN_MESSAGE__: string;
 
 module.exports = async function () {
-  // Start services that that the app needs to run (e.g. database, docker-compose, etc.).
   console.log('\nSetting up...\n');
+  // publish and link all packages
+  execSync('node tools/scripts/publish-all-locally.mjs');
+  // build API and Ory images
+  execSync('npx nx run-many -t docker-push');
+  // start Ory services and API
+  execSync(
+    'docker-compose -f e2e/ory-integration/docker-compose.yml up -d --wait',
+  );
 
-  // Hint: Use `globalThis` to pass variables to global teardown.
   globalThis.__TEARDOWN_MESSAGE__ = '\nTearing down...\n';
 };
