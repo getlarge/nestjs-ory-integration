@@ -12,5 +12,19 @@
     "target": "es2021"
   },
   "include": ["src/**/*.ts"],
-  "exclude": []
+  "exclude": [],
+  "references": [
+    {
+      "path": "../../packages/kratos-client-wrapper/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/keto-relations-parser/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/keto-client-wrapper/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/hydra-client-wrapper/tsconfig.lib.json"
+    }
+  ]
 }

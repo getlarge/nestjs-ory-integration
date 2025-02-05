@@ -4,6 +4,18 @@
   "include": [],
   "references": [
     {
+      "path": "../../packages/kratos-client-wrapper"
+    },
+    {
+      "path": "../../packages/keto-relations-parser"
+    },
+    {
+      "path": "../../packages/keto-client-wrapper"
+    },
+    {
+      "path": "../../packages/hydra-client-wrapper"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]
