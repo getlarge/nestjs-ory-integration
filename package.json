@@ -1,5 +1,5 @@
 {
-  "name": "nestjs-ory-integration",
+  "name": "@source/nestjs-ory-integration",
   "version": "0.2.0",
   "license": "MIT",
   "scripts": {
@@ -73,5 +73,6 @@
   "workspaces": [
     "packages/**",
     "e2e/*"
-  ]
+  ],
+  "packageManager": "npm@10.9.0"
 }

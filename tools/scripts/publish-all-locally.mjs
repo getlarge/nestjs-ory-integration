@@ -1,39 +1,39 @@
-import { startLocalRegistry } from '@nx/js/plugins/jest/local-registry';
+import { execFile, execSync } from 'node:child_process';
+import { readFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { resolve } from 'node:path';
+import { setTimeout } from 'node:timers/promises';
 import { parseArgs } from 'node:util';
-import { releasePublish, releaseVersion } from 'nx/release';
-
-const localRegistryTarget = 'nestjs-ory-integration:local-registry';
+import { releasePublish, releaseVersion } from 'nx/release/index.js';
+import { readCachedProjectGraph } from 'nx/src/devkit-exports.js';
 
 const args = process.argv.slice(2);
 
-const { value } = parseArgs({
+const { values } = parseArgs({
   args,
   strict: false,
-  tokens: true,
-  config: {
-    version: {
-      type: 'string',
-      default: `0.0.0-local.${Date.now()}`,
-      short: 'v',
-    },
+  options: {
     targetPath: {
       type: 'string',
-      default: 'e2e/nestjs-ory-integration',
+      default: 'e2e/ory-integration',
       short: 't',
     },
   },
 });
 
+const require = createRequire(import.meta.url);
+const nx = require.resolve('nx/bin/nx.js');
+const p = execFile(nx, [
+  'run',
+  '@source/nestjs-ory-integration:local-registry',
+]);
+
 try {
-  const storage = './tmp/local-registry/storage';
-  global.stopLocalRegistry = await startLocalRegistry({
-    localRegistryTarget,
-    storage,
-    verbose: false,
-  });
+  p.stdout.pipe(process.stdout);
+  p.stderr.pipe(process.stderr);
+  await setTimeout(1000);
 
   const { projectsVersionData } = await releaseVersion({
-    specifier: value.version,
     stageChanges: false,
     gitCommit: false,
     gitTag: false,
@@ -41,41 +41,49 @@ try {
     generatorOptionsOverrides: {
       skipLockFileUpdate: true,
     },
+    verbose: false,
   });
 
   const publishStatus = await releasePublish({
     firstRelease: true,
-    registry: 'http://localhost:4873',
+    verbose: false,
+    // tag: 'e2e',
   });
 
+  console.log('Publish status', publishStatus);
+
   // Get All published Npm packages that should be installed
-  const packagesToInstall = Object.entries(projectsVersionData).map(
-    ([projectName, { newVersion }]) => {
-      const project = readCachedProjectGraph().nodes[projectName];
-
-      const packageJson = JSON.parse(
-        readFileSync(
+  const packagesToInstall = await Promise.all(
+    Object.entries(projectsVersionData).map(
+      async ([projectName, { currentVersion, newVersion }]) => {
+        const project = readCachedProjectGraph().nodes[projectName];
+        const fileOutput = await readFile(
           resolve(process.cwd(), project.data.root, `package.json`),
-        ).toString(),
-      );
-
-      return `${packageJson.name}@${newVersion}`;
-    },
+          'utf-8',
+        );
+        const packageJson = JSON.parse(fileOutput);
+        return `${packageJson.name}@${newVersion ?? currentVersion}`;
+      },
+    ),
   );
 
   // Prepare the install command
-  const targetPath = resolve(process.cwd(), value.targetPath);
-  const installCommand = `npm --prefix ${targetPath} i ${packagesToInstall.join(' ')} --registry=http://localhost:4873`;
+  const targetPath = resolve(process.cwd(), values.targetPath);
+  const installCommand = `npm --prefix ${targetPath} --registry http://localhost:4873 i ${packagesToInstall.join(' ')}`;
 
   console.log(installCommand);
-
-  execSync(installCommand);
-
-  global.stopLocalRegistry();
-
-  process.exit(publishStatus);
+  execSync(installCommand, {
+    stdio: 'inherit',
+  });
+  // unfortunately, the process does not exit properly and verdaccio is not killed
+  // execSync is working but it is also blocking the process
+  p.kill('SIGTERM');
+  await setTimeout(2000);
+  process.exit(0);
 } catch (error) {
   console.error(error);
-  global.stopLocalRegistry();
+  p.kill('SIGTERM');
+  await setTimeout(2000);
+
   process.exit(1);
 }

@@ -31,7 +31,7 @@
     ]
   },
   "release": {
-    "projects": ["packages/*"],
+    "projects": ["packages/*", "!base-client-wrapper"],
     "projectsRelationship": "independent",
     "changelog": {
       "projectChangelogs": {
@@ -103,9 +103,15 @@
     },
     "nx-release-publish": {
       "options": {
-        "packageRoot": "dist/{projectRoot}",
-        "registry": "https://registry.npmjs.org/"
+        "packageRoot": "dist/{projectRoot}"
       },
+      "configurations": {
+        "production": {
+          "registry": "https://registry.npmjs.org/"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "development",
       "dependsOn": [
         {
           "target": "build",
