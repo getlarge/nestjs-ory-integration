@@ -25,7 +25,12 @@ class Toy implements Namespace {
     play: (ctx: Context) =>
       this.related.owners.includes(ctx.subject) ||
       this.related.puppetmasters.includes(ctx.subject),
-    break: (ctx: Context) => this.permits.play(ctx),
-    steal: (ctx: Context) => !this.permits.play(ctx),
+    // can't use this.permits.play(ctx) anymore when using batched permission checks, why?
+    break: (ctx: Context) =>
+      this.related.owners.includes(ctx.subject) ||
+      this.related.puppetmasters.includes(ctx.subject),
+    steal: (ctx: Context) =>
+      !this.related.owners.includes(ctx.subject) &&
+      !this.related.puppetmasters.includes(ctx.subject),
   };
 }
