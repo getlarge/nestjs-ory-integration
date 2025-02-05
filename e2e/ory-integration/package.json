@@ -1,0 +1,61 @@
+{
+  "name": "ory-integration",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "ory-integration",
+    "projectType": "application",
+    "sourceRoot": "e2e/ory-integration/src",
+    "targets": {
+      "build": {
+        "executor": "@nx/webpack:webpack",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "inputs": [
+          "production",
+          "^production"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "target": "node",
+          "compiler": "tsc",
+          "outputPath": "dist/e2e/ory-integration",
+          "main": "e2e/ory-integration/src/main.ts",
+          "tsConfig": "e2e/ory-integration/tsconfig.app.json",
+          "assets": [],
+          "webpackConfig": "e2e/ory-integration/webpack.config.js",
+          "generatePackageJson": false
+        },
+        "configurations": {
+          "development": {},
+          "production": {}
+        }
+      },
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "ory-integration:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "ory-integration:build:development"
+          },
+          "production": {
+            "buildTarget": "ory-integration:build:production"
+          }
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.7",
+    "@nestjs/core": "^11.0.7",
+    "@nx/webpack": "20.4.0"
+  }
+}

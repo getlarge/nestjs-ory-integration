@@ -4,6 +4,10 @@
       "analyzeSourceFiles": true
     }
   },
+  "workspaceLayout": {
+    "libsDir": "packages",
+    "appsDir": "e2e"
+  },
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
@@ -94,7 +98,8 @@
           "ci": true,
           "coverage": true
         }
-      }
+      },
+      "dependsOn": ["^build"]
     },
     "nx-release-publish": {
       "options": {
@@ -134,7 +139,8 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      }
+      },
+      "exclude": ["e2e/ory-integration-e2e/**/*"]
     }
   ],
   "sync": {
