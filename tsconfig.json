@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
-  "files": [], // intentionally empty
+  "files": [],
   "references": [
     {
       "path": "./packages/base-client-wrapper"
@@ -22,6 +22,12 @@
     },
     {
       "path": "./packages/kratos-client-wrapper"
+    },
+    {
+      "path": "./e2e/ory-integration-e2e"
+    },
+    {
+      "path": "./e2e/ory-integration"
     }
   ]
 }

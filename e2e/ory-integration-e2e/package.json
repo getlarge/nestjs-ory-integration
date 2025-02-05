@@ -1,0 +1,27 @@
+{
+  "name": "ory-integration-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "ory-integration-e2e",
+    "projectType": "application",
+    "implicitDependencies": [
+      "ory-integration"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{workspaceRoot}/coverage/{e2eProjectRoot}"
+        ],
+        "options": {
+          "jestConfig": "e2e/ory-integration-e2e/jest.config.ts",
+          "passWithNoTests": true
+        },
+        "dependsOn": [
+          "ory-integration:build"
+        ]
+      }
+    }
+  }
+}

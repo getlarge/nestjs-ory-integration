@@ -1,13 +1,15 @@
 {
-  "name": "nestjs-ory-integration",
+  "name": "@source/nestjs-ory-integration",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "targets": {
     "local-registry": {
       "executor": "@nx/js:verdaccio",
       "options": {
         "port": 4873,
+        "clear": true,
         "config": ".verdaccio/config.yml",
-        "storage": "tmp/local-registry/storage"
+        "storage": "tmp/local-registry/storage",
+        "scopes": ["@getlarge"]
       }
     }
   }

@@ -4,6 +4,10 @@
       "analyzeSourceFiles": true
     }
   },
+  "workspaceLayout": {
+    "libsDir": "packages",
+    "appsDir": "e2e"
+  },
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
@@ -27,7 +31,7 @@
     ]
   },
   "release": {
-    "projects": ["packages/*"],
+    "projects": ["packages/*", "!base-client-wrapper"],
     "projectsRelationship": "independent",
     "changelog": {
       "projectChangelogs": {
@@ -94,13 +98,20 @@
           "ci": true,
           "coverage": true
         }
-      }
+      },
+      "dependsOn": ["^build"]
     },
     "nx-release-publish": {
       "options": {
-        "packageRoot": "dist/{projectRoot}",
-        "registry": "https://registry.npmjs.org/"
+        "packageRoot": "dist/{projectRoot}"
       },
+      "configurations": {
+        "production": {
+          "registry": "https://registry.npmjs.org/"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "development",
       "dependsOn": [
         {
           "target": "build",
@@ -134,7 +145,8 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      }
+      },
+      "exclude": ["e2e/ory-integration-e2e/**/*"]
     }
   ],
   "sync": {
