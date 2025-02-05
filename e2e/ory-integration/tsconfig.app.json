@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "out-tsc/ory-integration",
+    "outDir": "../../dist/out-tsc/ory-integration",
     "module": "nodenext",
     "types": ["node"],
     "rootDir": "src",
