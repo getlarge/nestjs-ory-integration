@@ -8,7 +8,9 @@ module.exports = async function () {
   // publish and link all packages
   execSync('node tools/scripts/publish-all-locally.mjs');
   // build API and Ory images
-  execSync('npx nx run-many -t docker-push');
+  if (!process.env.CI) {
+    execSync('npx nx run-many -t docker-push');
+  }
   // start Ory services and API
   execSync(
     'docker-compose -f e2e/ory-integration/docker-compose.yml up -d --wait',

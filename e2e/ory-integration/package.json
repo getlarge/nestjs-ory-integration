@@ -64,10 +64,8 @@
   },
   "dependencies": {
     "@getlarge/hydra-client-wrapper": "^0.3.2",
-    "@getlarge/keto-cli": "^0.2.10",
     "@getlarge/keto-client-wrapper": "^0.6.1",
     "@getlarge/keto-relations-parser": "^0.0.12",
-    "@getlarge/kratos-cli": "^0.3.3",
     "@getlarge/kratos-client-wrapper": "^0.2.3",
     "@nestjs/axios": "^4.0.0",
     "@nestjs/common": "^11.0.7",
