@@ -4,7 +4,7 @@ FROM node:$NODE_VERSION AS deps
 
 WORKDIR /e2e/ory-integration
 
-COPY ./package*.json ./
+COPY ./e2e/ory-integration/package*.json ./
 
 RUN npm install --omit=dev -f --loglevel=error --include=optional
 
