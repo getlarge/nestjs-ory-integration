@@ -13,7 +13,9 @@
         "packageJson": "packages/kratos-client-wrapper/package.json",
         "main": "packages/kratos-client-wrapper/src/index.ts",
         "external": "none",
-        "assets": ["packages/kratos-client-wrapper/*.md"]
+        "assets": ["packages/kratos-client-wrapper/*.md"],
+        "generateExportsField": true,
+        "generatePackageJson": true
       }
     },
     "publish": {

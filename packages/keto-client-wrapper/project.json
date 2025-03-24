@@ -13,7 +13,9 @@
         "packageJson": "packages/keto-client-wrapper/package.json",
         "external": ["keto-relations-parser"],
         "main": "packages/keto-client-wrapper/src/index.ts",
-        "assets": ["packages/keto-client-wrapper/*.md"]
+        "assets": ["packages/keto-client-wrapper/*.md"],
+        "generateExportsField": true,
+        "generatePackageJson": true
       }
     },
     "publish": {

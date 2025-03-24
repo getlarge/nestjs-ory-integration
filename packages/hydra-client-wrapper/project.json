@@ -13,7 +13,9 @@
         "packageJson": "packages/hydra-client-wrapper/package.json",
         "main": "packages/hydra-client-wrapper/src/index.ts",
         "external": "none",
-        "assets": ["packages/hydra-client-wrapper/*.md"]
+        "assets": ["packages/hydra-client-wrapper/*.md"],
+        "generateExportsField": true,
+        "generatePackageJson": true
       }
     },
     "publish": {
