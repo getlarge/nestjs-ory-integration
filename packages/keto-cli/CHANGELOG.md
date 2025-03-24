@@ -1,3 +1,18 @@
+## 0.2.12 (2025-03-24)
+
+### 🩹 Fixes
+
+- update package.json exports to use .js and .d.ts extensions ([50c5dc1](https://github.com/getlarge/nestjs-ory-integration/commit/50c5dc1))
+
+### 🧱 Updated Dependencies
+
+- Updated keto-relations-parser to 0.0.13
+- Updated keto-client-wrapper to 0.6.3
+
+### ❤️ Thank You
+
+- getlarge
+
 ## 0.2.11 (2025-02-05)
 
 ### 🧱 Updated Dependencies
