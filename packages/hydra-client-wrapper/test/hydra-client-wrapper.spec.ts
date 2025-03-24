@@ -1,9 +1,9 @@
 import type { INestApplication } from '@nestjs/common';
 import { Test, type TestingModule } from '@nestjs/testing';
+import axios, { AxiosError } from 'axios';
 import { execSync } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
 import { join, resolve } from 'node:path';
-import { Issuer } from 'openid-client';
 import request from 'supertest';
 
 import { OryOAuth2Module, OryOAuth2Service, OryOidcModule } from '../src';
@@ -22,6 +22,7 @@ describe('Hydra client wrapper E2E', () => {
     const { data } = await oryOAuth2Service.createOAuth2Client({
       oAuth2Client: {
         grant_types: ['client_credentials'],
+        token_endpoint_auth_method: 'client_secret_post',
         access_token_strategy: 'opaque',
         owner: email,
         scope: 'offline',
@@ -35,18 +36,32 @@ describe('Hydra client wrapper E2E', () => {
   };
 
   const exchangeToken = async (clientId: string, clientSecret: string) => {
-    const issuer = await Issuer.discover('http://localhost:44440');
-    const client = new issuer.Client({
-      client_id: clientId,
-      client_secret: clientSecret,
-    });
-    const token = await client.grant({
-      grant_type: 'client_credentials',
-      scope: 'offline',
-    });
-    expect(token).toHaveProperty('access_token');
-    expect(token.access_token?.startsWith('ory_at_')).toBeTruthy();
-    return token;
+    try {
+      const response = await axios.post(
+        'http://localhost:44440/oauth2/token',
+        new URLSearchParams({
+          grant_type: 'client_credentials',
+          scope: 'offline',
+          client_id: clientId,
+          client_secret: clientSecret,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
+
+      const token = response.data;
+      expect(token).toHaveProperty('access_token');
+      expect(token.access_token?.startsWith('ory_at_')).toBeTruthy();
+      return token;
+    } catch (error) {
+      console.error(
+        (error as AxiosError).response?.data || (error as Error).message,
+      );
+      throw error;
+    }
   };
 
   beforeAll(() => {
@@ -104,7 +119,7 @@ describe('Hydra client wrapper E2E', () => {
       });
 
     expect(body).toEqual({ message: clientId });
-  }, 20000);
+  }, 20_000);
 
   it('should fail to authenticate user when it is not registered in Ory Kratos', async () => {
     const { body } = await request(app.getHttpServer())
