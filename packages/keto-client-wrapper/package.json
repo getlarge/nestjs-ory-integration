@@ -16,7 +16,7 @@
     "@getlarge/keto-relations-parser": "0.0.13",
     "tslib": "^2.7.0",
     "defekt": "^9.3.1",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.2"
   },
   "peerDependencies": {
     "@nestjs/axios": "^3 || ^4",
