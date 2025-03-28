@@ -28,6 +28,22 @@ module.exports = [
                 sourceTag: '*',
                 onlyDependOnLibsWithTags: ['*'],
               },
+              {
+                sourceTag: 'scope:hydra',
+                onlyDependOnLibsWithTags: ['scope:hydra', 'scope:shared'],
+              },
+              {
+                sourceTag: 'scope:keto',
+                onlyDependOnLibsWithTags: ['scope:keto', 'scope:shared'],
+              },
+              {
+                sourceTag: 'scope:kratos',
+                onlyDependOnLibsWithTags: ['scope:kratos', 'scope:shared'],
+              },
+              {
+                sourceTag: 'scope:shared',
+                onlyDependOnLibsWithTags: ['scope:shared'],
+              },
             ],
           },
         ],

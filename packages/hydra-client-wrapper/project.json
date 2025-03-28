@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/hydra-client-wrapper/src",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:hydra"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
