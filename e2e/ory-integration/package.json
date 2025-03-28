@@ -1,6 +1,6 @@
 {
   "name": "ory-integration",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "private": true,
   "nx": {
     "name": "ory-integration",
@@ -63,16 +63,16 @@
     }
   },
   "dependencies": {
-    "@getlarge/hydra-client-wrapper": "^0.3.2",
-    "@getlarge/keto-client-wrapper": "^0.6.2",
-    "@getlarge/keto-relations-parser": "^0.0.12",
-    "@getlarge/kratos-client-wrapper": "^0.2.3",
+    "@getlarge/hydra-client-wrapper": "^0.3.3",
+    "@getlarge/keto-client-wrapper": "^0.6.3",
+    "@getlarge/keto-relations-parser": "^0.0.13",
+    "@getlarge/kratos-client-wrapper": "^0.2.4",
     "@nestjs/axios": "^4.0.0",
     "@nestjs/common": "^11.0.7",
     "@nestjs/core": "^11.0.7",
     "@nx/webpack": "20.4.0",
     "@ory/client": "^1.16.5",
-    "axios": "1.7.9",
+    "axios": "1.8.4",
     "defekt": "^9.3.1",
     "rxjs": "^7.8.0",
     "tslib": "^2.7.0"
