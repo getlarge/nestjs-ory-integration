@@ -57,7 +57,7 @@
     "lint-staged": "^15.4.3",
     "nest-commander-testing": "^3.4.0",
     "nx": "20.4.0",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.3",
     "supertest": "^6.3.3",
     "ts-jest": "^29.2.5",
     "ts-node": "10.9.1",
