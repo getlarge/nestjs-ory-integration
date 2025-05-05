@@ -1,21 +1,21 @@
 import { OryBaseService } from '@getlarge/base-client-wrapper';
 import { Test, TestingModule } from '@nestjs/testing';
-import { OAuth2ApiCreateOAuth2ClientRequest } from '@ory/client';
+import { JwkApiCreateJsonWebKeySetRequest } from '@ory/client';
 
-import { OryOAuth2ModuleOptions } from './ory-oauth2.interfaces';
-import { OryOAuth2Service } from './ory-oauth2.service';
+import { OryJwkModuleOptions } from './ory-jwk.interfaces';
+import { OryJwkService } from './ory-jwk.service';
 
-describe('OryOAuth2Service', () => {
-  let oryOAuth2Service: OryOAuth2Service;
+describe('OryJwkService', () => {
+  let oryJwkService: OryJwkService;
   let oryBaseService: OryBaseService;
   const accessToken = 'ory_st_test';
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        OryOAuth2Service,
+        OryJwkService,
         {
-          provide: OryOAuth2ModuleOptions,
+          provide: OryJwkModuleOptions,
           useValue: {
             basePath: 'http://localhost:4445',
             accessToken,
@@ -33,23 +33,24 @@ describe('OryOAuth2Service', () => {
       ],
     }).compile();
 
-    oryOAuth2Service = module.get(OryOAuth2Service);
+    oryJwkService = module.get(OryJwkService);
     oryBaseService = module.get<OryBaseService>(OryBaseService);
   });
 
   it('should be defined', () => {
-    expect(oryOAuth2Service).toBeDefined();
+    expect(OryJwkService).toBeDefined();
   });
 
   describe('Should use custom axios instance', () => {
-    it('should call getOAuth2Client endpoint', async () => {
+    it('should call getJsonWebKey endpoint', async () => {
       const result = { data: 'test' };
-      const id = 'test';
+      const set = 'test';
+      const kid = 'test';
       oryBaseService.axios.request = jest.fn().mockResolvedValue(result);
 
-      await oryOAuth2Service.getOAuth2Client({ id });
+      await oryJwkService.getJsonWebKey({ set, kid });
       expect(oryBaseService.axios.request).toHaveBeenCalledWith({
-        url: `http://localhost:4445/admin/clients/${id}`,
+        url: `http://localhost:4445/admin/keys/${set}/${kid}`,
         method: 'GET',
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -57,24 +58,27 @@ describe('OryOAuth2Service', () => {
       });
     });
 
-    it('should call createOAuth2Client endpoint', async () => {
+    it('should call createJsonWebKeySet endpoint', async () => {
       const result = { data: 'test' };
       oryBaseService.axios.request = jest.fn().mockResolvedValue(result);
 
-      const params: OAuth2ApiCreateOAuth2ClientRequest = {
-        oAuth2Client: {
-          client_id: 'test',
+      const params: JwkApiCreateJsonWebKeySetRequest = {
+        set: 'test',
+        createJsonWebKeySet: {
+          kid: 'test',
+          use: 'sig',
+          alg: 'RS256',
         },
       };
-      await oryOAuth2Service.createOAuth2Client(params);
+      await oryJwkService.createJsonWebKeySet(params);
       expect(oryBaseService.axios.request).toHaveBeenCalledWith({
-        url: `http://localhost:4445/admin/clients`,
+        url: `http://localhost:4445/admin/keys/${params.set}`,
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-        data: JSON.stringify(params.oAuth2Client),
+        data: JSON.stringify(params.createJsonWebKeySet),
       });
     });
   });

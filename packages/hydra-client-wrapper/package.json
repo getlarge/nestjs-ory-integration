@@ -26,6 +26,11 @@
       "import": "./src/index.js",
       "default": "./src/index.js"
     },
+    "./base-client-wrapper": {
+      "types": "./base-client-wrapper/src/index.d.ts",
+      "import": "./base-client-wrapper/src/index.js",
+      "default": "./base-client-wrapper/src/index.js"
+    },
     "./package.json": "./package.json"
   }
 }
