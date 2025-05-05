@@ -1,3 +1,14 @@
+## 0.4.0 (2025-05-05)
+
+### 🚀 Features
+
+- add base-client-wrapper exports to hydra, keto, and kratos client wrappers ([7aac13f](https://github.com/getlarge/nestjs-ory-integration/commit/7aac13f))
+- implement OryJwk module with service and interfaces ([cc51e28](https://github.com/getlarge/nestjs-ory-integration/commit/cc51e28))
+
+### ❤️ Thank You
+
+- getlarge
+
 ## 0.3.3 (2025-03-24)
 
 ### 🩹 Fixes

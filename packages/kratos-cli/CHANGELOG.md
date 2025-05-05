@@ -1,3 +1,9 @@
+## 0.3.5 (2025-05-05)
+
+### 🧱 Updated Dependencies
+
+- Updated kratos-client-wrapper to 0.3.0
+
 ## 0.3.4 (2025-03-24)
 
 ### 🩹 Fixes

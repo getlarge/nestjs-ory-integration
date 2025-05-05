@@ -1,3 +1,13 @@
+## 0.3.0 (2025-05-05)
+
+### 🚀 Features
+
+- add base-client-wrapper exports to hydra, keto, and kratos client wrappers ([7aac13f](https://github.com/getlarge/nestjs-ory-integration/commit/7aac13f))
+
+### ❤️ Thank You
+
+- getlarge
+
 ## 0.2.4 (2025-03-24)
 
 ### 🩹 Fixes
