@@ -28,7 +28,7 @@
     "@eslint/eslintrc": "^2.1.1",
     "@nestjs/platform-express": "^11.0.7",
     "@nestjs/schematics": "^11.0.0",
-    "@nestjs/testing": "^11.0.7",
+    "@nestjs/testing": "^11.1.0",
     "@nx/eslint": "20.4.0",
     "@nx/eslint-plugin": "20.4.0",
     "@nx/jest": "20.4.0",
