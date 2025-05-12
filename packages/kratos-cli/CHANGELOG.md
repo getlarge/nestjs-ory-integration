@@ -1,3 +1,13 @@
+## 0.3.6 (2025-05-12)
+
+### 🩹 Fixes
+
+- **kratos-cli:** update module and moduleResolution options in tsconfig files ([9af64fc](https://github.com/getlarge/nestjs-ory-integration/commit/9af64fc))
+
+### ❤️ Thank You
+
+- getlarge
+
 ## 0.3.5 (2025-05-05)
 
 ### 🧱 Updated Dependencies

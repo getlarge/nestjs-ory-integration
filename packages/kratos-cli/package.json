@@ -1,6 +1,6 @@
 {
   "name": "@getlarge/kratos-cli",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "license": "MIT",
   "description": "CLI wrapper for the Ory Kratos API",
   "homepage": "https://github.com/getlarge/nestjs-ory-integration/tree/main/packages/kratos-cli",
